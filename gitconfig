@@ -1,0 +1,15 @@
+[alias]
+	st = status
+	l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cgreen\\ [%cn]" --decorate --date=short
+	a = add
+	s = status -s
+	ci = commit -m
+	co = checkout
+[color]
+	ui = true
+[url "https://"]
+	insteadOf = git://
+[push]
+	default = simple
+[http]
+	proxy = 
