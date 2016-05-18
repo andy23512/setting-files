@@ -14,3 +14,13 @@ $ vi
 gitconfig
 ### Setup
 $ cp gitconfig ~/.gitconfig
+
+## tmux
+tmux.conf
+### Setup
+$ cp tmux.conf ~/.tmux.conf
+
+## Bash
+bashrc
+### Setup
+$ cp bashrc ~/.bashrc
