@@ -16,6 +16,7 @@ Plugin 'gkz/vim-ls'
 Plugin 'wavded/vim-stylus'
 Plugin 'django.vim'
 Plugin 'klen/python-mode'
+Plugin 'CSSMinister'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
