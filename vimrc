@@ -9,7 +9,6 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'AutoComplPop'
-Plugin 'Yggdroot/indentLine'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'digitaltoad/vim-pug'
 Plugin 'gkz/vim-ls'
@@ -17,6 +16,7 @@ Plugin 'wavded/vim-stylus'
 Plugin 'django.vim'
 Plugin 'klen/python-mode'
 Plugin 'CSSMinister'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -151,6 +151,12 @@ let g:pymode_python = 'python3'
 "ignore line length error
 let g:pymode_lint_ignore = 'E501,W601'
 let g:pep8_ignore = 'E501,W601'
+
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=5
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
 
 noremap <silent> <Leader>w :call ToggleWrap()<CR>
 function ToggleWrap()
