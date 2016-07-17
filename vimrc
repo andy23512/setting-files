@@ -18,6 +18,7 @@ Plugin 'django.vim'
 " Plugin 'CSSMinister'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'othree/yajs.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
