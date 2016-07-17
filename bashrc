@@ -75,7 +75,8 @@ fi
 
 export EDITOR=vi
 export GDFONTPATH="$HOME/share/fonts"
-export LANG=en_US.UTF-8
+# export LANG=en_US.UTF-8
+export LANG=zh_TW.UTF-8
 export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin"
 
 # Standard Aliases
@@ -135,6 +136,7 @@ function _ls() {
 LANG=zh_TW.BIG5
 # /bin/ls -C --color=always $@ | /usr/bin/iconv -f big5 -t utf8
 /bin/ls -C --color=always $@
+LANG=zh_TW.UTF-8
 }
 
 function old() {

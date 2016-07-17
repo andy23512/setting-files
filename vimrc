@@ -14,9 +14,10 @@ Plugin 'digitaltoad/vim-pug'
 Plugin 'gkz/vim-ls'
 Plugin 'wavded/vim-stylus'
 Plugin 'django.vim'
-Plugin 'klen/python-mode'
-Plugin 'CSSMinister'
+" Plugin 'klen/python-mode'
+" Plugin 'CSSMinister'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'ntpeters/vim-better-whitespace'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -154,7 +155,7 @@ let g:pep8_ignore = 'E501,W601'
 
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=5
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=5
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=7
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 
