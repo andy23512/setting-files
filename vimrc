@@ -13,15 +13,16 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'digitaltoad/vim-pug'
 Plugin 'gkz/vim-ls'
 Plugin 'wavded/vim-stylus'
-Plugin 'django.vim'
-" Plugin 'klen/python-mode'
 " Plugin 'CSSMinister'
+Plugin 'klen/python-mode'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'othree/yajs.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+colorscheme default
 
 " If no screen, use color term
 if ($TERM == "vt100")
@@ -140,15 +141,16 @@ xnoremap <silent> S :sort!<CR>
 "nnoremap <silent> <F9>	:edit .<CR>
 "nnoremap <silent> <F10>	:BufExplorer<CR>
 
-hi Comment ctermfg = LightMagenta 
+hi Comment ctermfg = LightMagenta
 
 filetype plugin indent on
 au BufNewFile,BufReadPost *.ls setl softtabstop=2 shiftwidth=2 expandtab
 
 let g:indentLine_color_term = 005
+let g:colorizer_auto_filetype='stylus'
 
-"using python3
-let g:pymode_python = 'python3'
+"using python
+let g:pymode_python = 'python'
 
 "ignore line length error
 let g:pymode_lint_ignore = 'E501,W601'
