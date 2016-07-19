@@ -13,7 +13,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'digitaltoad/vim-pug'
 Plugin 'gkz/vim-ls'
 Plugin 'wavded/vim-stylus'
-" Plugin 'CSSMinister'
+Plugin 'CSSMinister'
 Plugin 'klen/python-mode'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
@@ -148,9 +148,11 @@ au BufNewFile,BufReadPost *.ls setl softtabstop=2 shiftwidth=2 expandtab
 
 let g:indentLine_color_term = 005
 let g:colorizer_auto_filetype='stylus'
-
-"using python
-let g:pymode_python = 'python'
+if has('python3')
+  let g:pymode_python = 'python3'
+elseif has('python')
+  let g:pymode_python = 'python'
+endif
 
 "ignore line length error
 let g:pymode_lint_ignore = 'E501,W601'
