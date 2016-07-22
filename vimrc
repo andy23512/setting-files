@@ -18,6 +18,8 @@ Plugin 'klen/python-mode'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'othree/yajs.vim'
+Plugin 'tpope/vim-commentary'
+Plugin 'vim-scripts/taglist.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -144,7 +146,7 @@ xnoremap <silent> S :sort!<CR>
 hi Comment ctermfg = LightMagenta
 
 filetype plugin indent on
-au BufNewFile,BufReadPost *.ls setl softtabstop=2 shiftwidth=2 expandtab
+au BufNewFile,BufReadPost *.ls,*.jade setl softtabstop=2 shiftwidth=2 expandtab
 
 let g:indentLine_color_term = 005
 let g:colorizer_auto_filetype='stylus'
@@ -193,5 +195,7 @@ function ToggleWrap()
     inoremap <buffer> <silent> <End>  <C-o>g<End>
   endif
 endfunction
+
+command Nanoha 0read !head ~/nanoha
 
 " vi:sw=4:ts=4
