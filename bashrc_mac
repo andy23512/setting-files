@@ -95,16 +95,9 @@ alias vi='vim'
 # Personal Aliases
 alias e='exit'
 alias q='exit'
-alias scr='screen -D -R'
 alias topme='top -c -u $USER'
 alias ts='tmux attach'
 alias tx='tmux attach -d'
-#
-alias ptt='ssh ptt.cc -l bbs'
-alias m1='ssh merry01'
-alias m2='ssh merry02'
-alias m3='ssh merry03'
-alias m4='ssh merry04'
 #
 
 if [ -e $HOME/.alias ]; then
@@ -146,7 +139,7 @@ day=$1; shift
 find . -maxdepth 1 -mtime +${day} $@
 }
 
-function _rm() { 
+function _rm() {
 while [ $# -ge 1 ]; do
 	mv -f "$1" $HOME/tmp
 	echo "$1 deleted."
