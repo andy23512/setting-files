@@ -98,7 +98,9 @@ endif
 
 " settings based on filetype
 au BufNewFile,BufRead *.less set filetype=less
-au BufNewFile,BufReadPost *.ls,*.jade setl softtabstop=2 shiftwidth=2 expandtab
+au BufNewFile,BufRead *.ls,*.jade,*.json setl softtabstop=2 shiftwidth=2 expandtab
+au BufNewFile,BufRead *.py setl softtabstop=4 shiftwidth=4 expandtab
+
 
 " Diff
 nnoremap <silent> <C-G>	:diffget<CR>
