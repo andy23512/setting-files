@@ -19,6 +19,8 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'othree/yajs.vim'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-repeat'
 Plugin 'vim-scripts/taglist.vim'
 
 call vundle#end()            " required
@@ -98,9 +100,9 @@ endif
 
 " settings based on filetype
 au BufNewFile,BufRead *.less set filetype=less
-au BufNewFile,BufRead *.ls,*.jade,*.json setl softtabstop=2 shiftwidth=2 expandtab
-au BufNewFile,BufRead *.py setl softtabstop=4 shiftwidth=4 expandtab
-
+au BufNewFile,BufRead *.py setl softtabstop=4 shiftwidth=4 expandtab fdm=marker
+au BufNewFile,BufRead *.jade,*.json setl softtabstop=2 shiftwidth=2 expandtab
+au FileType ls setl et sts=2 sw=2
 
 " Diff
 nnoremap <silent> <C-G>	:diffget<CR>
