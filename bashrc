@@ -89,10 +89,12 @@ alias mv='mv -i'
 alias rm='_rm'
 alias rrm='/bin/rm -i'	# real rm
 alias vi='vim'
+alias nanoha='vim ~/nanoha'
 
 # Personal Aliases
 alias e='exit'
 alias q='exit'
+alias scr='screen -D -R'
 alias topme='top -c -u $USER'
 alias ts='tmux attach'
 alias tx='tmux attach -d'
