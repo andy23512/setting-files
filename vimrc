@@ -71,6 +71,9 @@ set directory=~/tmp,/var/tmp/vi,/tmp,.
 set undodir=~/tmp
 set backup		" keep a backup file
 set backupcopy=yes " for brunch
+set ruler
+set incsearch
+set modelines=1
 "set textwidth=78
 set shiftwidth=4
 set tabstop=4
@@ -101,7 +104,7 @@ endif
 " settings based on filetype
 au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.py setl softtabstop=4 shiftwidth=4 expandtab fdm=marker
-au BufNewFile,BufRead *.jade,*.json setl softtabstop=2 shiftwidth=2 expandtab
+au BufNewFile,BufRead *.jade,*.json,*.js setl softtabstop=2 shiftwidth=2 expandtab
 au FileType ls setl et sts=2 sw=2
 
 " Diff
