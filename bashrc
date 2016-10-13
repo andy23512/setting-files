@@ -71,13 +71,20 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 
-#### Handle dirty's Requirements
+# Globals
 
 export EDITOR=vi
 export GDFONTPATH="$HOME/share/fonts"
 # export LANG=en_US.UTF-8
 export LANG=zh_TW.UTF-8
 export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin"
+export PERL_LOCAL_LIB_ROOT="/usr/local/lib/perl5";
+export PERL_MB_OPT="--install_base /usr/local/lib/perl5";
+export PERL_MM_OPT="INSTALL_BASE=/usr/local/lib/perl5";
+export PERL5LIB="/usr/local/lib/perl5/lib/perl5/i486-linux-gnu-thread-multi:/usr/local/lib/perl5/lib/perl5";
+export PATH="/usr/local/lib/perl5/bin:$PATH";
+export TERM="xterm-256color"
+export WORKON_HOME=$HOME/.virtualenvs
 
 # Standard Aliases
 
@@ -89,17 +96,18 @@ alias mv='mv -i'
 alias rm='_rm'
 alias rrm='/bin/rm -i'	# real rm
 alias vi='vim'
-alias nanoha='vim ~/nanoha'
 
 # Personal Aliases
+alias nanoha='vim ~/nanoha'
 alias e='exit'
 alias q='exit'
 alias scr='screen -D -R'
 alias topme='top -c -u $USER'
 alias ts='tmux attach'
 alias tx='tmux attach -d'
-#
+alias cd="venv_cd"
 
+# Home Aliases
 if [ -e $HOME/.alias ]; then
 	. $HOME/.alias
 fi
@@ -107,59 +115,49 @@ fi
 # Local Functions and Commands
 
 function git_info {
-ref=$(git symbolic-ref HEAD 2> /dev/null) || return;
-last_commit=$(git log --pretty=format:%at -1 2> /dev/null) || return;
+	ref=$(git symbolic-ref HEAD 2> /dev/null) || return;
+	last_commit=$(git log --pretty=format:%at -1 2> /dev/null) || return;
 
-now=`date +%s`;
-sec=$((now-last_commit));
-min=$((sec/60)); hr=$((min/60)); day=$((hr/24)); yr=$((day/365));
-if [ $min -lt 60 ]; then
-	info="${min}m"
-elif [ $hr -lt 24 ]; then
-	info="${hr}h$((min%60))m"
-elif [ $day -lt 365 ]; then
-	info="${day}d$((hr%24))h"
-else
-	info="${yr}y$((day%365))d"
-fi
+	now=`date +%s`;
+	sec=$((now-last_commit));
+	min=$((sec/60)); hr=$((min/60)); day=$((hr/24)); yr=$((day/365));
+	if [ $min -lt 60 ]; then
+		info="${min}m"
+	elif [ $hr -lt 24 ]; then
+		info="${hr}h$((min%60))m"
+	elif [ $day -lt 365 ]; then
+		info="${day}d$((hr%24))h"
+	else
+		info="${yr}y$((day%365))d"
+	fi
 
-echo "(${ref#refs/heads/} $info)";
-#	echo "(${ref#refs/heads/})";
+	echo "(${ref#refs/heads/} $info)";
+	#	echo "(${ref#refs/heads/})";
 }
 
 function _ls() {
-LANG=zh_TW.BIG5
-# /bin/ls -C --color=always $@ | /usr/bin/iconv -f big5 -t utf8
-/bin/ls -C --color=always $@
-LANG=zh_TW.UTF-8
+	LANG=zh_TW.BIG5
+	# /bin/ls -C --color=always $@ | /usr/bin/iconv -f big5 -t utf8
+	/bin/ls -C --color=always $@
+	LANG=zh_TW.UTF-8
 }
 
 function old() {
-day=$1; shift
-find . -maxdepth 1 -mtime +${day} $@
+	day=$1; shift
+	find . -maxdepth 1 -mtime +${day} $@
 }
 
 function _rm() {
-while [ $# -ge 1 ]; do
-	mv -f "$1" $HOME/tmp
-	echo "$1 deleted."
-	shift
-done
+	while [ $# -ge 1 ]; do
+		mv -f "$1" $HOME/tmp
+		echo "$1 deleted."
+		shift
+	done
 }
 
 function rmold() {
-find . -maxdepth 1 -mtime +$1 -exec rm -rf {} \;
+	find . -maxdepth 1 -mtime +$1 -exec rm -rf {} \;
 }
-
-# vi:nowrap:sw=4:ts=4
-
-export PERL_LOCAL_LIB_ROOT="/usr/local/lib/perl5";
-export PERL_MB_OPT="--install_base /usr/local/lib/perl5";
-export PERL_MM_OPT="INSTALL_BASE=/usr/local/lib/perl5";
-export PERL5LIB="/usr/local/lib/perl5/lib/perl5/i486-linux-gnu-thread-multi:/usr/local/lib/perl5/lib/perl5";
-export PATH="/usr/local/lib/perl5/bin:$PATH";
-export TERM="xterm-256color"
-export WORKON_HOME=$HOME/.virtualenvs
 
 # Automatically activate Git projects' virtual environments based on the
 # directory name of the project. Virtual environment name can be overridden
@@ -193,5 +191,7 @@ function venv_cd {
     \cd "$@" && workon_cwd
 }
 
-alias cd="venv_cd"
+# Initinalize
 workon_cwd
+
+# vi:nowrap:sw=4:ts=4
