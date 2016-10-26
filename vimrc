@@ -1,3 +1,6 @@
+" #########################################################################
+" Vundle
+
 " follow https://github.com/VundleVim/Vundle.vim to setup
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -22,24 +25,17 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-repeat'
 Plugin 'vim-scripts/taglist.vim'
+Plugin 'tpope/vim-haml'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 colorscheme default
+" #########################################################################
+" color term
 
 " If no screen, use color term
 if ($TERM == "vt100")
-  " ref: :help color, search for Tera Term Pro settings or ETerm settings
-  " TeraTermPro
-  "set t_Co=16
-  "set t_AB=[%?%p1%{8}%<%t%p1%{40}%+%e%p1%{32}%+5;%;%dm
-  "set t_AF=[%?%p1%{8}%<%t%p1%{30}%+%e%p1%{22}%+1;%;%dm
-  " Eterm
-  "set t_Co=16
-  "set t_AF=[%?%p1%{8}%<%t3%p1%d%e%p1%{22}%+%d;1%;m
-  "set t_AB=[%?%p1%{8}%<%t4%p1%d%e%p1%{32}%+%d;1%;m
-  " xterm-color / screen
   set t_Co=8
   set t_AF=[1;3%p1%dm
   set t_AB=[4%p1%dm
@@ -47,6 +43,9 @@ endif
 set t_Co=8
 set t_AF=[1;3%p1%dm
 set t_AB=[4%p1%dm
+
+" #########################################################################
+
 if filereadable($VIMRUNTIME . "/vimrc_example.vim")
   so $VIMRUNTIME/vimrc_example.vim
 endif
@@ -61,39 +60,35 @@ if filereadable(expand("hints"))
   au BufNewFile,BufReadPost *.c,*.C,*.cpp,*.CPP,*.cxx  so hints
 endif
 
+" #########################################################################
+" settings
+
 syntax on
-set noexpandtab
-set nocompatible
+set nocompatible " nocompatible with vi
 set nowrap
-set wildmenu
-set backupdir=~/tmp,.,/var/tmp/vi,/tmp
-set directory=~/tmp,/var/tmp/vi,/tmp,.
-set undodir=~/tmp
-set backup		" keep a backup file
-set backupcopy=yes " for brunch
-set ruler
-set incsearch
-set modelines=1
-"set textwidth=78
+set wildmenu " completion menu at command mode
+set ruler " show current line and column position
+set incsearch " immediate search
+set modelines=1 " enable modeline
+set noexpandtab
 set shiftwidth=4
 set tabstop=4
 set bs=2		" allow backspacing over everything in insert mode
 set ai			" always set autoindenting on
 set viminfo='20,\"50	" read/write a .viminfo file, don't store more
-set showmatch
-set mouse=c
-set nf=octal,hex,alpha
-
-"set background=dark	" another is 'light'
+set showmatch " show the match { ( <
+set mouse=c " disable mouse
+set backup		" keep a backup file
+set backupcopy=yes " for brunch
+set backupdir=~/tmp,.,/var/tmp/vi,/tmp
+set directory=~/tmp,/var/tmp/vi,/tmp,.
+set undodir=~/tmp
 
 " VIM 6.0, We're using VIM on ntucs? Solaris, my own build
 if version >= 600
-  set nohlsearch
-  "set foldcolumn=2
-  "set foldmethod=syntax
-  set foldmethod=marker
+  set nohlsearch " no highlight search
+  set foldmethod=marker " no auto folding
   set foldlevel=1
-  "set foldtext=/^/=>
   set encoding=utf-8
   set fileencodings=utf-8,big5,ucs-bom,latin1
   set termencoding=utf-8
@@ -104,8 +99,7 @@ endif
 " settings based on filetype
 au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.py setl softtabstop=4 shiftwidth=4 expandtab fdm=marker
-au BufNewFile,BufRead *.jade,*.json,*.js setl softtabstop=2 shiftwidth=2 expandtab
-au FileType ls setl et sts=2 sw=2
+au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls setl softtabstop=2 shiftwidth=2 expandtab
 
 " Diff
 nnoremap <silent> <C-G>	:diffget<CR>
@@ -143,9 +137,6 @@ nnoremap <silent> <F8>	:Tlist<CR>
 "nnoremap <silent> <F9>	:edit .<CR>
 "nnoremap <silent> <F10>	:BufExplorer<CR>
 
-" comment color
-hi Comment ctermfg = LightMagenta
-
 " wrap
 noremap <silent> <Leader>w :call ToggleWrap()<CR>
 function ToggleWrap()
@@ -176,6 +167,9 @@ function ToggleWrap()
     inoremap <buffer> <silent> <End>  <C-o>g<End>
   endif
 endfunction
+
+" comment color
+hi Comment ctermfg = LightMagenta
 
 " special command
 command Nanoha 0read !head ~/nanoha
