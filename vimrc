@@ -26,6 +26,7 @@ Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-repeat'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'tpope/vim-haml'
+Plugin 'scrooloose/nerdtree'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -199,6 +200,9 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=5
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=3
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
+
+" nerdtree
+map <C-n> :NERDTreeToggle<CR>
 
 
 " vi:et:sw=2:ts=2:sts=2
