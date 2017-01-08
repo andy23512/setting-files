@@ -70,6 +70,14 @@ if [ -f /etc/bash_completion ]; then
 	. /etc/bash_completion
 fi
 
+if [ -f ~/.git-completion.bash ]; then
+	. ~/.git-completion.bash
+fi
+
+if [ -f ~/.django_bash_completion ]; then
+	. ~/.django_bash_completion
+fi
+
 
 # Globals
 
@@ -101,7 +109,6 @@ alias vi='vim'
 alias nanoha='vim ~/nanoha'
 alias e='exit'
 alias q='exit'
-alias scr='screen -D -R'
 alias topme='top -c -u $USER'
 alias ts='tmux attach'
 alias tx='tmux attach -d'
