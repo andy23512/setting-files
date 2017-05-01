@@ -27,6 +27,9 @@ Plugin 'tpope/vim-repeat'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'tpope/vim-haml'
 Plugin 'scrooloose/nerdtree'
+Plugin 'posva/vim-vue'
+Plugin 'Raimondi/delimitMate'
+Plugin 'vim-syntastic/syntastic'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -75,7 +78,8 @@ set noexpandtab
 set shiftwidth=4
 set tabstop=4
 set bs=2		" allow backspacing over everything in insert mode
-set ai			" always set autoindenting on
+set nosmartindent
+set noai			" always set autoindenting on
 set viminfo='20,\"50	" read/write a .viminfo file, don't store more
 set showmatch " show the match { ( <
 set mouse=c " disable mouse
@@ -174,6 +178,8 @@ hi Comment ctermfg = LightMagenta
 
 " special command
 command Nanoha 0read !head ~/nanoha
+command P set paste
+command NP set nopaste
 
 " #########################################################################
 " plugin options
@@ -203,6 +209,16 @@ let g:indent_guides_guide_size = 1
 
 " nerdtree
 map <C-n> :NERDTreeToggle<CR>
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 
 " vi:et:sw=2:ts=2:sts=2
