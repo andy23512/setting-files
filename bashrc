@@ -59,9 +59,29 @@ if [ "$TERM" != "dumb" ]; then
 fi
 
 # some more ls aliases
-#alias ll='ls -l'
+alias ls='ls'
+alias ll='ls -la'
+alias l.='ls -d .* --color=auto'
 #alias la='ls -A'
 #alias l='ls -CF'
+
+# cd
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias .....='cd ../../../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../../'
+
+# grep
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+alias bc='bc -l' # calculator
+alias mkdir='mkdir -pv' # create parent
+alias h='history'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -104,9 +124,10 @@ alias mv='mv -i'
 alias rm='_rm'
 alias rrm='/bin/rm -i'	# real rm
 alias vi='vim'
+alias svi='sudo vi'
 
 # Personal Aliases
-alias nanoha='vim ~/nanoha'
+alias nanoha='vi ~/nanoha'
 alias e='exit'
 alias q='exit'
 alias topme='top -c -u $USER'
@@ -114,6 +135,10 @@ alias ts='tmux attach'
 alias tx='tmux attach -d'
 alias reload_apache='sudo service apache2 reload'
 alias cd="venv_cd"
+alias c='clear'
+alias ports='netstat -tulanp'
+alias top='atop'
+alias df='df -H'
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then

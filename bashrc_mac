@@ -61,9 +61,28 @@ fi
 # some more ls aliases
 export CLICOLOR=1
 alias ls='ls'
-#alias ll='ls -l'
+alias ll='ls -la'
+alias l.='ls -d .* --color=auto'
 #alias la='ls -A'
 #alias l='ls -CF'
+
+# cd
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias .....='cd ../../../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../../'
+
+# grep
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+alias bc='bc -l' # calculator
+alias mkdir='mkdir -pv' # create parent
+alias h='history'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -74,6 +93,10 @@ fi
 
 if [ -f ~/.git-completion.bash ]; then
 	. ~/.git-completion.bash
+fi
+
+if [ -f ~/.django_bash_completion ]; then
+	. ~/.django_bash_completion
 fi
 
 export NVM_DIR="$HOME/.nvm"
@@ -87,6 +110,7 @@ export GDFONTPATH="$HOME/share/fonts"
 # export LANG=en_US.UTF-8
 export LANG=zh_TW.UTF-8
 export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin"
+export WORKON_HOME="$HOME/.virtualenvs/"
 
 # Standard Aliases
 
@@ -98,6 +122,7 @@ alias mv='mv -i'
 alias rm='_rm'
 alias rrm='/bin/rm -i'	# real rm
 alias vi='vim'
+alias svi='sudo vi'
 
 # Personal Aliases
 alias nanoha='vi ~/nanoha'
@@ -107,6 +132,10 @@ alias topme='top -c -u $USER'
 alias ts='tmux attach'
 alias tx='tmux attach -d'
 alias cd="venv_cd"
+alias c='clear'
+alias ports='netstat -tulanp'
+alias top='atop'
+alias df='df -H'
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
@@ -207,3 +236,7 @@ EXE_GUID=ad
 DIR_STICKY=Ex
 DIR_WO_STICKY=Ex
 export LSCOLORS="$DIR$SYM_LINK$SOCKET$PIPE$EXE$BLOCK_SP$CHAR_SP$EXE_SUID$EXE_GUID$DIR_STICKY$DIR_WO_STICKY"
+
+# tabtab source for yarn package
+# uninstall by removing these lines or running `tabtab uninstall yarn`
+[ -f /Users/nanoha/.config/yarn/global/node_modules/tabtab/.completions/yarn.bash ] && . /Users/nanoha/.config/yarn/global/node_modules/tabtab/.completions/yarn.bash
