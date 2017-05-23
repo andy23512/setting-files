@@ -24,12 +24,10 @@ Plugin 'othree/yajs.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-repeat'
-Plugin 'vim-scripts/taglist.vim'
 Plugin 'tpope/vim-haml'
 Plugin 'scrooloose/nerdtree'
 Plugin 'posva/vim-vue'
 Plugin 'Raimondi/delimitMate'
-Plugin 'vim-syntastic/syntastic'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
