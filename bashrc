@@ -133,6 +133,7 @@ alias q='exit'
 alias topme='top -c -u $USER'
 alias ts='tmux attach'
 alias tx='tmux attach -d'
+alias nginx_restart='sudo service nginx restart'
 alias reload_apache='sudo service apache2 reload'
 alias cd="venv_cd"
 alias c='clear'
