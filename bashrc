@@ -140,6 +140,11 @@ alias c='clear'
 alias ports='netstat -tulanp'
 alias top='atop'
 alias df='df -H'
+alias gfi="git flow init"
+alias gff="git flow feature"
+alias gfr="git flow release"
+alias gfh="git flow hotfix"
+alias gfs="git flow support"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then

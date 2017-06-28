@@ -136,6 +136,11 @@ alias c='clear'
 alias ports='netstat -tulanp'
 alias top='atop'
 alias df='df -H'
+alias gfi="git flow init"
+alias gff="git flow feature"
+alias gfr="git flow release"
+alias gfh="git flow hotfix"
+alias gfs="git flow support"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
@@ -240,3 +245,17 @@ export LSCOLORS="$DIR$SYM_LINK$SOCKET$PIPE$EXE$BLOCK_SP$CHAR_SP$EXE_SUID$EXE_GUI
 # tabtab source for yarn package
 # uninstall by removing these lines or running `tabtab uninstall yarn`
 [ -f /Users/nanoha/.config/yarn/global/node_modules/tabtab/.completions/yarn.bash ] && . /Users/nanoha/.config/yarn/global/node_modules/tabtab/.completions/yarn.bash
+
+# ssh completion
+_ssh()
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts=$(grep '^Host' ~/.ssh/config | grep -v '[?*]' | cut -d ' ' -f 2-)
+
+    COMPREPLY=( $(compgen -W "$opts" -- ${cur}) )
+    return 0
+}
+complete -F _ssh ssh
