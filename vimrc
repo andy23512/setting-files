@@ -109,7 +109,7 @@ endif
 " settings based on filetype
 au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.py setl softtabstop=4 shiftwidth=4 expandtab fdm=marker
-au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls,*.html,*.ts setl softtabstop=2 shiftwidth=2 expandtab
+au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls,*sass,*.html,*.ts setl softtabstop=2 shiftwidth=2 expandtab
 
 " Diff
 nnoremap <silent> <C-G>	:diffget<CR>
@@ -257,5 +257,20 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_typescript_checkers = ['tsuquyomi']
+" vue
+autocmd BufNewFile,BufEnter *.vue setfiletype vue
+autocmd FileType vue setlocal autoindent expandtab shiftwidth=2 softtabstop=2 commentstring=//\ %s comments=://
+      \ | syntax include @PUG syntax/pug.vim | unlet b:current_syntax
+      \ | syntax include @JS syntax/ls.vim | unlet b:current_syntax
+      \ | syntax include @SASS syntax/stylus.vim | unlet b:current_syntax
+      \ | syntax region vueTemplate matchgroup=vueTag start=/^<template.*>$/ end='</template>' contains=@PUG keepend
+      \ | syntax region vueScript matchgroup=vueTag start=/^<script.*>$/ end='</script>' contains=@JS keepend
+      \ | syntax region vueStyle matchgroup=vueTag start=/^<style.*>$/ end='</style>' contains=@SASS keepend
+      \ | syntax match htmlArg /v-text\|v-html\|v-if\|v-show\|v-else\|v-for\|v-on\|v-bind\|v-model\|v-pre\|v-cloak\|v-once/ contained
+      \ | syntax keyword htmlArg contained key ref slot
+      \ | syntax keyword htmlTagName contained component transition transition-group keep-alive slot
+      \ | syntax sync fromstart
+highlight vueTag ctermfg=Blue
+
 
 " vi:et:sw=2:ts=2:sts=2
