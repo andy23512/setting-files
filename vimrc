@@ -11,7 +11,6 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'AutoComplPop'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'digitaltoad/vim-pug'
 Plugin 'gkz/vim-ls'
@@ -24,10 +23,18 @@ Plugin 'othree/yajs.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-repeat'
+Plugin 'vim-scripts/taglist.vim'
 Plugin 'tpope/vim-haml'
 Plugin 'scrooloose/nerdtree'
 Plugin 'posva/vim-vue'
 Plugin 'Raimondi/delimitMate'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'HerringtonDarkholme/yats.vim'
+Plugin 'Quramy/tsuquyomi'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Quramy/vim-js-pretty-template'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'burnettk/vim-angular'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -102,7 +109,7 @@ endif
 " settings based on filetype
 au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.py setl softtabstop=4 shiftwidth=4 expandtab fdm=marker
-au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls setl softtabstop=2 shiftwidth=2 expandtab
+au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls,*.html,*.ts setl softtabstop=2 shiftwidth=2 expandtab
 
 " Diff
 nnoremap <silent> <C-G>	:diffget<CR>
@@ -206,17 +213,49 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 
 " nerdtree
+let NERDTreeIgnore=['\.\w*\.js$', '\~$', '\.map']
 map <C-n> :NERDTreeToggle<CR>
+
+" typescript
+let g:typescript_compiler_binary = 'tsc'
+let g:typescript_compiler_options = ''
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" wildignore
+set wildignore+=*.a,*.o
+set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+set wildignore+=.DS_Store,.git,.hg,.svn
+set wildignore+=*~,*.swp,*.tmp
+set wildignore+=*.*.js,*.map
+
+
+
+" YouComplateMe
+if !exists("g:ycm_semantic_triggers")
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['re!\w*[^"]+.']
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+
+" vim-js-pretty-template
+call jspretmpl#register_tag('styles: \[', 'css')
+autocmd FileType typescript JsPreTmpl html
+autocmd FileType typescript syn clear foldBraces
 
 " syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+set statusline+=%*%f
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi']
 
 " vi:et:sw=2:ts=2:sts=2
