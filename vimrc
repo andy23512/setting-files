@@ -213,8 +213,9 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 
 " nerdtree
-let NERDTreeIgnore=['\.\w*\.js$', '\~$', '\.map']
+let NERDTreeIgnore=['\~$', '\.map']
 map <C-n> :NERDTreeToggle<CR>
+au VimEnter *  NERDTree
 
 " typescript
 let g:typescript_compiler_binary = 'tsc'
@@ -227,7 +228,7 @@ set wildignore+=*.a,*.o
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*~,*.swp,*.tmp
-set wildignore+=*.*.js,*.map
+set wildignore+=*.map
 
 
 
