@@ -27,7 +27,6 @@ Plugin 'vim-scripts/taglist.vim'
 Plugin 'tpope/vim-haml'
 Plugin 'scrooloose/nerdtree'
 Plugin 'posva/vim-vue'
-Plugin 'Raimondi/delimitMate'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'HerringtonDarkholme/yats.vim'
 Plugin 'Quramy/tsuquyomi'
@@ -109,7 +108,7 @@ endif
 " settings based on filetype
 au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.py setl softtabstop=4 shiftwidth=4 expandtab fdm=marker
-au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls,*sass,*.html,*.ts setl softtabstop=2 shiftwidth=2 expandtab
+au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls,*.sass,*.html,*.ts setl softtabstop=2 shiftwidth=2 expandtab
 
 " Diff
 nnoremap <silent> <C-G>	:diffget<CR>
@@ -204,6 +203,8 @@ elseif has('python')
 endif
 let g:pymode_lint_ignore = 'E501,W601' " ignore line length error
 let g:pep8_ignore = 'E501,W601' " ignore line length error
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_completion = 0
 
 " vim-indent-guides
 let g:indent_guides_auto_colors = 0

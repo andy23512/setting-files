@@ -104,7 +104,6 @@ export NVM_DIR="$HOME/.nvm"
 
 # Globals
 
-
 export EDITOR=vi
 export GDFONTPATH="$HOME/share/fonts"
 # export LANG=en_US.UTF-8
