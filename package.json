@@ -1,0 +1,12 @@
+{
+  "name": "setting-files",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://andy23512@bitbucket.org/andy23512/setting-files.git",
+  "author": "andy23512 <andy23512@gmail.com>",
+  "scripts": {
+    "diff-bashrc": "vim -d bashrc ~/.bashrc",
+    "diff-vimrc": "vim -d vimrc ~/.vimrc"
+  },
+  "license": "MIT"
+}

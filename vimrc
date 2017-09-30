@@ -214,8 +214,12 @@ let g:indent_guides_guide_size = 1
 
 " nerdtree
 let NERDTreeIgnore=['\~$', '\.map']
+let NERDTreeMapOpenSplit='s'
 map <C-n> :NERDTreeToggle<CR>
-au VimEnter *  NERDTree
+au VimEnter * NERDTree
+if @% =~# 'nanoha' || @% =~# 'COMMIT_EDITMSG' || &diff
+  au VimEnter * NERDTreeClose
+endif
 
 " typescript
 let g:typescript_compiler_binary = 'tsc'
