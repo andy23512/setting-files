@@ -217,10 +217,9 @@ let g:indent_guides_guide_size = 1
 let NERDTreeIgnore=['\~$', '\.map']
 let NERDTreeMapOpenSplit='s'
 map <C-n> :NERDTreeToggle<CR>
-au VimEnter * NERDTree
-if @% =~# 'nanoha' || @% =~# 'COMMIT_EDITMSG' || &diff
-  au VimEnter * NERDTreeClose
-endif
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " typescript
 let g:typescript_compiler_binary = 'tsc'
