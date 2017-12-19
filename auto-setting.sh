@@ -4,7 +4,7 @@
 \cp vimrc ~/.vimrc
 \mkdir -p ~/.vim/bundle/
 \git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-echo | echo | vim +PluginInstall +qall &>/dev/null
+\vim +PluginInstall +qall
 
 # copy gitconfig
 \cp gitconfig ~/.gitconfig
