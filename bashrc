@@ -129,23 +129,28 @@ alias svi='sudo vi'
 
 # Personal Aliases
 alias nanoha='vi ~/nanoha'
+alias n='vi ~/nanoha'
 alias e='exit'
 alias q='exit'
 alias topme='top -c -u $USER'
-alias ts='tmux attach'
-alias tx='tmux attach -d'
+alias tl='tmux ls'
+alias ts='tmux new -A -s'
 alias nginx_restart='sudo service nginx restart'
 alias reload_apache='sudo service apache2 reload'
 alias cd="venv_cd"
+alias cdr='cd $(git root)'
 alias c='clear'
 alias ports='netstat -tulanp'
 alias top='atop'
 alias df='df -H'
+alias g='git'
 alias gfi="git flow init"
 alias gff="git flow feature"
 alias gfr="git flow release"
 alias gfh="git flow hotfix"
 alias gfs="git flow support"
+alias tan="git clone https://github.com/andy23512/webpack-pack ."
+alias cta="git clone https://github.com/ylhuang0423/vue-starter ."
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then

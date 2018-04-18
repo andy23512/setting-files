@@ -104,11 +104,11 @@ export NVM_DIR="$HOME/.nvm"
 
 # Globals
 
-export EDITOR=vi
+export EDITOR=vim
 export GDFONTPATH="$HOME/share/fonts"
 # export LANG=en_US.UTF-8
 export LANG=zh_TW.UTF-8
-export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin"
+export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin:/Applications/Postgres.app/Contents/Versions/9.6/bin/"
 export WORKON_HOME="$HOME/.virtualenvs/"
 
 # Standard Aliases
@@ -125,21 +125,27 @@ alias svi='sudo vi'
 
 # Personal Aliases
 alias nanoha='vi ~/nanoha'
+alias n='vi ~/nanoha'
 alias e='exit'
 alias q='exit'
 alias topme='top -c -u $USER'
-alias ts='tmux attach'
-alias tx='tmux attach -d'
+alias tl='tmux ls'
+alias ts='tmux new -A -s'
+alias tx='tmux new -A -D -s'
 alias cd="venv_cd"
+alias cdr='cd $(git root)'
 alias c='clear'
 alias ports='netstat -tulanp'
 alias top='atop'
 alias df='df -H'
+alias g='git'
 alias gfi="git flow init"
 alias gff="git flow feature"
 alias gfr="git flow release"
 alias gfh="git flow hotfix"
 alias gfs="git flow support"
+alias tan="git clone https://github.com/andy23512/webpack-pack ."
+alias cta="git clone https://github.com/ylhuang0423/vue-starter ."
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then

@@ -23,7 +23,6 @@ Plugin 'othree/yajs.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-repeat'
-Plugin 'vim-scripts/taglist.vim'
 Plugin 'tpope/vim-haml'
 Plugin 'scrooloose/nerdtree'
 Plugin 'posva/vim-vue'
@@ -32,11 +31,16 @@ Plugin 'HerringtonDarkholme/yats.vim'
 Plugin 'Quramy/tsuquyomi'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Quramy/vim-js-pretty-template'
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
 Plugin 'burnettk/vim-angular'
+Plugin 'tpope/vim-git'
+Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'jparise/vim-graphql'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+hi link stylusProperty cssVisualProp
 
 colorscheme default
 " #########################################################################
@@ -240,7 +244,7 @@ set wildignore+=*.map
 if !exists("g:ycm_semantic_triggers")
   let g:ycm_semantic_triggers = {}
 endif
-let g:ycm_semantic_triggers['typescript'] = ['re!\w*[^"]+.']
+" let g:ycm_semantic_triggers['typescript'] = ['re!\w*[^"]+.']
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
@@ -254,18 +258,18 @@ autocmd FileType typescript JsPreTmpl html
 autocmd FileType typescript syn clear foldBraces
 
 " syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*%f
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*%f
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:tsuquyomi_disable_quickfix = 1
-let g:syntastic_typescript_checkers = ['tsuquyomi']
-let g:syntastic_python_checkers=['pylint']
-let g:syntastic_python_pylint_args = '-d R0903,E1101,E501,W601,C0301'
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:tsuquyomi_disable_quickfix = 1
+" let g:syntastic_typescript_checkers = ['tsuquyomi']
+" let g:syntastic_python_checkers=['pylint']
+" let g:syntastic_python_pylint_args = '-d R0903,E1101,E501,W601,C0301'
 " vue
 autocmd BufNewFile,BufEnter *.vue setfiletype vue
 autocmd FileType vue setlocal autoindent expandtab shiftwidth=2 softtabstop=2 commentstring=//\ %s comments=://
@@ -281,5 +285,28 @@ autocmd FileType vue setlocal autoindent expandtab shiftwidth=2 softtabstop=2 co
       \ | syntax sync fromstart
 highlight vueTag ctermfg=Blue
 
+let vim_markdown_preview_github=1
+
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
 
 " vi:et:sw=2:ts=2:sts=2
