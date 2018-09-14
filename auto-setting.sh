@@ -16,6 +16,9 @@
 \wget  -P ~ https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
 \mv ~/git-completion.bash ~/.git-completion.bash
 
+# install git prepare commit message hook
+\cp prepare-commit-msg /usr/local/share/git-core/templates/hooks/
+
 # get django completion file
 \wget -P ~ https://raw.githubusercontent.com/django/django/master/extras/django_bash_completion
 \mv ~/django_bash_completion ~/.django_bash_completion
