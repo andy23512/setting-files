@@ -36,6 +36,7 @@ Plugin 'burnettk/vim-angular'
 Plugin 'tpope/vim-git'
 Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'jparise/vim-graphql'
+Plugin 'isRuslan/vim-es6'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -183,6 +184,9 @@ endfunction
 
 " comment color
 hi Comment ctermfg = LightMagenta
+
+" Pmenu color
+hi Pmenu ctermfg = white
 
 " special command
 command Nanoha 0read !head ~/nanoha

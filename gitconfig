@@ -1,10 +1,15 @@
 [alias]
-	st = status
-	l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cgreen\\ [%cn]" --decorate --date=short
 	a = add
-	s = status -s
+	c = commit
 	ci = commit -m
 	co = checkout
+	d = diff
+	l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cgreen\\ [%cn]" --decorate --date=short
+	ph = push
+	pl = pull
+	root = rev-parse --show-toplevel
+	s = status -s
+	st = status
 [color]
 	ui = true
 [url "https://"]
@@ -13,3 +18,5 @@
 	default = simple
 [http]
 	proxy =
+[core]
+	editor = /usr/local/bin/vim
