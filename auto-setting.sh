@@ -2,9 +2,8 @@
 
 # copy vimrc and setup vundle
 \cp vimrc ~/.vimrc
-\mkdir -p ~/.vim/bundle/
-\git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-\vim +PluginInstall +qall
+git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
+\vim "+call minpac#update()" +qall
 
 # copy gitconfig
 \cp gitconfig ~/.gitconfig

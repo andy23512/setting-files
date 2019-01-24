@@ -1,45 +1,44 @@
+set encoding=utf-8
 " #########################################################################
-" Vundle
+" minpac
 
-" follow https://github.com/VundleVim/Vundle.vim to setup
-set nocompatible              " be iMproved, required
-filetype off                  " required
+packadd minpac
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call minpac#init()
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'digitaltoad/vim-pug'
-Plugin 'gkz/vim-ls'
-Plugin 'wavded/vim-stylus'
-Plugin 'CSSMinister'
-Plugin 'klen/python-mode'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'othree/yajs.vim'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-haml'
-Plugin 'scrooloose/nerdtree'
-Plugin 'posva/vim-vue'
-Plugin 'leafgarland/typescript-vim'
-Plugin 'HerringtonDarkholme/yats.vim'
-Plugin 'Quramy/tsuquyomi'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'Quramy/vim-js-pretty-template'
-" Plugin 'vim-syntastic/syntastic'
-Plugin 'burnettk/vim-angular'
-Plugin 'tpope/vim-git'
-Plugin 'JamshedVesuna/vim-markdown-preview'
-Plugin 'jparise/vim-graphql'
-Plugin 'isRuslan/vim-es6'
+" minpac must have {'type': 'opt'} so that it can be loaded with `packadd`.
+call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-call vundle#end()            " required
-filetype plugin indent on    " required
+" Add other plugins here.
+call minpac#add('vim-jp/syntax-vim-ex')
+call minpac#add('airblade/vim-gitgutter')
+call minpac#add('digitaltoad/vim-pug')
+call minpac#add('gkz/vim-ls')
+call minpac#add('wavded/vim-stylus')
+call minpac#add('klen/python-mode')
+call minpac#add('nathanaelkane/vim-indent-guides')
+call minpac#add('ntpeters/vim-better-whitespace')
+call minpac#add('othree/yajs.vim')
+call minpac#add('tpope/vim-commentary')
+call minpac#add('tpope/vim-abolish')
+call minpac#add('tpope/vim-repeat')
+call minpac#add('tpope/vim-haml')
+call minpac#add('scrooloose/nerdtree')
+call minpac#add('posva/vim-vue')
+call minpac#add('leafgarland/typescript-vim')
+call minpac#add('HerringtonDarkholme/yats.vim')
+call minpac#add('Quramy/tsuquyomi')
+call minpac#add('Valloric/YouCompleteMe')
+call minpac#add('Quramy/vim-js-pretty-template')
+call minpac#add('vim-syntastic/syntastic')
+call minpac#add('burnettk/vim-angular')
+call minpac#add('tpope/vim-git')
+call minpac#add('JamshedVesuna/vim-markdown-preview')
+call minpac#add('jparise/vim-graphql')
+call minpac#add('isRuslan/vim-es6')
+
+" Load the plugins right now. (optional)
+packloadall
 
 hi link stylusProperty cssVisualProp
 
@@ -204,11 +203,7 @@ let Tlist_Inc_Winwidth = 0
 runtime taglist.vim
 
 " python_mode options
-if has('python3')
-  let g:pymode_python = 'python3'
-elseif has('python')
-  let g:pymode_python = 'python'
-endif
+let g:pymode_python = 'python3'
 let g:pymode_lint_ignore = 'E501,W601' " ignore line length error
 let g:pep8_ignore = 'E501,W601' " ignore line length error
 let g:pymode_rope_complete_on_dot = 0
@@ -262,23 +257,23 @@ autocmd FileType typescript JsPreTmpl html
 autocmd FileType typescript syn clear foldBraces
 
 " syntastic
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*%f
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*%f
 
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:tsuquyomi_disable_quickfix = 1
-" let g:syntastic_typescript_checkers = ['tsuquyomi']
-" let g:syntastic_python_checkers=['pylint']
-" let g:syntastic_python_pylint_args = '-d R0903,E1101,E501,W601,C0301'
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi']
+let g:syntastic_python_checkers=['pylint']
+let g:syntastic_python_pylint_args = '-d R0903,E1101,E501,W601,C0301'
 " vue
 autocmd BufNewFile,BufEnter *.vue setfiletype vue
 autocmd FileType vue setlocal autoindent expandtab shiftwidth=2 softtabstop=2 commentstring=//\ %s comments=://
       \ | syntax include @PUG syntax/pug.vim | unlet b:current_syntax
-      \ | syntax include @JS syntax/ls.vim | unlet b:current_syntax
+      \ | syntax include @JS syntax/javascript.vim | unlet b:current_syntax
       \ | syntax include @SASS syntax/stylus.vim | unlet b:current_syntax
       \ | syntax region vueTemplate matchgroup=vueTag start=/^<template.*>$/ end='</template>' contains=@PUG keepend
       \ | syntax region vueScript matchgroup=vueTag start=/^<script.*>$/ end='</script>' contains=@JS keepend
