@@ -36,6 +36,7 @@ call minpac#add('tpope/vim-git')
 call minpac#add('JamshedVesuna/vim-markdown-preview')
 call minpac#add('jparise/vim-graphql')
 call minpac#add('isRuslan/vim-es6')
+call minpac#add('takac/vim-hardtime')
 
 " Load the plugins right now. (optional)
 packloadall
@@ -187,8 +188,14 @@ hi Comment ctermfg = LightMagenta
 " Pmenu color
 hi Pmenu ctermfg = white
 
+function Nanoha()
+  :1read !head ~/nanoha
+  :1
+  :join 1
+endfunction
+
 " special command
-command Nanoha 0read !head ~/nanoha
+command Nanoha exec Nanoha()
 command P set paste
 command NP set nopaste
 
@@ -215,6 +222,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=5
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=3
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
+IndentGuidesEnable
 
 " nerdtree
 let NERDTreeIgnore=['\~$', '\.map']
@@ -250,11 +258,11 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 
 " vim-js-pretty-template
-if exists("jspretmpl#register_tag")
-  call jspretmpl#register_tag('styles: \[', 'css')
-endif
-autocmd FileType typescript JsPreTmpl html
-autocmd FileType typescript syn clear foldBraces
+" if exists("jspretmpl#register_tag")
+"   call jspretmpl#register_tag('styles: \[', 'css')
+" endif
+" autocmd FileType typescript JsPreTmpl html
+" autocmd FileType typescript syn clear foldBraces
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -285,6 +293,9 @@ autocmd FileType vue setlocal autoindent expandtab shiftwidth=2 softtabstop=2 co
 highlight vueTag ctermfg=Blue
 
 let vim_markdown_preview_github=1
+
+" hardtime
+let g:hardtime_default_on = 1
 
 function! WrapForTmux(s)
   if !exists('$TMUX')
