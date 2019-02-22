@@ -1,3 +1,4 @@
+lang en_US
 set encoding=utf-8
 " #########################################################################
 " minpac
@@ -29,14 +30,14 @@ call minpac#add('leafgarland/typescript-vim')
 call minpac#add('HerringtonDarkholme/yats.vim')
 call minpac#add('Quramy/tsuquyomi')
 call minpac#add('Valloric/YouCompleteMe')
-call minpac#add('Quramy/vim-js-pretty-template')
 call minpac#add('vim-syntastic/syntastic')
 call minpac#add('burnettk/vim-angular')
 call minpac#add('tpope/vim-git')
 call minpac#add('JamshedVesuna/vim-markdown-preview')
 call minpac#add('jparise/vim-graphql')
 call minpac#add('isRuslan/vim-es6')
-call minpac#add('takac/vim-hardtime')
+call minpac#add('MaxMEllon/vim-jsx-pretty')
+call minpac#add('styled-components/vim-styled-components')
 
 " Load the plugins right now. (optional)
 packloadall
@@ -257,17 +258,12 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 
-" vim-js-pretty-template
-" if exists("jspretmpl#register_tag")
-"   call jspretmpl#register_tag('styles: \[', 'css')
-" endif
-" autocmd FileType typescript JsPreTmpl html
-" autocmd FileType typescript syn clear foldBraces
-
-" syntastic
+" status line
+set laststatus=2
+set statusline=%f\ %h%w%m%r\ 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*%f
+set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -294,8 +290,14 @@ highlight vueTag ctermfg=Blue
 
 let vim_markdown_preview_github=1
 
-" hardtime
-let g:hardtime_default_on = 1
+" vim-jsx-pretty
+highlight link jsxTagName Statement
+highlight link jsxPunct Function
+highlight link jsxCloseString jsxTag
+
+" yajs
+highlight link javascriptImport Special
+highlight link javascriptExport Special
 
 function! WrapForTmux(s)
   if !exists('$TMUX')
