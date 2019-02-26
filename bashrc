@@ -23,11 +23,11 @@ fi
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
 	xterm-color)
-		PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+		PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 		;;
 	*)
 		#	PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-		PS1='\[\033[1;32m\]\u@\h\[\033[00m\]:\[\033[1;33m\]\w\[\033[1;36m\]$(git_info)\[\033[00m\]\$ '
+		PS1='\[\033[1;32m\]\u@\h\[\033[00m\]:\[\033[1;33m\]\W\[\033[1;36m\]$(git_info)\[\033[00m\]\$ '
 		;;
 esac
 
@@ -35,9 +35,10 @@ esac
 #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 # If this is an xterm set the title to user@host:dir
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}:\007"'
 case "$TERM" in
 	xterm*|rxvt*)
-		PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+		PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}:\007"'
 		;;
 	*)
 		;;
@@ -59,6 +60,7 @@ if [ "$TERM" != "dumb" ]; then
 fi
 
 # some more ls aliases
+alias ls='pwd; ls'
 alias ll='ls -la'
 alias l.='ls -d .* --color=auto'
 #alias la='ls -A'
@@ -135,6 +137,7 @@ alias q='exit'
 alias topme='top -c -u $USER'
 alias tl='tmux ls'
 alias ts='tmux new -A -s'
+alias tx='tmux new -A -D -s'
 alias nginx_restart='sudo service nginx restart'
 alias reload_apache='sudo service apache2 reload'
 alias cd="venv_cd"
@@ -149,8 +152,12 @@ alias gff="git flow feature"
 alias gfr="git flow release"
 alias gfh="git flow hotfix"
 alias gfs="git flow support"
-alias tan="git clone https://github.com/andy23512/webpack-pack ."
-alias cta="git clone https://github.com/ylhuang0423/vue-starter ."
+alias cta-koa="git clone https://github.com/ylhuang0423/koa-starter ."
+alias y="yarn"
+alias ys="yarn start"
+alias yt="yarn test"
+alias c="code"
+alias vsc="code"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
