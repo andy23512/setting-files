@@ -99,23 +99,18 @@ if [ -f ~/.django_bash_completion ]; then
 	. ~/.django_bash_completion
 fi
 
+alias rm='/bin/rm'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
 # Globals
 
-export EDITOR=vi
+export EDITOR=vim
 export GDFONTPATH="$HOME/share/fonts"
 # export LANG=en_US.UTF-8
 export LANG=zh_TW.UTF-8
 export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin"
-export PERL_LOCAL_LIB_ROOT="/usr/local/lib/perl5";
-export PERL_MB_OPT="--install_base /usr/local/lib/perl5";
-export PERL_MM_OPT="INSTALL_BASE=/usr/local/lib/perl5";
-export PERL5LIB="/usr/local/lib/perl5/lib/perl5/i486-linux-gnu-thread-multi:/usr/local/lib/perl5/lib/perl5";
-export PATH="/usr/local/lib/perl5/bin:$PATH";
-export TERM="xterm-256color"
-export WORKON_HOME=$HOME/.virtualenvs
+export WORKON_HOME="$HOME/.virtualenvs/"
 
 # Standard Aliases
 
@@ -138,8 +133,6 @@ alias topme='top -c -u $USER'
 alias tl='tmux ls'
 alias ts='tmux new -A -s'
 alias tx='tmux new -A -D -s'
-alias nginx_restart='sudo service nginx restart'
-alias reload_apache='sudo service apache2 reload'
 alias cd="venv_cd"
 alias cdr='cd $(git root)'
 alias c='clear'

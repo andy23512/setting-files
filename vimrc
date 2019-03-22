@@ -200,6 +200,10 @@ command Nanoha exec Nanoha()
 command P set paste
 command NP set nopaste
 
+" faster up down
+map <C-UP> 5gk
+map <C-DOWN> 5gj
+
 " #########################################################################
 " plugin options
 
@@ -257,6 +261,7 @@ let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
+set completeopt-=preview
 
 " status line
 set laststatus=2
