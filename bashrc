@@ -23,11 +23,11 @@ fi
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
 	xterm-color)
-		PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
+		PS1='${debian_chroot:+($debian_chroot)}\[\033[01;35m\]\u\[\033[1;31m\]@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\n\$ '
 		;;
 	*)
 		#	PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-		PS1='\[\033[1;32m\]\u@\h\[\033[00m\]:\[\033[1;33m\]\W\[\033[1;36m\]$(git_info)\[\033[00m\]\$ '
+		PS1='\[\033[1;35m\]\u\[\033[1;31m\]@\h\[\033[00m\]:\[\033[1;33m\]\W\[\033[1;36m\]$(git_info)\[\033[00m\]\n\$ '
 		;;
 esac
 
@@ -109,7 +109,7 @@ export EDITOR=vim
 export GDFONTPATH="$HOME/share/fonts"
 # export LANG=en_US.UTF-8
 export LANG=zh_TW.UTF-8
-export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin"
+export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin:/usr/local/sbin"
 export WORKON_HOME="$HOME/.virtualenvs/"
 
 # Standard Aliases

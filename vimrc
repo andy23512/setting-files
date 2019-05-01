@@ -38,6 +38,7 @@ call minpac#add('jparise/vim-graphql')
 call minpac#add('isRuslan/vim-es6')
 call minpac#add('MaxMEllon/vim-jsx-pretty')
 call minpac#add('styled-components/vim-styled-components')
+call minpac#add('mkitt/tabline.vim')
 
 " Load the plugins right now. (optional)
 packloadall
@@ -114,7 +115,7 @@ endif
 " settings based on filetype
 au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.py setl softtabstop=4 shiftwidth=4 expandtab fdm=marker
-au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls,*.sass,*.html,*.ts setl softtabstop=2 shiftwidth=2 expandtab
+au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls,*.sass,*.html,*.ts,*.yml,*.yaml setl softtabstop=2 shiftwidth=2 expandtab
 
 " Diff
 nnoremap <silent> <C-G>	:diffget<CR>
@@ -203,6 +204,11 @@ command NP set nopaste
 " faster up down
 map <C-UP> 5gk
 map <C-DOWN> 5gj
+
+" tab page options
+hi TabLineFill ctermfg=White ctermbg=White
+hi TabLine ctermfg=Black ctermbg=White
+hi TabLineSel ctermfg=White ctermbg=Black
 
 " #########################################################################
 " plugin options
