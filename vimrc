@@ -206,6 +206,7 @@ map <C-UP> 5gk
 map <C-DOWN> 5gj
 
 " tab page options
+cabbrev t tabnew
 hi TabLineFill ctermfg=White ctermbg=White
 hi TabLine ctermfg=Black ctermbg=White
 hi TabLineSel ctermfg=White ctermbg=Black
