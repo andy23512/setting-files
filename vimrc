@@ -196,10 +196,16 @@ function Nanoha()
   :join 1
 endfunction
 
+function SaveAndExecute()
+  :w
+  :!%:p
+endfunction
+
 " special command
 command Nanoha exec Nanoha()
 command P set paste
 command NP set nopaste
+command WE exec WriteAndExecute()
 
 " faster up down
 map <C-UP> 5gk

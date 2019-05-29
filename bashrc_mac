@@ -152,6 +152,7 @@ alias ys="yarn start"
 alias yt="yarn test"
 alias c="code"
 alias vsc="code"
+alias cx="chmod +x"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
