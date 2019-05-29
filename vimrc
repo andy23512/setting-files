@@ -196,7 +196,7 @@ function Nanoha()
   :join 1
 endfunction
 
-function SaveAndExecute()
+function WriteAndExecute()
   :w
   :!%:p
 endfunction
