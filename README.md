@@ -4,23 +4,31 @@
 ### File
 vimrc
 ### Setup
+```sh
 $ cp vimrc ~/.vimrc
 $ mkdir -p ~/.vim/bundle 
 $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 $ vi
 (in vi) :BundleInstall
+```
 
 ## Git
 gitconfig
 ### Setup
+```sh
 $ cp gitconfig ~/.gitconfig
+```
 
 ## tmux
 tmux.conf
 ### Setup
+```sh
 $ cp tmux.conf ~/.tmux.conf
+```
 
 ## Bash
 bashrc
 ### Setup
+```sh
 $ cp bashrc ~/.bashrc
+```
