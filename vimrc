@@ -39,6 +39,7 @@ call minpac#add('isRuslan/vim-es6')
 call minpac#add('MaxMEllon/vim-jsx-pretty')
 call minpac#add('styled-components/vim-styled-components')
 call minpac#add('mkitt/tabline.vim')
+call minpac#add('zxqfl/tabnine-vim')
 
 " Load the plugins right now. (optional)
 packloadall
