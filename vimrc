@@ -230,7 +230,7 @@ runtime taglist.vim
 
 " python_mode options
 let g:pymode_python = 'python3'
-let g:pymode_lint_ignore = 'E501,W601' " ignore line length error
+let g:pymode_lint_ignore = ['E501', 'W601'] " ignore line length error
 let g:pep8_ignore = 'E501,W601' " ignore line length error
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_completion = 0
