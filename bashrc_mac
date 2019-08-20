@@ -173,6 +173,9 @@ alias yt="yarn test"
 alias c="code"
 alias vsc="code"
 alias cx="chmod +x"
+alias dc="docker-compose"
+alias dcl="docker-compose logs  --since 30s -f"
+function dcb() { docker-compose exec $@ /bin/bash; }
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
