@@ -228,6 +228,7 @@ let g:pymode_lint_ignore = ['E501', 'W601'] " ignore line length error
 let g:pep8_ignore = 'E501,W601' " ignore line length error
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_completion = 0
+let g:pymode_lint_on_write = 1
 
 " vim-indent-guides
 let g:indent_guides_auto_colors = 0
