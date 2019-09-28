@@ -170,11 +170,12 @@ alias cta-koa="git clone https://github.com/ylhuang0423/koa-starter ."
 alias y="yarn"
 alias ys="yarn start"
 alias yt="yarn test"
+alias yt="yarn lint"
 alias c="code"
 alias vsc="code"
 alias cx="chmod +x"
 alias dc="docker-compose"
-alias dcl="docker-compose logs  --since 30s -f"
+alias dcl="docker-compose logs --tail 20 -f"
 function dcb() { docker-compose exec $@ /bin/bash; }
 
 # Home Aliases
