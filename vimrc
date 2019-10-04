@@ -270,6 +270,27 @@ let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_max_diagnostics_to_display = 30
+let g:ycm_auto_trigger = 1
+let g:ycm_max_num_candidates = 50
+let g:ycm_filetype_whitelist = {"*": 1}
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar': 1,
+      \ 'notes': 1,
+      \ 'markdown': 1,
+      \ 'netrw': 1,
+      \ 'unite': 1,
+      \ 'text': 1,
+      \ 'vimwiki': 1,
+      \ 'pandoc': 1,
+      \ 'infolog': 1,
+      \ 'mail': 1
+      \}
+let g:ycm_filter_diagnostics = {}
+let g:ycm_filetype_specific_completion_to_disable = {
+      \ 'gitcommit': 1
+      \}
 set completeopt-=preview
 
 " status line
