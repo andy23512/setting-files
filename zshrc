@@ -9,10 +9,6 @@ fi
 # don't put duplicate lines in the history. See bash(1) for more options
 export HISTCONTROL=ignoredups
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
 
@@ -29,6 +25,7 @@ case "$TERM" in
 	*)
 		#	PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 		PS1='\[\033[1;35m\]\u\[\033[1;31m\]@\h\[\033[00m\]:\[\033[1;33m\]\W\[\033[1;36m\]$(git_info)\[\033[00m\]\n\$ '
+		setopt PROMPT_SUBST
 		PS1=$'\e[1;35m%n\e[0m\e[1;31m@%m\e[0m\e[1;33m:%1d\e[0m\e[1;36m$(git_info)\e[0m\n\$ '
 		;;
 esac
@@ -94,33 +91,9 @@ if [ -f /etc/bash_completion ]; then
 	. /etc/bash_completion
 fi
 
-if [ -f ~/.git-completion.bash ]; then
-	. ~/.git-completion.bash
-fi
-
 if [ -f ~/.django_bash_completion ]; then
 	. ~/.django_bash_completion
 fi
-
-function _makefile_targets {
-    local curr_arg;
-    local targets;
-
-    # Find makefile targets available in the current directory
-    targets=''
-    if [[ -e "$(pwd)/Makefile" ]]; then
-        targets=$( \
-            grep -oE '^[a-zA-Z0-9_-]+:' Makefile \
-            | sed 's/://' \
-            | tr '\n' ' ' \
-        )
-    fi
-
-    # Filter targets based on user input to the bash completion
-    curr_arg=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $(compgen -W "${targets[@]}" -- $curr_arg ) );
-}
-complete -F _makefile_targets make
 
 alias rm='/bin/rm'
 export NVM_DIR="$HOME/.nvm"
@@ -238,7 +211,7 @@ function rmold() {
 function workon_cwd {
     # Check that this is a Git repo
     GIT_DIR=`git rev-parse --git-dir 2> /dev/null`
-    if [ $? == 0 ]; then
+    if [ $? '==' 0 ]; then
         # Find the repo root and check for virtualenv name override
         GIT_DIR=`\cd $GIT_DIR; pwd`
         PROJECT_ROOT=`dirname "$GIT_DIR"`
@@ -290,17 +263,5 @@ export LSCOLORS="$DIR$SYM_LINK$SOCKET$PIPE$EXE$BLOCK_SP$CHAR_SP$EXE_SUID$EXE_GUI
 # uninstall by removing these lines or running `tabtab uninstall yarn`
 [ -f /Users/nanoha/.config/yarn/global/node_modules/tabtab/.completions/yarn.bash ] && . /Users/nanoha/.config/yarn/global/node_modules/tabtab/.completions/yarn.bash
 
-# ssh completion
-_ssh()
-{
-    local cur prev opts
-    COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts=$(grep '^Host' ~/.ssh/config | grep -v '[?*]' | cut -d ' ' -f 2-)
-
-    COMPREPLY=( $(compgen -W "$opts" -- ${cur}) )
-    return 0
-}
-complete -F _ssh ssh
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+export PATH="/usr/local/opt/ruby/bin:$PATH"
