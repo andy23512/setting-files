@@ -129,7 +129,7 @@ fi
 # Local Functions and Commands
 
 function git_repo {
-    GIT_DIR=`git rev-parse --git-dir 2> /dev/null`
+    GIT_DIR=`git rev-parse --git-dir 2> /dev/null` || return;
     GIT_DIR=`\cd $GIT_DIR; pwd`
     PROJECT_ROOT=`dirname "$GIT_DIR"`
 	REPO_NAME=`basename "$PROJECT_ROOT"`
