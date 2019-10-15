@@ -18,7 +18,7 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 setopt PROMPT_SUBST
-PS1=$'%B%F{magenta}%n%F{red}@%m%F{yellow}:%1d%F{cyan}$(git_info)\n%b%F{white}$ '
+PS1=$'%B%F{magenta}%n%F{red}@%m%F{yellow}:%1d%F{cyan}$(git_repo)$(git_info)\n%b%F{white}$ '
 
 # enable color support of ls and also add handy aliases
 if [ "$TERM" != "dumb" ]; then
@@ -127,6 +127,14 @@ if [ -e $HOME/.alias ]; then
 fi
 
 # Local Functions and Commands
+
+function git_repo {
+    GIT_DIR=`git rev-parse --git-dir 2> /dev/null`
+    GIT_DIR=`\cd $GIT_DIR; pwd`
+    PROJECT_ROOT=`dirname "$GIT_DIR"`
+	REPO_NAME=`basename "$PROJECT_ROOT"`
+	echo "[$REPO_NAME]"
+}
 
 function git_info {
 	ref=$(git symbolic-ref HEAD 2> /dev/null) || return;
