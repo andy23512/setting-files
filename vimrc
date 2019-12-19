@@ -224,7 +224,7 @@ runtime taglist.vim
 
 " python_mode options
 let g:pymode_python = 'python3'
-let g:pymode_lint_ignore = ['E501', 'W601'] " ignore line length error
+let g:pymode_lint_ignore = ['E501', 'W601', 'W391'] " ignore line length error
 let g:pep8_ignore = 'E501,W601' " ignore line length error
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_completion = 0
@@ -291,6 +291,7 @@ let g:ycm_filter_diagnostics = {}
 let g:ycm_filetype_specific_completion_to_disable = {
       \ 'gitcommit': 1
       \}
+let g:ycm_complete_in_comments = 0
 set completeopt-=preview
 
 " status line

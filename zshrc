@@ -6,9 +6,6 @@ fi
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# don't put duplicate lines in the history. See bash(1) for more options
-export HISTCONTROL=ignoredups
-
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
 
@@ -63,7 +60,6 @@ if [ -f ~/.django_bash_completion ]; then
 	. ~/.django_bash_completion
 fi
 
-alias rm='/bin/rm'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
@@ -83,10 +79,9 @@ alias cp='cp -i'
 alias du='du -h --max-depth=1'
 alias h='history | grep'
 alias mv='mv -i'
-alias rm='_rm'
-alias rrm='/bin/rm -i'	# real rm
 alias vi='vim'
 alias svi='sudo vi'
+alias del='rmtrash'
 
 # Personal Aliases
 alias nanoha='vi ~/nanoha'
@@ -119,6 +114,8 @@ alias vsc="code"
 alias cx="chmod +x"
 alias dc="docker-compose"
 alias dcl="docker-compose logs --tail 20 -f"
+alias dcd="docker-compose down -v"
+alias dcu="docker-compose up -d"
 function dcb() { docker-compose exec $@ /bin/bash; }
 
 # Home Aliases
@@ -241,3 +238,5 @@ export LSCOLORS="$DIR$SYM_LINK$SOCKET$PIPE$EXE$BLOCK_SP$CHAR_SP$EXE_SUID$EXE_GUI
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 export PATH="/usr/local/opt/ruby/bin:$PATH"
+export EDITOR=vim
+export VISUAL="$EDITOR"
