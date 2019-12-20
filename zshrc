@@ -25,29 +25,6 @@ fi
 
 # some more ls aliases
 export CLICOLOR=1
-alias ls='pwd; ls'
-alias ll='ls -la'
-alias l.='ls -d .* --color=auto'
-#alias la='ls -A'
-#alias l='ls -CF'
-
-# cd
-alias cd..='cd ..'
-alias ..='cd ..'
-alias ...='cd ../../../'
-alias ....='cd ../../../../'
-alias .....='cd ../../../../../'
-alias .4='cd ../../../../'
-alias .5='cd ../../../../../'
-
-# grep
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-
-alias bc='bc -l' # calculator
-alias mkdir='mkdir -pv' # create parent
-alias h='history'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -74,6 +51,8 @@ export WORKON_HOME="$HOME/.virtualenvs/"
 
 # Standard Aliases
 
+alias ls='pwd; ls'
+alias grep='grep --color=auto'
 alias cls='clear'
 alias cp='cp -i'
 alias du='du -h --max-depth=1'
@@ -113,6 +92,7 @@ alias c="code"
 alias vsc="code"
 alias cx="chmod +x"
 alias dc="docker-compose"
+alias dcbu="docker-compose build"
 alias dcl="docker-compose logs --tail 20 -f"
 alias dcd="docker-compose down -v"
 alias dcu="docker-compose up -d"
@@ -159,23 +139,6 @@ function _ls() {
 	# /bin/gls -C --color=always $@ | /usr/bin/iconv -f big5 -t utf8
 	/bin/gls -C --color=always $@
 	LANG=zh_TW.UTF-8
-}
-
-function old() {
-	day=$1; shift
-	find . -maxdepth 1 -mtime +${day} $@
-}
-
-function _rm() {
-	while [ $# -ge 1 ]; do
-		mv -f "$1" $HOME/tmp
-		echo "$1 deleted."
-		shift
-	done
-}
-
-function rmold() {
-	find . -maxdepth 1 -mtime +$1 -exec rm -rf {} \;
 }
 
 # Automatically activate Git projects' virtual environments based on the
