@@ -24,7 +24,6 @@ call minpac#add('tpope/vim-commentary')
 call minpac#add('tpope/vim-abolish')
 call minpac#add('tpope/vim-repeat')
 call minpac#add('tpope/vim-haml')
-call minpac#add('scrooloose/nerdtree')
 call minpac#add('posva/vim-vue')
 call minpac#add('leafgarland/typescript-vim')
 call minpac#add('HerringtonDarkholme/yats.vim')
@@ -198,6 +197,7 @@ function Nanoha()
 endfunction
 
 " special command
+command Na exec Nanoha()
 command Nanoha exec Nanoha()
 command P set paste
 command NP set nopaste
@@ -237,14 +237,6 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=3
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 IndentGuidesEnable
-
-" nerdtree
-let NERDTreeIgnore=['\~$', '\.map']
-let NERDTreeMapOpenSplit='s'
-map <C-n> :NERDTreeToggle<CR>
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " typescript
 let g:typescript_compiler_binary = 'tsc'
@@ -292,6 +284,7 @@ let g:ycm_filetype_specific_completion_to_disable = {
       \ 'gitcommit': 1
       \}
 let g:ycm_complete_in_comments = 0
+let ycm_disable_signature_help = 1
 set completeopt-=preview
 
 " status line

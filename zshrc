@@ -93,10 +93,12 @@ alias vsc="code"
 alias cx="chmod +x"
 alias dc="docker-compose"
 alias dcbu="docker-compose build"
-alias dcl="docker-compose logs --tail 20 -f"
 alias dcd="docker-compose down -v"
+alias dcl="docker-compose logs --tail 20 -f"
+alias dcr="docker-compose restart"
 alias dcu="docker-compose up -d"
 function dcb() { docker-compose exec $@ /bin/bash; }
+function dcs() { docker-compose exec $@ /bin/sh; }
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
@@ -164,7 +166,7 @@ function workon_cwd {
     elif [ $CD_VIRTUAL_ENV ]; then
         # We've just left the repo, deactivate the environment
         # Note: this only happens if the virtualenv was activated automatically
-        source deactivate && unset CD_VIRTUAL_ENV
+        deactivate && unset CD_VIRTUAL_ENV
     fi
 }
 
