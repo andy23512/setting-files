@@ -99,7 +99,9 @@ set backupcopy=yes " for brunch
 set backupdir=~/tmp,.,/var/tmp/vi,/tmp
 set directory=~/tmp,/var/tmp/vi,/tmp,.
 set undodir=~/tmp
+set spell
 set spelllang=en
+set spellfile=$HOME/Cloud/MEGAsync/vim/spell/en.utf-8.add
 
 " VIM 6.0, We're using VIM on ntucs? Solaris, my own build
 if version >= 600
