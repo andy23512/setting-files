@@ -36,6 +36,7 @@ call minpac#add('tpope/vim-git')
 call minpac#add('tpope/vim-haml')
 call minpac#add('vim-jp/syntax-vim-ex')
 call minpac#add('vim-syntastic/syntastic')
+call minpac#add('vimwiki/vimwiki')
 call minpac#add('wavded/vim-stylus')
 
 " Load the plugins right now. (optional)
