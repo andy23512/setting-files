@@ -1,3 +1,6 @@
+" #########################################################################
+" language
+
 lang en_US
 set encoding=utf-8
 " #########################################################################
@@ -11,34 +14,29 @@ call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " Add other plugins here.
-call minpac#add('vim-jp/syntax-vim-ex')
+call minpac#add('HerringtonDarkholme/yats.vim')
+call minpac#add('MaxMEllon/vim-jsx-pretty')
+call minpac#add('Quramy/tsuquyomi')
+call minpac#add('Valloric/YouCompleteMe')
 call minpac#add('airblade/vim-gitgutter')
+call minpac#add('burnettk/vim-angular')
 call minpac#add('digitaltoad/vim-pug')
 call minpac#add('gkz/vim-ls')
-call minpac#add('wavded/vim-stylus')
+call minpac#add('isRuslan/vim-es6')
+call minpac#add('jparise/vim-graphql')
 call minpac#add('klen/python-mode')
+call minpac#add('leafgarland/typescript-vim')
+call minpac#add('mkitt/tabline.vim')
 call minpac#add('nathanaelkane/vim-indent-guides')
 call minpac#add('ntpeters/vim-better-whitespace')
 call minpac#add('othree/yajs.vim')
-call minpac#add('tpope/vim-commentary')
-call minpac#add('tpope/vim-abolish')
-call minpac#add('tpope/vim-repeat')
-call minpac#add('tpope/vim-haml')
 call minpac#add('posva/vim-vue')
-call minpac#add('leafgarland/typescript-vim')
-call minpac#add('HerringtonDarkholme/yats.vim')
-call minpac#add('Quramy/tsuquyomi')
-call minpac#add('Valloric/YouCompleteMe')
-call minpac#add('vim-syntastic/syntastic')
-call minpac#add('burnettk/vim-angular')
-call minpac#add('tpope/vim-git')
-call minpac#add('JamshedVesuna/vim-markdown-preview')
-call minpac#add('jparise/vim-graphql')
-call minpac#add('isRuslan/vim-es6')
-call minpac#add('MaxMEllon/vim-jsx-pretty')
 call minpac#add('styled-components/vim-styled-components')
-call minpac#add('mkitt/tabline.vim')
-call minpac#add('zxqfl/tabnine-vim')
+call minpac#add('tpope/vim-git')
+call minpac#add('tpope/vim-haml')
+call minpac#add('vim-jp/syntax-vim-ex')
+call minpac#add('vim-syntastic/syntastic')
+call minpac#add('wavded/vim-stylus')
 
 " Load the plugins right now. (optional)
 packloadall
@@ -60,6 +58,7 @@ set t_AF=[1;3%p1%dm
 set t_AB=[4%p1%dm
 
 " #########################################################################
+" default vimrc files
 
 if filereadable($VIMRUNTIME . "/vimrc_example.vim")
   so $VIMRUNTIME/vimrc_example.vim
@@ -67,58 +66,60 @@ endif
 if filereadable($VIMRUNTIME . "/macros/matchit.vim")
   so $VIMRUNTIME/macros/matchit.vim
 endif
-" flist support
-if filereadable("~/vim/flistmaps.vim")
-  so ~/vim/flistmaps.vim
-endif
-if filereadable(expand("hints"))
-  au BufNewFile,BufReadPost *.c,*.C,*.cpp,*.CPP,*.cxx  so hints
-endif
 
 " #########################################################################
 " settings
 
 syntax on
-set nocompatible " nocompatible with vi
-set nowrap
-set wildmenu " completion menu at command mode
-set ruler " show current line and column position
-set incsearch " immediate search
-set modelines=1 " enable modeline
-set noexpandtab
-set shiftwidth=4
-set tabstop=4
-set bs=2		" allow backspacing over everything in insert mode
-set nosmartindent
-set noai			" always set autoindenting on
-set viminfo='20,\"50	" read/write a .viminfo file, don't store more
-set showmatch " show the match { ( <
-set mouse=c " disable mouse
 set backup		" keep a backup file
 set backupcopy=yes " for brunch
 set backupdir=~/tmp,.,/var/tmp/vi,/tmp
+set bs=2		" allow backspacing over everything in insert mode
 set directory=~/tmp,/var/tmp/vi,/tmp,.
-set undodir=~/tmp
+set incsearch " immediate search
+set modelines=1 " enable modeline
+set mouse=c " disable mouse
+set noai			" always set autoindenting on
+set nocompatible " nocompatible with vi
+set noexpandtab
+set nosmartindent
+set nowrap
+set redrawtime=10000
+set ruler " show current line and column position
+set shiftwidth=4
+set showmatch " show the match { ( <
 set spell
-set spelllang=en
 set spellfile=$HOME/Cloud/MEGAsync/vim/spell/en.utf-8.add
+set spelllang=en
+set tabstop=4
+set undodir=~/tmp
+set viminfo='20,\"50	" read/write a .viminfo file, don't store more
+set wildignore+=*.a,*.o
+set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+set wildignore+=*.map
+set wildignore+=*~,*.swp,*.tmp
+set wildignore+=.DS_Store,.git,.hg,.svn
+set wildmenu " completion menu at command mode
 
 " VIM 6.0, We're using VIM on ntucs? Solaris, my own build
 if version >= 600
-  set nohlsearch " no highlight search
-  set foldmethod=marker " no auto folding
-  set foldlevel=1
   set encoding=utf-8
   set fileencodings=utf-8,big5,ucs-bom,latin1
+  set foldlevel=1
+  set foldmethod=marker " no auto folding
+  set nohlsearch " no highlight search
   set termencoding=utf-8
 else
   set fileencoding=taiwan
 endif
 
 " settings based on filetype
+au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls,*.sass,*.html,*.ts,*.yml,*.yaml setl softtabstop=2 shiftwidth=2 expandtab
 au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.py setl softtabstop=4 shiftwidth=4 expandtab fdm=marker
-au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls,*.sass,*.html,*.ts,*.yml,*.yaml setl softtabstop=2 shiftwidth=2 expandtab
+
+" #########################################################################
+" key mapping
 
 " Diff
 nnoremap <silent> <C-G>	:diffget<CR>
@@ -141,20 +142,13 @@ inoremap <Esc>Op <End>
 nnoremap <Esc>Oq <Home>
 nnoremap <Esc>Op <End>
 
-" Increment
-nnoremap <C-C> <C-A>
-
 " Sort hot key
 xnoremap <silent> s :sort<CR>
 xnoremap <silent> S :sort!<CR>
 
-" IDE
-"nnoremap <silent> <F5>	:cwindow<CR>
-"nnoremap <silent> <F6>	:make<CR>
-nnoremap <silent> <F7>	:TlistUpdate<CR>
-nnoremap <silent> <F8>	:Tlist<CR>
-"nnoremap <silent> <F9>	:edit .<CR>
-"nnoremap <silent> <F10>	:BufExplorer<CR>
+" faster up down
+map <C-UP> 5gk
+map <C-DOWN> 5gj
 
 " wrap
 noremap <silent> <Leader>w :call ToggleWrap()<CR>
@@ -187,11 +181,16 @@ function ToggleWrap()
   endif
 endfunction
 
+" #########################################################################
+" color
+
 " comment color
 hi Comment ctermfg = LightMagenta
-
 " Pmenu color
 hi Pmenu ctermfg = white
+
+" #########################################################################
+" command
 
 function Nanoha()
   :1read !head ~/nanoha
@@ -205,25 +204,33 @@ command Nanoha exec Nanoha()
 command P set paste
 command NP set nopaste
 
-" faster up down
-map <C-UP> 5gk
-map <C-DOWN> 5gj
+" #########################################################################
+" paste in tmux
 
-" tab page options
-cabbrev t tabnew
-hi TabLineFill ctermfg=White ctermbg=White
-hi TabLine ctermfg=Black ctermbg=White
-hi TabLineSel ctermfg=White ctermbg=Black
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
 
 " #########################################################################
 " plugin options
-
-" taglist options
-let Tlist_Sort_Type = "order"
-let Tlist_WinWidth = 30
-let Tlist_Inc_Winwidth = 0
-"let Tlist_Use_Right_Window = 1
-runtime taglist.vim
 
 " python_mode options
 let g:pymode_python = 'python3'
@@ -246,15 +253,6 @@ let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
-
-" wildignore
-set wildignore+=*.a,*.o
-set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
-set wildignore+=.DS_Store,.git,.hg,.svn
-set wildignore+=*~,*.swp,*.tmp
-set wildignore+=*.map
-
-
 
 " YouComplateMe
 if !exists("g:ycm_semantic_triggers")
@@ -290,13 +288,12 @@ let g:ycm_complete_in_comments = 0
 let ycm_disable_signature_help = 1
 set completeopt-=preview
 
-" status line
+" syntastic
 set laststatus=2
 set statusline=%f\ %h%w%m%r\ 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
@@ -305,6 +302,7 @@ let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:syntastic_python_checkers=['pylint']
 let g:syntastic_python_pylint_args = '-d R0903,E1101,E501,W601,C0301'
+
 " vue
 autocmd BufNewFile,BufEnter *.vue setfiletype vue
 autocmd FileType vue setlocal autoindent expandtab shiftwidth=2 softtabstop=2 commentstring=//\ %s comments=://
@@ -320,8 +318,6 @@ autocmd FileType vue setlocal autoindent expandtab shiftwidth=2 softtabstop=2 co
       \ | syntax sync fromstart
 highlight vueTag ctermfg=Blue
 
-let vim_markdown_preview_github=1
-
 " vim-jsx-pretty
 highlight link jsxTagName Statement
 highlight link jsxPunct Function
@@ -330,27 +326,5 @@ highlight link jsxCloseString jsxTag
 " yajs
 highlight link javascriptImport Special
 highlight link javascriptExport Special
-
-function! WrapForTmux(s)
-  if !exists('$TMUX')
-    return a:s
-  endif
-
-  let tmux_start = "\<Esc>Ptmux;"
-  let tmux_end = "\<Esc>\\"
-
-  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
-endfunction
-
-let &t_SI .= "\<Esc>[?2004h"
-let &t_EI .= "\<Esc>[?2004l"
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
 
 " vi:et:sw=2:ts=2:sts=2
