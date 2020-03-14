@@ -201,7 +201,6 @@ endfunction
 
 " special command
 command Na exec Nanoha()
-command Nanoha exec Nanoha()
 command P set paste
 command NP set nopaste
 
