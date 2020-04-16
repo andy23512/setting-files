@@ -72,6 +72,8 @@ alias tl='tmux ls'
 alias ts='tmux new -A -s'
 alias tx='tmux new -A -D -s'
 alias cd="venv_cd"
+alias txs='cd ~/git/space/; tx s'
+alias txw='cd ~/git/website/; tx w'
 alias cr='cd $(git root)'
 alias cf='cd $(git root)/frontend'
 alias cb='cd $(git root)/backend'
@@ -92,6 +94,7 @@ alias dcd="docker-compose down -v"
 alias dcl="docker-compose logs --tail 20 -f"
 alias dcr="docker-compose restart"
 alias dcu="docker-compose up -d"
+alias accel_shooter="python3 ~/git/accel-shooter/accel_shooter"
 function dcb() { docker-compose exec $@ /bin/bash; }
 function dcs() { docker-compose exec $@ /bin/sh; }
 
