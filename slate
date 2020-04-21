@@ -1,0 +1,43 @@
+# Configs
+config defaultToCurrentScreen true
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+config secondsBetweenRepeat 0.1
+config checkDefaultsOnLoad true
+config focusCheckWidthMax 3000
+config windowHintsShowIcons true
+config windowHintsIgnoreHiddenWindows false
+config windowHintsSpread true
+
+# Misc Aliases
+alias showNormalHint hint ZXCASDQWE
+
+# Abstract positions
+alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
+alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY
+alias q1            move screenOriginX;screenOriginY                  screenSizeX*0.25;screenSizeY
+alias q2            move screenOriginX+screenSizeX*0.25;screenOriginY screenSizeX*0.25;screenSizeY
+alias q3            move screenOriginX+screenSizeX*0.50;screenOriginY screenSizeX*0.25;screenSizeY
+alias q4            move screenOriginX+screenSizeX*0.75;screenOriginY screenSizeX*0.25;screenSizeY
+
+bind e:cmd  ${showNormalHint}
+
+# ======================================
+# The HYPER key
+# ======================================
+
+alias hyper ctrl;shift;alt;cmd
+
+# Location bindings
+bind s:${hyper} ${lefthalf}
+bind d:${hyper} ${righthalf}
+bind z:${hyper} ${q1}
+bind x:${hyper} ${q2}
+bind c:${hyper} ${q3}
+bind v:${hyper} ${q4}
+
+# Focus Bindings
+bind right:${hyper}    focus right
+bind left:${hyper}     focus left
+bind up:${hyper}       focus up
+bind down:${hyper}     focus down
