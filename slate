@@ -13,12 +13,16 @@ config windowHintsSpread true
 alias showNormalHint hint ZXCASDQWE
 
 # Abstract positions
-alias lefthalf      move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
-alias righthalf     move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY
 alias q1            move screenOriginX;screenOriginY                  screenSizeX*0.25;screenSizeY
 alias q2            move screenOriginX+screenSizeX*0.25;screenOriginY screenSizeX*0.25;screenSizeY
 alias q3            move screenOriginX+screenSizeX*0.50;screenOriginY screenSizeX*0.25;screenSizeY
 alias q4            move screenOriginX+screenSizeX*0.75;screenOriginY screenSizeX*0.25;screenSizeY
+alias h1            move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
+alias h2            move screenOriginX+screenSizeX*0.25;screenOriginY screenSizeX/2;screenSizeY
+alias h3            move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY
+alias t1            move screenOriginX;screenOriginY                  screenSizeX/3;screenSizeY
+alias t2            move screenOriginX+screenSizeX/3;screenOriginY    screenSizeX/3;screenSizeY
+alias t3            move screenOriginX+screenSizeX*2/3;screenOriginY  screenSizeX/3;screenSizeY
 
 bind e:cmd  ${showNormalHint}
 
@@ -29,15 +33,28 @@ bind e:cmd  ${showNormalHint}
 alias hyper ctrl;shift;alt;cmd
 
 # Location bindings
-bind s:${hyper} ${lefthalf}
-bind d:${hyper} ${righthalf}
-bind z:${hyper} ${q1}
-bind x:${hyper} ${q2}
-bind c:${hyper} ${q3}
-bind v:${hyper} ${q4}
+bind 1:${hyper} ${q1}
+bind 2:${hyper} ${q2}
+bind 3:${hyper} ${q3}
+bind 4:${hyper} ${q4}
+bind 5:${hyper} ${h1}
+bind 6:${hyper} ${h2}
+bind 7:${hyper} ${h3}
+bind 8:${hyper} ${t1}
+bind 9:${hyper} ${t2}
+bind 0:${hyper} ${t3}
 
 # Focus Bindings
 bind right:${hyper}    focus right
 bind left:${hyper}     focus left
 bind up:${hyper}       focus up
 bind down:${hyper}     focus down
+
+# App bindings
+bind g:${hyper} focus 'Google Chrome'
+bind v:${hyper} focus 'Code'
+bind s:${hyper} focus 'Slack'
+bind c:${hyper} focus 'ClickUp'
+bind f:${hyper} focus 'Caprine'
+bind i:${hyper} focus 'iTerm2'
+bind o:${hyper} focus 'Finder'
