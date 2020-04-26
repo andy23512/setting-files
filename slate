@@ -13,16 +13,19 @@ config windowHintsSpread true
 alias showNormalHint hint ZXCASDQWE
 
 # Abstract positions
-alias q1            move screenOriginX;screenOriginY                  screenSizeX*0.25;screenSizeY
-alias q2            move screenOriginX+screenSizeX*0.25;screenOriginY screenSizeX*0.25;screenSizeY
-alias q3            move screenOriginX+screenSizeX*0.50;screenOriginY screenSizeX*0.25;screenSizeY
-alias q4            move screenOriginX+screenSizeX*0.75;screenOriginY screenSizeX*0.25;screenSizeY
-alias h1            move screenOriginX;screenOriginY                  screenSizeX/2;screenSizeY
-alias h2            move screenOriginX+screenSizeX*0.25;screenOriginY screenSizeX/2;screenSizeY
-alias h3            move screenOriginX+screenSizeX/2;screenOriginY    screenSizeX/2;screenSizeY
-alias t1            move screenOriginX;screenOriginY                  screenSizeX/3;screenSizeY
-alias t2            move screenOriginX+screenSizeX/3;screenOriginY    screenSizeX/3;screenSizeY
-alias t3            move screenOriginX+screenSizeX*2/3;screenOriginY  screenSizeX/3;screenSizeY
+alias leftPad       450
+alias paddedOriginX (screenOriginX+${leftPad})
+alias paddedWidth   (screenSizeX-${leftPad})
+alias q1            move ${paddedOriginX}+${paddedWidth}*0/4;screenOriginY ${paddedWidth}/4;screenSizeY
+alias q2            move ${paddedOriginX}+${paddedWidth}*1/4;screenOriginY ${paddedWidth}/4;screenSizeY
+alias q3            move ${paddedOriginX}+${paddedWidth}*2/4;screenOriginY ${paddedWidth}/4;screenSizeY
+alias q4            move ${paddedOriginX}+${paddedWidth}*3/4;screenOriginY ${paddedWidth}/4;screenSizeY
+alias h1            move ${paddedOriginX}+${paddedWidth}*0/4;screenOriginY ${paddedWidth}/2;screenSizeY
+alias h2            move ${paddedOriginX}+${paddedWidth}*1/4;screenOriginY ${paddedWidth}/2;screenSizeY
+alias h3            move ${paddedOriginX}+${paddedWidth}*2/4;screenOriginY ${paddedWidth}/2;screenSizeY
+alias t1            move ${paddedOriginX}+${paddedWidth}*0/3;screenOriginY ${paddedWidth}/3;screenSizeY
+alias t2            move ${paddedOriginX}+${paddedWidth}*1/3;screenOriginY ${paddedWidth}/3;screenSizeY
+alias t3            move ${paddedOriginX}+${paddedWidth}*2/3;screenOriginY ${paddedWidth}/3;screenSizeY
 
 bind e:cmd  ${showNormalHint}
 
