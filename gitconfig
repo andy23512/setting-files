@@ -10,6 +10,7 @@
 	root = rev-parse --show-toplevel
 	s = status -s
 	st = status
+	nanoha = commit -F ~/nanoha
 [color]
 	ui = true
 [url "https://"]
