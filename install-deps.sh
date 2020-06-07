@@ -2,10 +2,10 @@
 
 # install python3
 sudo apt-get update
-sudo apt-get install vim python3 python3-venv python3-pip python-virtualenv
+sudo apt-get install vim python3 python3-venv python3-pip python-virtualenv zsh
 
 # install nodejs
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo apt-get install -y build-essential
 

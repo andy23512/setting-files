@@ -13,7 +13,7 @@ config windowHintsSpread true
 alias showNormalHint hint ZXCASDQWE
 
 # Abstract positions
-alias leftPad       450
+alias leftPad       0
 alias paddedOriginX (screenOriginX+${leftPad})
 alias paddedWidth   (screenSizeX-${leftPad})
 alias q1            move ${paddedOriginX}+${paddedWidth}*0/4;screenOriginY ${paddedWidth}/4;screenSizeY
@@ -33,7 +33,7 @@ bind e:cmd  ${showNormalHint}
 # The HYPER key
 # ======================================
 
-alias hyper ctrl;shift;alt;cmd
+alias hyper alt;cmd
 
 # Location bindings
 bind 1:${hyper} ${q1}
@@ -59,5 +59,5 @@ bind v:${hyper} focus 'Code'
 bind s:${hyper} focus 'Slack'
 bind c:${hyper} focus 'ClickUp'
 bind f:${hyper} focus 'Caprine'
-bind i:${hyper} focus 'iTerm2'
+bind t:${hyper} focus 'iTerm2'
 bind o:${hyper} focus 'Finder'

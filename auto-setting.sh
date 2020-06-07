@@ -22,6 +22,13 @@ git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
 \wget -P ~ https://raw.githubusercontent.com/django/django/master/extras/django_bash_completion
 \mv ~/django_bash_completion ~/.django_bash_completion
 
-# copy bashrc
-\cp bashrc ~/.bashrc
-. ~/.bashrc
+# setup zshrc
+zsh
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+setopt EXTENDED_GLOB
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+done
+cp zshrc ~/.zshrc
+cp zpreztorc ~/.zpreztorc
+chsh -s /bin/zsh

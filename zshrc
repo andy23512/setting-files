@@ -77,6 +77,8 @@ alias txw='cd ~/git/website/; tx w'
 alias cr='cd $(git root)'
 alias cf='cd $(git root)/frontend'
 alias cb='cd $(git root)/backend'
+alias cs='cd ~/git/space/'
+alias cw='cd ~/git/website/'
 alias c='clear'
 alias ports='netstat -tulanp'
 alias top='atop'
@@ -88,15 +90,21 @@ alias yt="yarn test"
 alias yl="yarn lint"
 alias c="code"
 alias cx="chmod +x"
-alias dc="docker-compose"
-alias dcbu="docker-compose build"
-alias dcd="docker-compose down -v"
-alias dcl="docker-compose logs --tail 20 -f"
-alias dcr="docker-compose restart"
-alias dcu="docker-compose up -d"
-alias accel_shooter="python3 ~/git/accel-shooter/accel_shooter"
-function dcb() { docker-compose exec $@ /bin/bash; }
-function dcs() { docker-compose exec $@ /bin/sh; }
+alias d="docker-compose"
+alias dbu="cr; docker-compose build"
+alias dd="cr; docker-compose down -v"
+alias dl="cr; docker-compose logs --tail 20 -f"
+alias dr="cr; docker-compose restart"
+alias du="cr; docker-compose up -d"
+alias dlf="cr; docker-compose logs --tail 20 -f frontend"
+alias dlb="cr; docker-compose logs --tail 20 -f backend"
+alias dbf="cr; docker-compose exec frontend /bin/bash"
+alias dbb="cr; docker-compose exec backend /bin/bash"
+function db() { cr; docker-compose exec $@ /bin/bash; }
+function ds() { cr; docker-compose exec $@ /bin/sh; }
+alias mr="cr; make stop-dev-main; make start-dev-main"
+alias msa="cr; make start-dev-main"
+alias mso="cr; make stop-dev-main"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then

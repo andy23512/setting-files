@@ -39,6 +39,7 @@ call minpac#add('vim-jp/syntax-vim-ex')
 call minpac#add('vim-syntastic/syntastic')
 call minpac#add('vimwiki/vimwiki')
 call minpac#add('wavded/vim-stylus')
+" call minpac#add('zxqfl/tabnine-vim')
 
 " Load the plugins right now. (optional)
 packloadall
@@ -73,7 +74,7 @@ endif
 " settings
 
 syntax on
-set backup		" keep a backup file
+set nobackup		" keep a backup file
 set backupcopy=yes " for brunch
 set backupdir=~/tmp,.,/var/tmp/vi,/tmp
 set bs=2		" allow backspacing over everything in insert mode
@@ -287,6 +288,7 @@ let g:ycm_filetype_specific_completion_to_disable = {
       \}
 let g:ycm_complete_in_comments = 0
 let ycm_disable_signature_help = 1
+let g:ycm_auto_hover = 'CursorHold'
 set completeopt-=preview
 
 " syntastic
