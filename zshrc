@@ -95,7 +95,7 @@ alias gs='git s'
 alias gst='git st'
 alias y="yarn"
 alias ys="yarn start"
-alias yt="yarn test"
+alias yt="yarn test --watch"
 alias yl="yarn lint"
 alias c="code ."
 alias cx="chmod +x"
@@ -114,6 +114,7 @@ function dcs() { cr; docker-compose exec $@ /bin/sh; }
 alias mr="cr; make stop-dev-main; make start-dev-main"
 alias msa="cr; make start-dev-main"
 alias mso="cr; make stop-dev-main"
+alias mrf="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml restart frontend"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
