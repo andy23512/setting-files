@@ -115,6 +115,7 @@ alias mr="cr; make stop-dev-main; make start-dev-main"
 alias msa="cr; make start-dev-main"
 alias mso="cr; make stop-dev-main"
 alias mrf="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml restart frontend"
+alias mrb="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml restart backend"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
