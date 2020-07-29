@@ -59,8 +59,8 @@ alias du='du -h --max-depth=1'
 alias h='history | grep'
 alias mv='mv -i'
 alias vi='vim'
+alias v='vim'
 alias svi='sudo vi'
-alias del='rmtrash'
 
 # Personal Aliases
 alias nanoha='vi ~/nanoha'
@@ -72,6 +72,7 @@ alias tl='tmux ls'
 alias ts='tmux new -A -s'
 alias tx='tmux new -A -D -s'
 alias cd="venv_cd"
+alias txa='tx a'
 alias txs='cd ~/git/space/; tx s'
 alias txw='cd ~/git/website/; tx w'
 alias cr='cd $(git root)'
@@ -98,6 +99,7 @@ alias ys="yarn start"
 alias yt="yarn test --watch"
 alias yl="yarn lint"
 alias c="code ."
+alias cof='code $(git root)/frontend'
 alias cx="chmod +x"
 alias dc="docker-compose"
 alias dcbu="cr; docker-compose build"
@@ -116,6 +118,8 @@ alias msa="cr; make start-dev-main"
 alias mso="cr; make stop-dev-main"
 alias mrf="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml restart frontend"
 alias mrb="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml restart backend"
+alias grp="grep -nR --exclude-dir=node_modules --exclude-dir=dist"
+alias dp="vi ~/Daily\ Progress.md"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
