@@ -132,6 +132,15 @@ fi
 
 # Local Functions and Commands
 #
+function start_rns {
+	msoall
+	tmux new -A -d -s r -c ~/git/research-note-system
+	tmux send-keys 'cd backend; ./manage.py runserver' C-m
+	tmux split-window -v -c ~/git/research-note-system
+	tmux send-keys 'cd frontend; ys' C-m
+	tx r
+}
+
 function innocent_starter {
 	msoall
 	tmux new -A -d -s $2 -c $1
