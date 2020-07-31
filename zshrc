@@ -113,6 +113,7 @@ alias dcbf="cr; docker-compose exec frontend /bin/bash"
 alias dcbb="cr; docker-compose exec backend /bin/bash"
 function dcb() { cr; docker-compose exec $@ /bin/bash; }
 function dcs() { cr; docker-compose exec $@ /bin/sh; }
+function copy() { cat $@ | pbcopy; }
 alias mr="cr; make stop-dev-main; make start-dev-main"
 alias msa="cr; make start-dev-main"
 alias mso="cr; make stop-dev-main"
@@ -120,6 +121,9 @@ alias mrf="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml 
 alias mrb="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml restart backend"
 alias grp="grep -nR --exclude-dir=node_modules --exclude-dir=dist"
 alias dp="vi ~/Daily\ Progress.md"
+alias isw="innocent_starter ~/git/website w"
+alias iss="innocent_starter ~/git/space s"
+alias msoall="cw; make stop-dev-main; cs; make stop-dev-main"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
@@ -127,6 +131,25 @@ if [ -e $HOME/.alias ]; then
 fi
 
 # Local Functions and Commands
+#
+function innocent_starter {
+	msoall
+	tmux new -A -d -s $2 -c $1
+	tmux rename-window 'exec'
+	tmux send-keys 'msa' C-m
+	tmux split-window -h -c $1
+	tmux send-keys 'sleep 10s; dclf' C-m
+	tmux split-window -v -c $1
+	tmux send-keys 'sleep 10s; dclb' C-m
+	tmux select-pane -t 0
+	tmux split-window -v -c $1
+	tmux new-window -c $1
+	tmux rename-window 'vim'
+	tmux new-window -c $1
+	tmux rename-window 'git'
+	tmux select-window -t 0
+	tx $2
+}
 
 function git_repo {
     GIT_DIR=`git rev-parse --git-dir 2> /dev/null` || return;
