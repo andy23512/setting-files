@@ -147,15 +147,18 @@ function innocent_starter {
 	tmux rename-window 'exec'
 	tmux send-keys 'msa' C-m
 	tmux split-window -h -c $1
-	tmux send-keys 'sleep 10s; dclf' C-m
+	tmux send-keys 'sleep 10s' C-m
+	tmux send-keys 'dclf' C-m
 	tmux split-window -v -c $1
-	tmux send-keys 'sleep 10s; dclb' C-m
+	tmux send-keys 'sleep 10s' C-m
+	tmux send-keys 'dclb' C-m
 	tmux select-pane -t 0
 	tmux split-window -v -c $1
 	tmux new-window -c $1
-	tmux rename-window 'vim'
+	tmux rename-window 'dp'
+	tmux send-keys 'dp' C-m
 	tmux new-window -c $1
-	tmux rename-window 'git'
+	tmux rename-window 'vim'
 	tmux select-window -t 0
 	tx $2
 }

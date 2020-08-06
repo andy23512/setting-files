@@ -108,6 +108,7 @@ endif
 au BufNewFile,BufRead *.jade,*.json,*.js,*.styl,*.pug,*.ls,*.sass,*.html,*.ts,*.yml,*.yaml setl softtabstop=2 shiftwidth=2 expandtab
 au BufNewFile,BufRead *.less set filetype=less
 au BufNewFile,BufRead *.py setl softtabstop=4 shiftwidth=4 expandtab fdm=marker
+au BufNewFile,BufRead *.md setl softtabstop=2 shiftwidth=2 expandtab wrap
 
 " #########################################################################
 " key mapping
