@@ -158,6 +158,8 @@ function innocent_starter {
 	tmux send-keys 'dclb' C-m
 	tmux select-pane -t 0
 	tmux split-window -v -c $1
+	tmux new-window -c $1
+	tmux rename-window 'dp'
 	tmux send-keys 'dp' C-m
 	tmux new-window -c $1
 	tmux rename-window 'vim'
