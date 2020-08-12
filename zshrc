@@ -119,7 +119,7 @@ alias msa="cr; make start-dev-main"
 alias mso="cr; make stop-dev-main"
 alias mrf="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml restart frontend"
 alias mrb="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml restart backend"
-alias grp="grep -nR --exclude-dir=node_modules --exclude-dir=dist"
+alias grp="grep -nR --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git"
 alias dp="vi ~/Daily\ Progress.md"
 alias isw="innocent_starter ~/git/website w"
 alias iss="innocent_starter ~/git/space s"
@@ -132,6 +132,10 @@ fi
 
 # Local Functions and Commands
 #
+function zipr {
+	zip -r $@.zip $@ -x "*node_modules*"
+}
+
 function start_rns {
 	msoall
 	tmux new -A -d -s r -c ~/git/research-note-system
