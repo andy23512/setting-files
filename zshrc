@@ -113,6 +113,7 @@ alias dcbf="cr; docker-compose exec frontend /bin/bash"
 alias dcbb="cr; docker-compose exec backend /bin/bash"
 function dcb() { cr; docker-compose exec $@ /bin/bash; }
 function dcs() { cr; docker-compose exec $@ /bin/sh; }
+alias drm='docker rm $(docker ps -q -f 'status=exited'); docker rmi $(docker images -q -f "dangling=true")'
 function copy() { cat $@ | pbcopy; }
 alias mr="cr; make stop-dev-main; make start-dev-main"
 alias msa="cr; make start-dev-main"
