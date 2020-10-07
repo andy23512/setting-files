@@ -153,10 +153,10 @@ function innocent_starter {
 	tmux rename-window 'exec'
 	tmux send-keys 'msa' C-m
 	tmux split-window -h -c $1
-	tmux send-keys 'sleep 10s' C-m
+	tmux send-keys 'sleep 20s' C-m
 	tmux send-keys 'dclf' C-m
 	tmux split-window -v -c $1
-	tmux send-keys 'sleep 10s' C-m
+	tmux send-keys 'sleep 20s' C-m
 	tmux send-keys 'dclb' C-m
 	tmux select-pane -t 0
 	tmux split-window -v -c $1
