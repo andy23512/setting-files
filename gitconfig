@@ -22,6 +22,7 @@
 [core]
 	editor = /usr/local/bin/vim
 	pager = diff-so-fancy | less --tabs=4 -RFX
+	autocrlf = input
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
