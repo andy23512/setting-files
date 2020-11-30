@@ -4,6 +4,7 @@
 	ci = commit -m
 	co = checkout
 	d = diff
+	dc = diff --cached
 	l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cgreen\\ [%cn]" --decorate --date=short
 	ph = push
 	pl = pull
