@@ -268,3 +268,8 @@ export LSCOLORS="$DIR$SYM_LINK$SOCKET$PIPE$EXE$BLOCK_SP$CHAR_SP$EXE_SUID$EXE_GUI
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export EDITOR=vim
 export VISUAL="$EDITOR"
+
+zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
+fpath=(~/.zsh $fpath)
+
+autoload -Uz compinit && compinit
