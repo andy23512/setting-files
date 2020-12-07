@@ -112,6 +112,7 @@ alias dclf="cr; docker-compose logs --tail 20 -f frontend"
 alias dclb="cr; docker-compose logs --tail 20 -f backend"
 alias dcbf="cr; docker-compose exec frontend /bin/bash"
 alias dcbb="cr; docker-compose exec backend /bin/bash"
+function dcc() { cr; docker-compose exec $@; }
 function dcb() { cr; docker-compose exec $@ /bin/bash; }
 function dcs() { cr; docker-compose exec $@ /bin/sh; }
 alias drm='docker rm $(docker ps -q -f 'status=exited'); docker rmi $(docker images -q -f "dangling=true")'
@@ -149,10 +150,10 @@ function start_rns {
 
 function innocent_starter {
 	msoall
+	cd $1
+	msa
 	tmux new -A -d -s $2 -c $1
 	tmux rename-window 'exec'
-	tmux send-keys 'msa' C-m
-	tmux split-window -h -c $1
 	tmux send-keys 'sleep 20s' C-m
 	tmux send-keys 'dclf' C-m
 	tmux split-window -v -c $1
@@ -160,6 +161,7 @@ function innocent_starter {
 	tmux send-keys 'dclb' C-m
 	tmux select-pane -t 0
 	tmux split-window -v -c $1
+	tmux send-keys 'sleep 20s' C-m
 	tmux send-keys 'open http://localhost:4200' C-m
 	tmux new-window -c $1
 	tmux rename-window 'dp'
