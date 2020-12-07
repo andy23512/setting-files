@@ -105,13 +105,13 @@ alias cx="chmod +x"
 alias dc="docker-compose"
 alias dcbu="cr; docker-compose build"
 alias dcd="cr; docker-compose down -v"
-alias dcl="cr; docker-compose logs --tail 20 -f"
+alias dcl="cr; docker-compose logs --tail 20 -f -t"
 alias dcr="cr; docker-compose restart"
 alias dcu="cr; docker-compose up -d"
-alias dclf="cr; docker-compose logs --tail 20 -f frontend"
-alias dclb="cr; docker-compose logs --tail 20 -f backend"
-alias dcbf="cr; docker-compose exec frontend /bin/bash"
-alias dcbb="cr; docker-compose exec backend /bin/bash"
+alias dclf="cr; dcl frontend"
+alias dclb="cr; dcl backend"
+alias dcbf="cr; dcb frontend"
+alias dcbb="cr; dcb backend"
 function dcc() { cr; docker-compose exec $@; }
 function dcb() { cr; docker-compose exec $@ /bin/bash; }
 function dcs() { cr; docker-compose exec $@ /bin/sh; }
@@ -270,3 +270,8 @@ export LSCOLORS="$DIR$SYM_LINK$SOCKET$PIPE$EXE$BLOCK_SP$CHAR_SP$EXE_SUID$EXE_GUI
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export EDITOR=vim
 export VISUAL="$EDITOR"
+
+zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
+fpath=(~/.zsh $fpath)
+
+autoload -Uz compinit && compinit
