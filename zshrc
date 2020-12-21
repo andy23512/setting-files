@@ -99,6 +99,7 @@ alias y="yarn"
 alias ys="yarn start"
 alias yt="yarn test --watch"
 alias yl="yarn lint"
+alias yp="yarn prod"
 alias c="code ."
 alias cof='code $(git root)/frontend'
 alias cx="chmod +x"
