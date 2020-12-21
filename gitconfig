@@ -6,7 +6,7 @@
 	d = diff
 	dc = diff --cached
 	l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cgreen\\ [%cn]" --decorate --date=short
-	ph = push
+	p = push
 	pl = pull
 	root = rev-parse --show-toplevel
 	s = status -s
@@ -36,3 +36,5 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
+[pull]
+	rebase = false
