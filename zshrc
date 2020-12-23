@@ -165,6 +165,8 @@ function innocent_starter {
 	tmux send-keys 'sleep 20s' C-m
 	tmux send-keys 'open http://localhost:4200' C-m
 	tmux new-window -c $1
+	tmux rename-window 'acst'
+	tmux new-window -c $1
 	tmux rename-window 'dp'
 	tmux send-keys 'dp' C-m
 	tmux new-window -c $1
