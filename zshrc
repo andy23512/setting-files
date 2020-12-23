@@ -44,8 +44,7 @@ export NVM_DIR="$HOME/.nvm"
 
 export EDITOR=vim
 export GDFONTPATH="$HOME/share/fonts"
-# export LANG=en_US.UTF-8
-export LANG=zh_TW.UTF-8
+export LANG=en_US.UTF-8
 export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin:/Applications/Postgres.app/Contents/Versions/9.6/bin/:/usr/local/sbin"
 export WORKON_HOME="$HOME/.virtualenvs/"
 
@@ -125,6 +124,7 @@ alias mrf="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml 
 alias mrb="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml restart backend; dclb"
 alias grp="grep -nR --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git"
 alias dp="vi ~/ResilioSync/Daily\ Progress.md"
+alias tk="vi ~/ResilioSync/Track.csv"
 alias isw="innocent_starter ~/git/website w"
 alias iss="innocent_starter ~/git/space s"
 alias msoall="cw; make stop-dev-main; cs; make stop-dev-main"
