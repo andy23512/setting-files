@@ -159,20 +159,9 @@ function start_rns {
 }
 
 function innocent_starter {
-	msoall
 	cd $1
-	msa
 	tmux new -A -d -s $2 -c $1
-	tmux rename-window 'exec'
-	tmux send-keys 'sleep 20s' C-m
-	tmux send-keys 'dclf' C-m
-	tmux split-window -v -c $1
-	tmux send-keys 'sleep 20s' C-m
-	tmux send-keys 'dclb' C-m
-	tmux select-pane -t 0
-	tmux split-window -v -c $1
-	tmux send-keys 'sleep 20s' C-m
-	tmux send-keys 'open http://localhost:4200' C-m
+	tmux rename-window 'acst'
 	tmux new-window -c $1
 	tmux rename-window 'dp'
 	tmux send-keys 'dp' C-m
