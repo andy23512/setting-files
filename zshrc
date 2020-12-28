@@ -96,9 +96,18 @@ alias gs='git s'
 alias gst='git st'
 alias y="yarn"
 alias ys="yarn start"
-alias yt="yarn test --watch"
-alias yl="yarn lint"
-alias yp="yarn prod"
+alias yt="cf; yarn test --watch"
+alias yta="cf; yarn test --watchAll"
+alias yl="cf; yarn lint"
+alias yp="cf; yarn prod"
+function yc() {
+	tmux new-window
+	tmux send-keys 'yl' C-m
+	tmux split-window
+	tmux send-keys 'yta' C-m
+	tmux split-window
+	tmux send-keys 'yp' C-m
+}
 alias c="code ."
 alias cof='code $(git root)/frontend'
 alias cx="chmod +x"
