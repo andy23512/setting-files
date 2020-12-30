@@ -105,7 +105,7 @@ function yc() {
 	tmux send-keys 'yl' C-m
 	tmux split-window
 	tmux send-keys 'yta' C-m
-	tmux split-window
+	tmux split-window -v
 	tmux send-keys 'yp' C-m
 }
 alias c="code ."
