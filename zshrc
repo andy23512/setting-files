@@ -137,6 +137,7 @@ alias tk="vi ~/ResilioSync/Track.csv"
 alias isw="innocent_starter ~/git/website w"
 alias iss="innocent_starter ~/git/space s"
 alias msoall="cw; make stop-dev-main; cs; make stop-dev-main"
+alias as="accel-shooter"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
