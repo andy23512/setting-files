@@ -79,6 +79,7 @@ alias cf='cd $(git root)/frontend'
 alias cb='cd $(git root)/backend'
 alias cs='cd ~/git/space/'
 alias cw='cd ~/git/website/'
+alias ca='cd ~/git/accel-shooter/'
 alias c='clear'
 alias ports='netstat -tulanp'
 alias top='atop'
@@ -136,7 +137,7 @@ alias dp="vi ~/ResilioSync/Daily\ Progress.md"
 alias tk="vi ~/ResilioSync/Track.csv"
 alias isw="innocent_starter ~/git/website w"
 alias iss="innocent_starter ~/git/space s"
-alias msoall="cw; make stop-dev-main; cs; make stop-dev-main"
+alias msoa="cw; make stop-dev-main; cs; make stop-dev-main"
 alias as="accel-shooter"
 
 # Home Aliases
