@@ -101,8 +101,8 @@ alias yt="cf; yarn test --watch"
 alias yta="cf; yarn test --watchAll"
 alias yl="cf; yarn lint"
 alias yp="cf; yarn prod"
-alias ydt="dcc frontend 'yarn test'"
-alias ydp="dcc frontend 'yarn prod'"
+alias ydt="dcc frontend yarn test"
+alias ydp="dcc frontend yarn prod"
 function yc() {
 	tmux new-window
 	tmux send-keys 'yl' C-m
