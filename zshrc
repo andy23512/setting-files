@@ -154,7 +154,7 @@ function zipr {
 }
 
 function start_rns {
-	msoall
+	msoa
 	tmux new -A -d -s r -c ~/git/research-note-system
 	tmux send-keys 'cd backend; ./manage.py runserver' C-m
 	tmux split-window -v -c ~/git/research-note-system
@@ -173,6 +173,13 @@ function innocent_starter {
 	tmux rename-window 'vim'
 	tmux select-window -t 0
 	tx $2
+}
+
+function setup_python {
+	cd $1
+	git init
+	python3 -m venv ~/.virtualenvs/$1
+	source ~/.virtualenvs/$1/bin/activate
 }
 
 function git_repo {
