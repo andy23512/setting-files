@@ -28,6 +28,7 @@ call minpac#add('tpope/vim-git')
 call minpac#add('tpope/vim-haml')
 call minpac#add('vim-jp/syntax-vim-ex')
 call minpac#add('vim-syntastic/syntastic')
+call minpac#add('mustache/vim-mustache-handlebars')
 
 " Load the plugins right now. (optional)
 packloadall
