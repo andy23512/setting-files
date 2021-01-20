@@ -109,6 +109,12 @@ function yc() {
 	tmux split-window -v
 	tmux send-keys 'yp' C-m
 }
+function ydc() {
+	tmux new-window
+	tmux send-keys 'ydt' C-m
+	tmux split-window -v
+	tmux send-keys 'ydp' C-m
+}
 alias c="code ."
 alias cof='code $(git root)/frontend'
 alias cx="chmod +x"
