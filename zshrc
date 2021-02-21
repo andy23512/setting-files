@@ -171,7 +171,7 @@ function innocent_starter {
 	tmux new -A -d -s $2 -c $1
 	tmux rename-window 'acst'
 	tmux split-window
-	tmux send-keys 'as track' C-m
+	tmux send-keys 'as trackNew' C-m
 	tmux new-window -c $1
 	tmux rename-window 'dp'
 	tmux send-keys 'dp' C-m
