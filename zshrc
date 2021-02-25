@@ -260,6 +260,7 @@ function set_vpn_net {
     sudo route delete -net default -interface ppp0
     sudo route add -net 0.0.0.0 -interface en0
     sudo route add -net 172.18.0.0 -netmask 255.255.0.0 -interface ppp0
+    sudo route add -net 10.1.0.0 -netmask 255.255.0.0 -interface ppp0
 }
 
 # Initinalize
