@@ -46,6 +46,8 @@ bind 7:${hyper} ${h3}
 bind 8:${hyper} ${t1}
 bind 9:${hyper} ${t2}
 bind 0:${hyper} ${t3}
+bind [:${hyper} ${h1}
+bind ]:${hyper} ${h3}
 
 # Focus Bindings
 bind right:${hyper}    focus right
