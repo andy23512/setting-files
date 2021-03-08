@@ -115,8 +115,8 @@ function ydc() {
 	tmux split-window -v
 	tmux send-keys 'ydp' C-m
 }
-alias c="code-insiders --disable-gpu ."
-alias cof='code-insiders --disable-gpu $(git root)/frontend'
+alias c="code-insiders --disable-gpu --ignore-gpu-blacklist --high-dpi-support=1 ."
+alias cof='code-insiders --disable-gpu --ignore-gpu-blacklist --high-dpi-support=1 $(git root)/frontend'
 alias cx="chmod +x"
 alias dc="docker-compose"
 alias dcbu="cr; docker-compose build"
