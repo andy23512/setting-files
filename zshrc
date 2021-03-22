@@ -95,14 +95,13 @@ alias gs='git s'
 alias gst='git st'
 alias y="yarn"
 alias ys="yarn start"
-alias yt="cf; yarn test --watch"
-alias yta="cf; yarn test --watchAll"
+alias yt="cf; yarn jest --watch --coverage=false"
+alias yta="cf; yarn jest --watchAll --coverage=false"
 alias yl="cf; yarn lint"
 alias yp="cf; yarn prod"
-alias ydt="dcc frontend yarn test"
+alias ydt="dcc frontend yarn jest --coverage=false"
 alias ydp="dcc frontend yarn prod"
 function yc() {
-	tmux new-window
 	tmux send-keys 'yl' C-m
 	tmux split-window
 	tmux send-keys 'yta' C-m
@@ -110,13 +109,12 @@ function yc() {
 	tmux send-keys 'yp' C-m
 }
 function ydc() {
-	tmux new-window
 	tmux send-keys 'ydt' C-m
 	tmux split-window -v
 	tmux send-keys 'ydp' C-m
 }
-alias c="code-insiders --disable-gpu --ignore-gpu-blacklist --high-dpi-support=1 ."
-alias cof='code-insiders --disable-gpu --ignore-gpu-blacklist --high-dpi-support=1 $(git root)/frontend'
+alias c="code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 ."
+alias cof='code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)/frontend'
 alias cx="chmod +x"
 alias dc="docker-compose"
 alias dcbu="cr; docker-compose build"
