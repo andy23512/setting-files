@@ -38,5 +38,3 @@
 	whitespace = red reverse
 [pull]
 	rebase = false
-[submodule]
-	recurse = true

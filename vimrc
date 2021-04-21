@@ -29,6 +29,7 @@ call minpac#add('tpope/vim-haml')
 call minpac#add('vim-jp/syntax-vim-ex')
 call minpac#add('vim-syntastic/syntastic')
 call minpac#add('mustache/vim-mustache-handlebars')
+call minpac#add('fisadev/vim-isort')
 
 " Load the plugins right now. (optional)
 packloadall
@@ -231,6 +232,7 @@ let g:pep8_ignore = 'E501,W601' " ignore line length error
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_completion = 0
 let g:pymode_lint_on_write = 1
+let g:pymode_lint_checkers = ['pylint', 'pyflakes', 'pep8', 'mccabe']
 
 " vim-indent-guides
 let g:indent_guides_auto_colors = 0
@@ -319,5 +321,9 @@ highlight link jsxCloseString jsxTag
 " yajs
 highlight link javascriptImport Special
 highlight link javascriptExport Special
+
+" isort
+let g:vim_isort_config_overrides = {
+  \ 'include_trailing_comma': 1, 'multi_line_output': 5}
 
 " vi:et:sw=2:ts=2:sts=2

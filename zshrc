@@ -44,7 +44,7 @@ export NVM_DIR="$HOME/.nvm"
 
 export EDITOR=vim
 export GDFONTPATH="$HOME/share/fonts"
-export LANG=en_US.UTF-8
+export LANG=ja_JP.UTF-8
 export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin:/Applications/Postgres.app/Contents/Versions/9.6/bin/:/usr/local/sbin"
 export WORKON_HOME="$HOME/.virtualenvs/"
 
@@ -171,10 +171,6 @@ function innocent_starter {
 	tmux split-window
 	tmux send-keys 'as trackNew' C-m
 	tmux new-window -c $1
-	tmux rename-window 'dp'
-	tmux send-keys 'dp' C-m
-	tmux new-window -c $1
-	tmux rename-window 'vim'
 	tmux select-window -t 0
 	tx $2
 }
