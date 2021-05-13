@@ -233,6 +233,7 @@ let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_completion = 0
 let g:pymode_lint_on_write = 1
 let g:pymode_lint_checkers = ['pylint', 'pyflakes', 'pep8', 'mccabe']
+autocmd BufWritePost *.py PymodeLintAuto
 
 " vim-indent-guides
 let g:indent_guides_auto_colors = 0
@@ -325,5 +326,6 @@ highlight link javascriptExport Special
 " isort
 let g:vim_isort_config_overrides = {
   \ 'include_trailing_comma': 1, 'multi_line_output': 5}
+autocmd BufWritePost *.py Isort
 
 " vi:et:sw=2:ts=2:sts=2
