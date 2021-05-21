@@ -141,7 +141,6 @@ alias dp="vi ~/ResilioSync/Daily\ Progress.md"
 alias tk="vi ~/ResilioSync/Track.csv"
 alias isw="innocent_starter ~/git/website w"
 alias iss="innocent_starter ~/git/space s"
-alias msoa="cw; make stop-dev-main; cs; make stop-dev-main"
 alias as="accel-shooter"
 
 # Home Aliases
@@ -180,6 +179,15 @@ function setup_python {
 	git init
 	python3 -m venv ~/.virtualenvs/$1
 	source ~/.virtualenvs/$1/bin/activate
+}
+
+function msoa {
+	pwd=`pwd`
+	cw
+	make stop-dev-main
+	cs
+	make stop-dev-main
+	cd $pwd
 }
 
 function git_repo {
