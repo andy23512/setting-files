@@ -104,14 +104,10 @@ alias ydp="dcc frontend yarn prod"
 function yc() {
 	tmux send-keys 'yl' C-m
 	tmux split-window
-	tmux send-keys 'yta' C-m
-	tmux split-window -v
-	tmux send-keys 'yp' C-m
-}
-function ydc() {
 	tmux send-keys 'ydt' C-m
 	tmux split-window -v
 	tmux send-keys 'ydp' C-m
+	tmux select-layout even-vertical
 }
 alias c="code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 ."
 alias cof='code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)/frontend'
@@ -142,6 +138,7 @@ alias tk="vi ~/ResilioSync/Track.csv"
 alias isw="innocent_starter ~/git/website w"
 alias iss="innocent_starter ~/git/space s"
 alias as="accel-shooter"
+alias a="accel-shooter"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
