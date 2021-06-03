@@ -59,9 +59,11 @@ alias h='history | grep'
 alias mv='mv -i'
 alias vi='vim'
 alias v='vim'
+alias va="vim -R +AnsiEsc ~/ac-checker-log"
 alias svi='sudo vi'
 
 # Personal Aliases
+alias python='python3'
 alias nanoha='vi ~/nanoha'
 alias n='vi ~/nanoha'
 alias e='exit'
@@ -115,7 +117,7 @@ alias cx="chmod +x"
 alias dc="docker-compose"
 alias dcbu="cr; docker-compose build"
 alias dcd="cr; docker-compose down -v"
-alias dcl="cr; docker-compose logs --tail 20 -f -t"
+alias dcl="cr; docker-compose logs --tail 30 -f -t"
 alias dcr="cr; docker-compose restart"
 alias dcu="cr; docker-compose up -d"
 alias dclf="cr; dcl frontend"

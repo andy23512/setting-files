@@ -30,6 +30,7 @@ call minpac#add('vim-jp/syntax-vim-ex')
 call minpac#add('vim-syntastic/syntastic')
 call minpac#add('mustache/vim-mustache-handlebars')
 call minpac#add('fisadev/vim-isort')
+call minpac#add('powerman/vim-plugin-AnsiEsc')
 
 " Load the plugins right now. (optional)
 packloadall
