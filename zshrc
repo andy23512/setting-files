@@ -64,8 +64,6 @@ alias svi='sudo vi'
 
 # Personal Aliases
 alias python='python3'
-alias nanoha='vi ~/nanoha'
-alias n='vi ~/nanoha'
 alias e='exit'
 alias q='exit'
 alias topme='top -c -u $USER'
