@@ -292,15 +292,16 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 1
 let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:syntastic_python_checkers=['pylint', 'flake8']
-let g:syntastic_python_pylint_args = '-d R0903,E1101,E501,W601,C0301,E0402,E0213,R0201,R0914,W0511,W0102'
-let g:syntastic_python_flake8_args = '-ignore=R0903,E1101,E501,W601,C0301,E0402,E0213,R0201,R0914,W0511,W0102'
+let g:syntastic_python_pylint_args = '-d R0903,E1101,E501,W601,C0301,E0402,E0213,R0201,R0914,W0511,W0102,C0415,R0901'
+let g:syntastic_python_flake8_args = '--select E225,E226,E227,E228 --ignore=R0903,E1101,E501,W601,C0301,E0402,E0213,R0201,R0914,W0511,W0102,C0415,R0901'
 let g:syntastic_loc_list_height = 2
 let g:syntastic_aggregate_errors = 1
+let g:syntastic_ignore_files = ['\m\.mustache$']
 
 " vue
 autocmd BufNewFile,BufEnter *.vue setfiletype vue

@@ -76,7 +76,11 @@ alias cr='cd $(git root)'
 alias cf='cd $(git root)/frontend'
 alias cb='cd $(git root)/backend'
 alias cs='cd ~/git/space/'
+alias csf='cd ~/git/space/frontend/'
+alias csb='cd ~/git/space/backend/'
 alias cw='cd ~/git/website/'
+alias cwf='cd ~/git/website/frontend/'
+alias cwb='cd ~/git/website/backend/'
 alias ca='cd ~/git/accel-shooter/'
 alias c='clear'
 alias ports='netstat -tulanp'
@@ -167,6 +171,7 @@ function innocent_starter {
 	tmux split-window
 	tmux send-keys 'as track' C-m
 	tmux new-window -c $1
+	tmux send-keys 'cd ~/git/aether-mono; yarn serve pheno' C-m
 	tmux select-window -t 0
 	tx $2
 }
