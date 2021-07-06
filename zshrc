@@ -64,40 +64,21 @@ alias svi='sudo vi'
 
 # Personal Aliases
 alias python='python3'
-alias e='exit'
-alias q='exit'
-alias topme='top -c -u $USER'
 alias tl='tmux ls'
 alias ts='tmux new -A -s'
 alias tx='tmux new -A -D -s'
 alias cd="venv_cd"
-alias txa='tx a'
 alias cr='cd $(git root)'
 alias cf='cd $(git root)/frontend'
 alias cb='cd $(git root)/backend'
 alias cs='cd ~/git/space/'
-alias csf='cd ~/git/space/frontend/'
-alias csb='cd ~/git/space/backend/'
 alias cw='cd ~/git/website/'
-alias cwf='cd ~/git/website/frontend/'
-alias cwb='cd ~/git/website/backend/'
 alias ca='cd ~/git/accel-shooter/'
 alias cm='cd ~/git/aether-mono/'
-alias c='clear'
 alias ports='netstat -tulanp'
 alias top='atop'
 alias df='df -H'
 alias g='git'
-alias ga='git add'
-alias gd='git diff --cached'
-alias gj='git jump'
-alias gph='git push'
-alias gn='git n'
-alias gc='git commit -m'
-alias gco='git checkout'
-alias gl='git l'
-alias gs='git s'
-alias gst='git st'
 alias y="yarn"
 alias ys="yarn start"
 alias yt="cf; yarn jest --watch --coverage=false"
@@ -116,7 +97,6 @@ function yc() {
 }
 alias c="code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 ."
 alias cof='code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)/frontend'
-alias cx="chmod +x"
 alias dc="docker-compose"
 alias dcbu="cr; docker-compose build"
 alias dcd="cr; docker-compose down -v"
@@ -262,13 +242,6 @@ function workon_cwd {
 # New cd function that does the virtualenv magic
 function venv_cd {
     \cd "$@" && workon_cwd
-}
-
-function set_vpn_net {
-    sudo route delete -net default -interface ppp0
-    sudo route add -net 0.0.0.0 -interface en0
-    sudo route add -net 172.18.0.0 -netmask 255.255.0.0 -interface ppp0
-    sudo route add -net 10.1.0.0 -netmask 255.255.0.0 -interface ppp0
 }
 
 # Initinalize
