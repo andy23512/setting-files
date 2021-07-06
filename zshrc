@@ -142,9 +142,9 @@ alias dp="vi ~/ResilioSync/Daily\ Progress.md"
 alias tk="vi ~/ResilioSync/Track.csv"
 alias isw="innocent_starter ~/git/website w"
 alias iss="innocent_starter ~/git/space s"
-alias isa="innocent_starter ~/git/aether-mono a"
+alias ism="innocent_starter ~/git/aether-mono m"
+alias ac="accel-shooter check"
 alias as="accel-shooter"
-alias a="accel-shooter"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
@@ -174,7 +174,7 @@ function innocent_starter {
 	tmux split-window
 	tmux send-keys 'as track' C-m
 	tmux new-window -c $1
-	tmux send-keys 'cd ~/git/aether-mono; yarn serve pheno' C-m
+	tmux send-keys 'cd ~/git/aether-mono; yarn build:iconfont; yarn serve pheno' C-m
 	tmux new-window -c $1
 	tmux select-window -t 0
 	tx $2
