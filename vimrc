@@ -297,12 +297,12 @@ let g:syntastic_check_on_wq = 1
 let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:syntastic_python_checkers=['pylint', 'flake8']
-let g:syntastic_python_pylint_args = '-d R0903,E1101,E501,W601,C0301,E0402,E0213,R0201,R0914,W0511,W0102,C0415,R0901,W1202,W1203,W0621,W0707,W0613,C0411'
+let g:syntastic_python_pylint_args = '-d R0903,E1101,E501,W601,C0301,E0402,E0213,R0201,R0914,W0511,W0102,C0415,R0901,W1202,W1203,W0621,W0707,W0613,C0411,R0904,R0912,W0201'
 let g:syntastic_python_pylint_post_args = '--msg-template="{path}:{line}:{column}:{C}: [{symbol} {msg_id}] {msg}"'
-let g:syntastic_python_flake8_args = '--select E225,E226,E227,E228 --ignore=R0903,E1101,E501,W601,C0301,E0402,E0213,R0201,R0914,W0511,W0102,C0415,R0901,W1202,W1203,W0621,W0707,W0613,C0411'
-let g:syntastic_loc_list_height = 2
+let g:syntastic_python_flake8_args = '--select E225,E226,E227,E228 --ignore=R0903,E1101,E501,W601,C0301,E0402,E0213,R0201,R0914,W0511,W0102,C0415,R0901,W1202,W1203,W0621,W0707,W0613,C0411,R0904,R0912,W0201'
+let g:syntastic_loc_list_height = 1
 let g:syntastic_aggregate_errors = 1
-let g:syntastic_ignore_files = ['\m\.mustache$']
+let g:syntastic_ignore_files = ['\m\.mustache$', '\m\.env']
 
 " vue
 autocmd BufNewFile,BufEnter *.vue setfiletype vue

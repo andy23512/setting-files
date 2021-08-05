@@ -97,26 +97,27 @@ function yc() {
 }
 alias c="code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 ."
 alias cof='code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)/frontend'
-alias dc="docker-compose"
-alias dcbu="cr; docker-compose build"
-alias dcd="cr; docker-compose down -v"
-alias dcl="cr; docker-compose logs --tail 30 -f -t"
-alias dcr="cr; docker-compose restart"
-alias dcu="cr; docker-compose up -d"
+alias dc="docker-compose --log-level ERROR"
+alias dcbu="cr; docker-compose --log-level ERROR build"
+alias dcd="cr; docker-compose --log-level ERROR down -v"
+alias dcl="cr; docker-compose --log-level ERROR logs --tail 30 -f -t"
+alias dcfl="cr; docker-compose --log-level ERROR logs 30 -f -t"
+alias dcr="cr; docker-compose --log-level ERROR restart"
+alias dcu="cr; docker-compose --log-level ERROR up -d"
 alias dclf="cr; dcl frontend"
 alias dclb="cr; dcl backend"
 alias dcbf="cr; dcb frontend"
 alias dcbb="cr; dcb backend"
-function dcc() { cr; docker-compose exec $@; }
-function dcb() { cr; docker-compose exec $@ /bin/bash; }
-function dcs() { cr; docker-compose exec $@ /bin/sh; }
+function dcc() { cr; docker-compose --log-level ERROR exec $@; }
+function dcb() { cr; docker-compose --log-level ERROR exec $@ /bin/bash; }
+function dcs() { cr; docker-compose --log-level ERROR exec $@ /bin/sh; }
 alias drm='docker rm $(docker ps -q -f 'status=exited'); docker rmi $(docker images -q -f "dangling=true")'
 function copy() { cat $@ | pbcopy; }
 alias mr="cr; make stop-dev-main; make start-dev-main"
 alias msa="cr; make start-dev-main"
 alias mso="cr; make stop-dev-main"
-alias mrf="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml restart frontend; dclf"
-alias mrb="cr; docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml restart backend; dclb"
+alias mrf="cr; docker-compose --log-level ERROR -f docker-compose.yaml -f docker-compose.dev.yaml restart frontend; dclf"
+alias mrb="cr; docker-compose --log-level ERROR -f docker-compose.yaml -f docker-compose.dev.yaml restart backend; dclb"
 alias grp="grep -nR --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git"
 alias dp="vi ~/ResilioSync/Daily\ Progress.md"
 alias tk="vi ~/ResilioSync/Track.csv"
@@ -125,6 +126,7 @@ alias iss="innocent_starter ~/git/space s"
 alias ism="innocent_starter ~/git/aether-mono m"
 alias ac="accel-shooter check"
 alias as="accel-shooter"
+alias dpcp="accel-shooter update && . ~/.virtualenvs/accel-shooter.py/bin/activate && python3 ~/git/accel-shooter.py/copy_action.py && deactivate"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
@@ -154,13 +156,19 @@ function innocent_starter {
 	tmux split-window
 	tmux send-keys 'as track' C-m
 	tmux new-window -c $1
-	tmux send-keys 'cd ~/git/aether-mono; yarn build:iconfont; yarn serve pheno' C-m
-	tmux new-window -c $1
 	tmux select-window -t 0
 	tx $2
 }
 
+function start_pheno {
+	cd ~/git/aether-mono/
+	tmux new -A -d -s p -c ~/git/aether-mono/
+	tmux send-keys 'cd ~/git/aether-mono; yarn build:iconfont; yarn serve pheno' C-m
+	tx p
+}
+
 function setup_python {
+	mkdir $1
 	cd $1
 	git init
 	python3 -m venv ~/.virtualenvs/$1

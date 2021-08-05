@@ -7,7 +7,8 @@
   "scripts": {
     "diff-bashrc": "vim -d bashrc ~/.bashrc",
     "diff-zshrc": "vim -d zshrc ~/.zshrc",
-    "diff-vimrc": "vim -d vimrc ~/.vimrc"
+    "diff-vimrc": "vim -d vimrc ~/.vimrc",
+    "diff-gitconfig": "vim -d gitconfig ~/.gitconfig"
   },
   "license": "MIT"
 }
