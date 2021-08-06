@@ -96,7 +96,14 @@ function yc() {
 	tmux select-layout even-vertical
 }
 alias c="code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 ."
-alias cof='code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)/frontend'
+function cof() {
+	DIR=$(git root)/frontend
+	if [ -d "$DIR" ]; then
+		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $DIR
+	else
+		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)
+	fi
+}
 alias dc="docker-compose --log-level ERROR"
 alias dcbu="cr; docker-compose --log-level ERROR build"
 alias dcd="cr; docker-compose --log-level ERROR down -v"
