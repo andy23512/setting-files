@@ -20,3 +20,8 @@ yarn global add yarn-completions
 
 # install diff-so-dancy
 sudo apt-get install -y diff-so-fancy
+
+# install commitizen
+npm install -g commitizen
+npm install -g cz-conventional-changelog
+echo '{ "path": "cz-conventional-changelog" }' > ~/.czrc
