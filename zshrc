@@ -87,6 +87,7 @@ alias yl="cf; yarn lint"
 alias yp="cf; yarn prod"
 alias ydt="dcc frontend yarn jest --coverage=false"
 alias ydp="dcc frontend yarn prod"
+alias ip="ifconfig | grep 'inet' | grep '192.168.1'"
 function yc() {
 	tmux send-keys 'yl' C-m
 	tmux split-window
@@ -98,6 +99,14 @@ function yc() {
 alias c="code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 ."
 function cof() {
 	DIR=$(git root)/frontend
+	if [ -d "$DIR" ]; then
+		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $DIR
+	else
+		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)
+	fi
+}
+function cob() {
+	DIR=$(git root)/backend
 	if [ -d "$DIR" ]; then
 		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $DIR
 	else
@@ -159,7 +168,6 @@ function innocent_starter {
 	cd $1
 	tmux new -A -d -s $2 -c $1
 	tmux rename-window 'acst'
-	tmux send-keys 'as sync' C-m
 	tmux split-window
 	tmux send-keys 'as track' C-m
 	tmux new-window -c $1

@@ -14,7 +14,7 @@ call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
 " Add other plugins here.
-call minpac#add('Valloric/YouCompleteMe')
+call minpac#add('tabnine/YouCompleteMe')
 call minpac#add('airblade/vim-gitgutter')
 call minpac#add('digitaltoad/vim-pug')
 call minpac#add('isRuslan/vim-es6')
