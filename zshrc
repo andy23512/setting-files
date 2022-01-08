@@ -143,6 +143,8 @@ alias ism="innocent_starter ~/git/aether-mono m"
 alias ac="accel-shooter check"
 alias as="accel-shooter"
 alias dpcp="accel-shooter update && . ~/.virtualenvs/accel-shooter.py/bin/activate && python3 ~/git/accel-shooter.py/copy_action.py && deactivate"
+alias op="open ~/git/aether-mono/libs/pheno/documentation/compodoc/index.html"
+alias sp="cd ~/git/aether-mono; yarn build:iconfont; yarn serve pheno"
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
@@ -168,18 +170,12 @@ function innocent_starter {
 	cd $1
 	tmux new -A -d -s $2 -c $1
 	tmux rename-window 'acst'
+	tmux send-keys 'as sync' C-m
 	tmux split-window
 	tmux send-keys 'as track' C-m
 	tmux new-window -c $1
 	tmux select-window -t 0
 	tx $2
-}
-
-function start_pheno {
-	cd ~/git/aether-mono/
-	tmux new -A -d -s p -c ~/git/aether-mono/
-	tmux send-keys 'cd ~/git/aether-mono; yarn build:iconfont; yarn serve pheno' C-m
-	tx p
 }
 
 function setup_python {
