@@ -187,14 +187,7 @@ hi Pmenu ctermfg = white
 " #########################################################################
 " command
 
-function Nanoha()
-  :1read !head ~/nanoha
-  :1
-  :join 1
-endfunction
-
 " special command
-command Na exec Nanoha()
 command P set paste
 command NP set nopaste
 
@@ -228,8 +221,8 @@ endfunction
 
 " python_mode options
 let g:pymode_python = 'python3'
-let g:pymode_lint_ignore = ['E501', 'W601', 'W391'] " ignore line length error
-let g:pep8_ignore = 'E501,W601' " ignore line length error
+let g:pymode_lint_ignore = 'E501,W601,W391,E0307' " ignore line length error
+let g:pep8_ignore = 'E501,W601,E0307' " ignore line length error
 let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_completion = 0
 let g:pymode_lint_on_write = 0

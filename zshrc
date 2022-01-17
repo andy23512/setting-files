@@ -75,6 +75,7 @@ alias cs='cd ~/git/space/'
 alias cw='cd ~/git/website/'
 alias ca='cd ~/git/accel-shooter/'
 alias cm='cd ~/git/aether-mono/'
+alias ci='cd ~/git/ihis/'
 alias ports='netstat -tulanp'
 alias top='atop'
 alias df='df -H'
@@ -139,6 +140,7 @@ alias dp="vi ~/ResilioSync/Daily\ Progress.md"
 alias tk="vi ~/ResilioSync/Track.csv"
 alias isw="innocent_starter ~/git/website w"
 alias iss="innocent_starter ~/git/space s"
+alias isi="innocent_starter ~/git/ihis i"
 alias ism="innocent_starter ~/git/aether-mono m"
 alias ac="accel-shooter check"
 alias as="accel-shooter"
@@ -170,9 +172,9 @@ function innocent_starter {
 	cd $1
 	tmux new -A -d -s $2 -c $1
 	tmux rename-window 'acst'
-	tmux send-keys 'as sync' C-m
-	tmux split-window
 	tmux send-keys 'as track' C-m
+	tmux split-window
+	tmux send-keys 'acst-server' C-m
 	tmux new-window -c $1
 	tmux select-window -t 0
 	tx $2
