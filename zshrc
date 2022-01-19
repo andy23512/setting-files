@@ -176,7 +176,6 @@ function innocent_starter {
 	tmux split-window
 	tmux send-keys 'acst-server' C-m
 	tmux new-window -c $1
-	tmux select-window -t 0
 	tx $2
 }
 
