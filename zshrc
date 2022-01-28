@@ -138,6 +138,7 @@ alias mrb="cr; docker-compose --log-level ERROR -f docker-compose.yaml -f docker
 alias grp="grep -nR --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git"
 alias dp="vi ~/ResilioSync/Daily\ Progress.md"
 alias tk="vi ~/ResilioSync/Track.csv"
+alias ass="accel_shooter_starter"
 alias isw="innocent_starter ~/git/website w"
 alias iss="innocent_starter ~/git/space s"
 alias isi="innocent_starter ~/git/ihis i"
@@ -168,14 +169,19 @@ function start_rns {
 	tx r
 }
 
-function innocent_starter {
-	cd $1
-	tmux new -A -d -s $2 -c $1
+function accel_shooter_starter {
+	cd ~/git/accel-shooter
+	tmux new -A -d -s a -c ~/git/accel-shooter
 	tmux rename-window 'acst'
 	tmux send-keys 'as track' C-m
 	tmux split-window
 	tmux send-keys 'acst-server' C-m
-	tmux new-window -c $1
+	tx a
+}
+
+function innocent_starter {
+	cd $1
+	tmux new -A -d -s $2 -c $1
 	tx $2
 }
 
@@ -294,3 +300,10 @@ fpath=(~/.zsh $fpath)
 
 autoload -Uz compinit && compinit
 export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/.config.json
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export FZF_COMPLETION_TRIGGER='``'
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

@@ -79,6 +79,7 @@ set noexpandtab
 set nosmartindent
 set nowrap
 set redrawtime=10000
+set rtp+=/usr/local/opt/fzf
 set ruler " show current line and column position
 set shiftwidth=4
 set showmatch " show the match { ( <
