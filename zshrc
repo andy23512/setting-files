@@ -304,6 +304,6 @@ export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/.config.json
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export FZF_COMPLETION_TRIGGER='``'
+export FZF_COMPLETION_TRIGGER='//'
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

@@ -32,4 +32,3 @@ done
 cp zshrc ~/.zshrc
 cp zpreztorc ~/.zpreztorc
 chsh -s /bin/zsh
-git clone https://github.com/Aloxaf/fzf-tab ${ZDOTDIR:-$HOME}/.zprezto/contrib/fzf-tab
