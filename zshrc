@@ -263,10 +263,6 @@ function workon_cwd {
         # Note: this only happens if the virtualenv was activated automatically
         deactivate && unset CD_VIRTUAL_ENV
     fi
-    if [ "$TERM_PROGRAM" = tmux ]; then
-        echo 'In tmux'
-        tmux set set-titles-string "$(git_repo)$(git_info)"
-    fi
 }
 
 # New cd function that does the virtualenv magic
@@ -311,3 +307,12 @@ export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/.config.json
 export FZF_COMPLETION_TRIGGER='//'
 export FZF_DEFAULT_COMMAND='fd'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# zsh hook
+function precmd_function() {
+    if [ "$TERM_PROGRAM" = tmux ]; then
+        tmux set set-titles-string "$(git_repo)$(git_info)"
+    fi
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd precmd_function
