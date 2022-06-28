@@ -1,8 +1,5 @@
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the start of this file.
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-#### END FIG ENV VARIABLES ####
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -119,27 +116,28 @@ function cob() {
 		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)
 	fi
 }
-alias dc="docker-compose --log-level ERROR"
-alias dcbu="cr; docker-compose --log-level ERROR build"
-alias dcd="cr; docker-compose --log-level ERROR down -v"
-alias dcl="cr; docker-compose --log-level ERROR logs --tail 30 -f -t"
-alias dcfl="cr; docker-compose --log-level ERROR logs 30 -f -t"
-alias dcr="cr; docker-compose --log-level ERROR restart"
-alias dcu="cr; docker-compose --log-level ERROR up -d"
+# alias dc="docker-compose -f docker-compose.yaml -f dev.yaml"
+alias dc="docker-compose"
+alias dcbu="cr; dc build"
+alias dcd="cr; dc down -v"
+alias dcl="cr; dc logs --tail 30 -f -t"
+alias dcfl="cr; dc logs 30 -f -t"
+alias dcr="cr; dc restart"
+alias dcu="cr; dc up -d"
 alias dclf="cr; dcl frontend"
 alias dclb="cr; dcl backend"
 alias dcbf="cr; dcb frontend"
 alias dcbb="cr; dcb backend"
-function dcc() { cr; docker-compose --log-level ERROR exec $@; }
-function dcb() { cr; docker-compose --log-level ERROR exec $@ /bin/bash; }
-function dcs() { cr; docker-compose --log-level ERROR exec $@ /bin/sh; }
+function dcc() { cr; dc exec $@; }
+function dcb() { cr; dc exec $@ /bin/bash; }
+function dcs() { cr; dc exec $@ /bin/sh; }
 alias drm='docker rm $(docker ps -q -f 'status=exited'); docker rmi $(docker images -q -f "dangling=true")'
 function copy() { cat $@ | pbcopy; }
 alias mr="cr; make stop-dev-main; make start-dev-main"
 alias msa="cr; make start-dev-main"
 alias mso="cr; make stop-dev-main"
-alias mrf="cr; docker-compose --log-level ERROR -f docker-compose.yaml -f docker-compose.dev.yaml restart frontend; dclf"
-alias mrb="cr; docker-compose --log-level ERROR -f docker-compose.yaml -f docker-compose.dev.yaml restart backend; dclb"
+alias mrf="cr; dc restart frontend; dclf"
+alias mrb="cr; dc restart backend; dclb"
 alias grp="grep -nR --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git"
 alias dp="vi ~/ResilioSync/Daily\ Progress.md"
 alias tk="vi ~/ResilioSync/Track.csv"
@@ -181,6 +179,8 @@ function accel_shooter_starter {
 	tmux send-keys 'as track' C-m
 	tmux split-window
 	tmux send-keys 'acst-server' C-m
+	tmux split-window
+	tmux send-keys 'as dumpMyTasks' C-m
 	tx a
 }
 
@@ -322,7 +322,7 @@ function precmd_function() {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd precmd_function
 
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####
+export PATH="$HOME/.poetry/bin:$PATH"
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"

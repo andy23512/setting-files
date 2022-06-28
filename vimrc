@@ -31,6 +31,7 @@ call minpac#add('vim-syntastic/syntastic')
 call minpac#add('mustache/vim-mustache-handlebars')
 call minpac#add('fisadev/vim-isort')
 call minpac#add('powerman/vim-plugin-AnsiEsc')
+call minpac#add('nvie/vim-flake8')
 
 " Load the plugins right now. (optional)
 packloadall
@@ -228,6 +229,8 @@ let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_completion = 0
 let g:pymode_lint_on_write = 0
 let g:pymode_lint_checkers = ['pylint', 'pyflakes', 'pep8', 'mccabe']
+let g:pymode_options_max_line_length=119
+autocmd FileType python set colorcolumn=119
 
 " vim-indent-guides
 let g:indent_guides_auto_colors = 0
@@ -324,8 +327,9 @@ highlight link javascriptExport Special
 
 " isort
 let g:vim_isort_config_overrides = {
-  \ 'include_trailing_comma': 1, 'multi_line_output': 5}
+  \ 'include_trailing_comma': 1, 'multi_line_output': 5, 'line_length': 100, 'balanced_wrapping': 1, 'lines_after_imports': 2, 'combine_as_imports': 1}
 autocmd BufWritePost *.py call PostPython()
+autocmd BufWritePost *.py call flake8#Flake8()
 function PostPython()
   Isort
 endfunction
