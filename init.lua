@@ -1,3 +1,5 @@
+-- reload config part
+
 function reloadConfig(files)
     doReload = false
     for _,file in pairs(files) do
@@ -12,69 +14,81 @@ end
 myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 hs.alert.show("Config loaded")
 
-keys = {
-	['1'] = {index = 0, split = 4},
-	['2'] = {index = 1, split = 4},
-	['3'] = {index = 2, split = 4},
-	['4'] = {index = 3, split = 4},
-	['5'] = {index = 0, split = 3},
-	['6'] = {index = 1, split = 3},
-	['7'] = {index = 2, split = 3},
-	['8'] = {index = 0, split = 5},
-	['9'] = {index = 1, split = 5},
-	['0'] = {index = 2, split = 5},
-	['-'] = {index = 3, split = 5},
-	['='] = {index = 4, split = 5},
+-- global setting part
+
+hs.window.animationDuration = 0
+
+-- global function
+
+function callbackFactory(callback)
+	return function()
+		local win = hs.window.focusedWindow()
+		local f = win:frame()
+		local screen = win:screen()
+		local max = screen:frame()
+		callback(win, f, max)
+		f.y = max.y
+		f.h = max.h
+		win:setFrame(f)
+	end
+end
+
+-- split and move window
+
+split_and_move_window_keys = {
 	['['] = {index = 0, split = 2},
 	[']'] = {index = 1, split = 2},
 }
 
+for key, val in pairs(split_and_move_window_keys) do
+	hs.hotkey.bind({'cmd', 'alt'}, key, callbackFactory(function(win, f, max)
+		f.x = max.w * val.index / val.split
+		f.w = max.w / val.split
+	end))
+end
+
+-- enlarge window
+
 enlarge_keys = {
-	['q'] = 2,
-	['w'] = 3,
-	['e'] = 4,
+	['s'] = 2,
+	['d'] = 3,
+	['f'] = 4,
+	['g'] = 5,
 }
 
-hs.window.animationDuration = 0
-
-function moveWindow(index, split)
-	local win = hs.window.focusedWindow()
-	local f = win:frame()
-	local screen = win:screen()
-	local max = screen:frame()
-
-	f.x = max.w * index / split
-	f.y = max.y
-	f.w = max.w / split
-	f.h = max.h
-	win:setFrame(f)
+for key, n in pairs(enlarge_keys) do
+	hs.hotkey.bind({'cmd', 'alt'}, key, callbackFactory(function(win, f, max)
+		local width = f.w * n
+		if f.x + width > max.w then
+			f.x = max.w - width
+		end
+		f.w = f.w * n
+	end))
 end
 
-for key, val in pairs(keys) do
-	hs.hotkey.bind({'cmd', 'alt'}, key, function()
-		moveWindow(val.index, val.split)
-	end)
+-- set window size
+
+for i = 1, 6 do
+	hs.hotkey.bind({'cmd', 'alt'}, tostring(i), callbackFactory(function(win, f, max)
+		local width = max.w / i
+		if f.x + width > max.w then
+			f.x = max.w - width
+		end
+		f.w = width
+	end))
 end
 
-function enlargeWindowWidth(n)
-	local win = hs.window.focusedWindow()
-	local f = win:frame()
-	local screen = win:screen()
-	local max = screen:frame()
+-- set window position
 
-	local width = f.w * n
+set_window_position_keys = {'q', 'w', 'e', 'r', 't', 'y'}
 
-	if f.x + width > max.w then
-		f.x = max.w - width
-	end
-
-	f.w = f.w * n
-
-	win:setFrame(f)
-end
-
-for key, val in pairs(enlarge_keys) do
-	hs.hotkey.bind({'cmd', 'alt'}, key, function()
-		enlargeWindowWidth(val)
-	end)
+for index, key in pairs(set_window_position_keys) do
+	hs.hotkey.bind({'cmd', 'alt'}, key, callbackFactory(function(win, f, max)
+		local x = f.w * (index - 1)
+		if x + f.w > max.w then
+			f.x = max.w - f.w
+		else
+			f.x = x
+		end
+	end))
 end
