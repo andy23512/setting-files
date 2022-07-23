@@ -42,6 +42,8 @@ for key, val in pairs(split_and_move_window_keys) do
 	hs.hotkey.bind({'cmd', 'alt'}, key, callbackFactory(function(win, f, max)
 		f.x = max.w * val.index / val.split
 		f.w = max.w / val.split
+		f.y = 0
+		f.h = max.h
 	end))
 end
 
@@ -61,6 +63,8 @@ for key, n in pairs(enlarge_keys) do
 			f.x = max.w - width
 		end
 		f.w = f.w * n
+		f.y = 0
+		f.h = max.h
 	end))
 end
 
@@ -73,6 +77,8 @@ for i = 1, 6 do
 			f.x = max.w - width
 		end
 		f.w = width
+		f.y = 0
+		f.h = max.h
 	end))
 end
 
@@ -88,6 +94,8 @@ for index, key in pairs(set_window_position_keys) do
 		else
 			f.x = x
 		end
+		f.y = 0
+		f.h = max.h
 	end))
 end
 
