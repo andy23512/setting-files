@@ -27,8 +27,6 @@ function callbackFactory(callback)
 		local screen = win:screen()
 		local max = screen:frame()
 		callback(win, f, max)
-		f.y = max.y
-		f.h = max.h
 		win:setFrame(f)
 	end
 end
@@ -90,5 +88,18 @@ for index, key in pairs(set_window_position_keys) do
 		else
 			f.x = x
 		end
+	end))
+end
+
+y_keys = {
+	['z'] = { split = 1, index = 0 },
+	['x'] = { split = 2, index = 0 },
+	['c'] = { split = 2, index = 1 },
+}
+
+for key, val in pairs(y_keys) do
+	hs.hotkey.bind({'cmd', 'alt'}, key, callbackFactory(function(win, f, max)
+		f.y = max.h * val.index / val.split
+		f.h = max.h / val.split
 	end))
 end
