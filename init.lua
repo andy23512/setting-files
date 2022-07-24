@@ -94,7 +94,7 @@ for index, key in pairs(set_window_position_keys) do
 		else
 			f.x = x
 		end
-		f.y = 0
+		f.y = max.y
 		f.h = max.h
 	end))
 end
@@ -107,7 +107,7 @@ y_keys = {
 
 for key, val in pairs(y_keys) do
 	hs.hotkey.bind({'cmd', 'alt'}, key, callbackFactory(function(win, f, max)
-		f.y = max.h * val.index / val.split
+		f.y = max.y + max.h * val.index / val.split
 		f.h = max.h / val.split
 	end))
 end
