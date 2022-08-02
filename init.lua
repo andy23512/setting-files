@@ -75,8 +75,6 @@ for i = 1, 6 do
 			f.x = max.w - width
 		end
 		f.w = width
-		f.y = 0
-		f.h = max.h
 	end))
 end
 
