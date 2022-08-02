@@ -63,8 +63,6 @@ for key, n in pairs(enlarge_keys) do
 			f.x = max.w - width
 		end
 		f.w = f.w * n
-		f.y = 0
-		f.h = max.h
 	end))
 end
 
@@ -94,8 +92,6 @@ for index, key in pairs(set_window_position_keys) do
 		else
 			f.x = x
 		end
-		f.y = max.y
-		f.h = max.h
 	end))
 end
 
