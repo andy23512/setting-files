@@ -116,8 +116,13 @@ function cob() {
 		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)
 	fi
 }
-# alias dc="docker-compose -f docker-compose.yaml -f dev.yaml"
-alias dc="docker-compose"
+function dc() {
+	if [ -e "dev.yaml" ]; then
+		docker-compose -f docker-compose.yaml -f dev.yaml $@
+	else
+		docker-compose $@
+	fi
+}
 alias dcbu="cr; dc build"
 alias dcd="cr; dc down -v"
 alias dcl="cr; dc logs --tail 30 -f -t"
@@ -147,6 +152,7 @@ alias iss="innocent_starter ~/git/space s"
 alias isi="innocent_starter ~/git/ihis i"
 alias ism="innocent_starter ~/git/aether-mono m"
 alias ac="accel-shooter check"
+alias aci="accel-shooter commit"
 alias as="accel-shooter"
 alias dpcp="accel-shooter update && . ~/.virtualenvs/accel-shooter.py/bin/activate && python3 ~/git/accel-shooter.py/copy_action.py && deactivate"
 alias op="open ~/git/aether-mono/libs/pheno/documentation/compodoc/index.html"

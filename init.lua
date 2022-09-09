@@ -71,7 +71,7 @@ end
 for i = 1, 6 do
 	hs.hotkey.bind({'cmd', 'alt'}, tostring(i), callbackFactory(function(win, f, max)
 		local width = max.w / i
-		local x = math.floor((f.x + f.w / 2) / width) * width
+		local x = math.round((f.x + f.w / 2) / width) * width
 		if x + width > max.w then
 			f.x = max.w - width
 		else
