@@ -31,7 +31,62 @@ function callbackFactory(callback)
 	end
 end
 
--- split and move window
+-- grid cols setting
+
+cols = hs.settings.get('cols') or 4
+hs.grid.setGrid(tostring(cols) .. 'x2')
+hs.grid.setMargins({ x = 0, y = 0 })
+
+for i = 3, 5 do
+	hs.hotkey.bind({'cmd', 'alt'}, tostring(i), function()
+		hs.settings.set('cols', i)
+		hs.grid.setGrid(tostring(i) .. 'x2')
+		hs.alert.show(tostring(i) .. 'x2')
+	end)
+end
+
+-- set window to cell
+
+set_cell_keys = {
+	['q'] = '0,0 1x1',
+	['a'] = '0,1 1x1',
+	['w'] = '1,0 1x1',
+	['s'] = '1,1 1x1',
+	['e'] = '2,0 1x1',
+	['d'] = '2,1 1x1',
+	['r'] = '3,0 1x1',
+	['f'] = '3,1 1x1',
+	['t'] = '4,0 1x1',
+	['g'] = '4,1 1x1',
+	['z'] = '0,0 1x2',
+	['x'] = '1,0 1x2',
+	['c'] = '2,0 1x2',
+	['v'] = '3,0 1x2',
+	['b'] = '4,0 1x2',
+}
+
+for key, val in pairs(set_cell_keys) do
+	hs.hotkey.bind({'cmd', 'alt'}, key, function()
+		local win = hs.window.focusedWindow()
+		hs.grid.set(win, val)
+	end)
+end
+
+-- wider window
+
+hs.hotkey.bind({'cmd', 'alt'}, 'Right', function()
+	local win = hs.window.focusedWindow()
+	hs.grid.resizeWindowWider(win)
+end)
+
+-- taller window
+
+hs.hotkey.bind({'cmd', 'alt'}, 'Down', function()
+	local win = hs.window.focusedWindow()
+	hs.grid.resizeWindowTaller(win)
+end)
+
+-- left right split window
 
 split_and_move_window_keys = {
 	['['] = {index = 0, split = 2},
@@ -44,67 +99,5 @@ for key, val in pairs(split_and_move_window_keys) do
 		f.w = max.w / val.split
 		f.y = 0
 		f.h = max.h
-	end))
-end
-
--- enlarge window
-
-enlarge_keys = {
-	['s'] = 2,
-	['d'] = 3,
-	['f'] = 4,
-	['g'] = 5,
-}
-
-for key, n in pairs(enlarge_keys) do
-	hs.hotkey.bind({'cmd', 'alt'}, key, callbackFactory(function(win, f, max)
-		local width = f.w * n
-		if f.x + width > max.w then
-			f.x = max.w - width
-		end
-		f.w = f.w * n
-	end))
-end
-
--- set window size
-
-for i = 1, 6 do
-	hs.hotkey.bind({'cmd', 'alt'}, tostring(i), callbackFactory(function(win, f, max)
-		local width = max.w / i
-		local x = math.round((f.x + f.w / 2) / width) * width
-		if x + width > max.w then
-			f.x = max.w - width
-		else
-			f.x = x
-		end
-		f.w = width
-	end))
-end
-
--- set window position
-
-set_window_position_keys = {'q', 'w', 'e', 'r', 't', 'y'}
-
-for index, key in pairs(set_window_position_keys) do
-	hs.hotkey.bind({'cmd', 'alt'}, key, callbackFactory(function(win, f, max)
-		local x = f.w * (index - 1)
-		if x + f.w > max.w then
-			f.x = max.w - f.w
-		else
-			f.x = x
-		end
-	end))
-end
-
-y_keys = {
-	['z'] = { split = 1, index = 0 },
-	['x'] = { split = 2, index = 0 },
-	['c'] = { split = 2, index = 1 },
-}
-
-for key, val in pairs(y_keys) do
-	hs.hotkey.bind({'cmd', 'alt'}, key, callbackFactory(function(win, f, max)
-		f.y = max.y + max.h * val.index / val.split
-		f.h = max.h / val.split
 	end))
 end
