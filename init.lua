@@ -37,7 +37,7 @@ cols = hs.settings.get('cols') or 4
 hs.grid.setGrid(tostring(cols) .. 'x2')
 hs.grid.setMargins({ x = 0, y = 0 })
 
-for i = 3, 5 do
+for i = 2, 5 do
 	hs.hotkey.bind({'cmd', 'alt'}, tostring(i), function()
 		hs.settings.set('cols', i)
 		hs.grid.setGrid(tostring(i) .. 'x2')
@@ -91,6 +91,7 @@ end)
 split_and_move_window_keys = {
 	['['] = {index = 0, split = 2},
 	[']'] = {index = 1, split = 2},
+	['\\'] = {index = 0.5, split = 2},
 }
 
 for key, val in pairs(split_and_move_window_keys) do
