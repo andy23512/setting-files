@@ -31,60 +31,41 @@ function callbackFactory(callback)
 	end
 end
 
+-- modal mode for characorder
+
+m = hs.hotkey.modal.new('cmd-alt', 'm')
+function m:entered() hs.alert('Entered mode') end
+function m:exited() hs.alert('Exited mode') end
+m:bind('', 'escape', function() m:exit() end)
+
 -- grid cols setting
 
 cols = hs.settings.get('cols') or 4
 hs.grid.setGrid(tostring(cols) .. 'x2')
 hs.grid.setMargins({ x = 0, y = 0 })
 
+function setColsCallbackFactory(cols)
+  return function()
+		hs.settings.set('cols', cols)
+		hs.grid.setGrid(tostring(cols) .. 'x2')
+		hs.alert.show(tostring(cols) .. 'x2')
+	end
+end
+
 for i = 2, 5 do
-	hs.hotkey.bind({'cmd', 'alt'}, tostring(i), function()
-		hs.settings.set('cols', i)
-		hs.grid.setGrid(tostring(i) .. 'x2')
-		hs.alert.show(tostring(i) .. 'x2')
-	end)
+	setColsCallback = setColsCallbackFactory(i)
+	hs.hotkey.bind({'cmd', 'alt'}, tostring(i), setColsCallback)
+	m:bind('', tostring(i), setColsCallback)
 end
 
--- set window to cell
+-- show grid
 
-set_cell_keys = {
-	['q'] = '0,0 1x1',
-	['a'] = '0,1 1x1',
-	['w'] = '1,0 1x1',
-	['s'] = '1,1 1x1',
-	['e'] = '2,0 1x1',
-	['d'] = '2,1 1x1',
-	['r'] = '3,0 1x1',
-	['f'] = '3,1 1x1',
-	['t'] = '4,0 1x1',
-	['g'] = '4,1 1x1',
-	['z'] = '0,0 1x2',
-	['x'] = '1,0 1x2',
-	['c'] = '2,0 1x2',
-	['v'] = '3,0 1x2',
-	['b'] = '4,0 1x2',
-}
-
-for key, val in pairs(set_cell_keys) do
-	hs.hotkey.bind({'cmd', 'alt'}, key, function()
-		local win = hs.window.focusedWindow()
-		hs.grid.set(win, val)
-	end)
+function showGrid()
+	hs.grid.show()
 end
 
--- wider window
-
-hs.hotkey.bind({'cmd', 'alt'}, 'Right', function()
-	local win = hs.window.focusedWindow()
-	hs.grid.resizeWindowWider(win)
-end)
-
--- taller window
-
-hs.hotkey.bind({'cmd', 'alt'}, 'Down', function()
-	local win = hs.window.focusedWindow()
-	hs.grid.resizeWindowTaller(win)
-end)
+hs.hotkey.bind({'cmd', 'alt'}, 's', showGrid)
+m:bind('', 's', showGrid)
 
 -- left right split window
 
@@ -92,6 +73,9 @@ split_and_move_window_keys = {
 	['['] = {index = 0, split = 2},
 	[']'] = {index = 1, split = 2},
 	['\\'] = {index = 0.5, split = 2},
+	['Left'] = {index = 0, split = 2},
+	['Right'] = {index = 1, split = 2},
+	['Down'] = {index = 0.5, split = 2},
 }
 
 for key, val in pairs(split_and_move_window_keys) do
@@ -102,3 +86,23 @@ for key, val in pairs(split_and_move_window_keys) do
 		f.h = max.h
 	end))
 end
+
+-- auto grid
+
+wf_youtube_popup = hs.window.filter.new(function(w)
+  title = w:title()
+	return string.find(title, '- YouTube') and not string.find(title, '- Brave')
+end)
+
+hs.hotkey.bind({'cmd', 'alt'}, 'a', function()
+  windows = wf_youtube_popup:getWindows()
+	if #windows == 1 then
+		hs.grid.set(windows[1], (tostring(cols - 1)) .. ',0 1x2')
+	else
+		for i = 1, #windows do
+			ci = cols - 1 - math.floor((i - 1) / 2)
+			ri = (i - 1) % 2
+      hs.grid.set(windows[i], (tostring(ci)) .. ',' .. (tostring(ri)) .. ' 1x1')
+		end
+	end
+end)
