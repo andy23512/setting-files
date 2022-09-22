@@ -61,7 +61,7 @@ end
 -- show grid
 
 function showGrid()
-	hs.grid.show()
+	hs.grid.show(true)
 end
 
 hs.hotkey.bind({'cmd', 'alt'}, 's', showGrid)
@@ -102,7 +102,7 @@ hs.hotkey.bind({'cmd', 'alt'}, 'a', function()
 		for i = 1, #windows do
 			ci = cols - 1 - math.floor((i - 1) / 2)
 			ri = (i - 1) % 2
-      hs.grid.set(windows[i], (tostring(ci)) .. ',' .. (tostring(ri)) .. ' 1x1')
+			hs.grid.set(windows[i], (tostring(ci)) .. ',' .. (tostring(ri)) .. ' 1x1')
 		end
 	end
 end)
