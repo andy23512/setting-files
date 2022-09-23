@@ -49,10 +49,11 @@ function setColsCallbackFactory(cols)
 		hs.settings.set('cols', cols)
 		hs.grid.setGrid(tostring(cols) .. 'x2')
 		hs.alert.show(tostring(cols) .. 'x2')
+		cols = cols
 	end
 end
 
-for i = 2, 5 do
+for i = 2, 6 do
 	setColsCallback = setColsCallbackFactory(i)
 	hs.hotkey.bind({'cmd', 'alt'}, tostring(i), setColsCallback)
 	m:bind('', tostring(i), setColsCallback)
