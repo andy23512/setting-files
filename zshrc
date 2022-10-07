@@ -82,6 +82,9 @@ alias ports='netstat -tulanp'
 alias top='atop'
 alias df='df -H'
 alias g='git'
+alias gd='git d'
+alias gdc='git dc'
+alias gp='git push'
 alias y="yarn"
 alias ys="yarn start"
 alias yt="cf; yarn jest --watch --coverage=false"
