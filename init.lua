@@ -103,24 +103,16 @@ for key, val in pairs(split_and_move_window_keys) do
     end))
 end
 
--- auto grid
+-- auto snap
 
-wf_youtube_popup = hs.window.filter.new(function(w)
-    title = w:title()
-    return string.find(title, '- YouTube') and not string.find(title, '- Brave')
-end)
+wf_all = hs.window.filter.new(true)
 
-hs.hotkey.bind({'cmd', 'alt'}, 'a', function()
-    windows = wf_youtube_popup:getWindows()
-    if #windows == 1 then
-        hs.grid.set(windows[1], (tostring(gcols - 1)) .. ',0 1x2')
-    else
-        for i = 1, #windows do
-            ci = gcols - 1 - math.floor((i - 1) / 2)
-            ri = (i - 1) % 2
-            hs.grid.set(windows[i], (tostring(ci)) .. ',' .. (tostring(ri)) .. ' 1x1')
-        end
+function snapWindow(window)
+    if window:isVisible() and window:isStandard() then
+        hs.grid.snap(window)
     end
-end)
+end
+
+wf_all:subscribe(hs.window.filter.windowMoved, snapWindow)
 
 -- vim:sw=4:ts=4:sts=4:et
