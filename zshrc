@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -154,6 +154,7 @@ alias ism="innocent_starter ~/git/aether-mono m"
 alias ac="accel-shooter check"
 alias aci="accel-shooter commit"
 alias as="accel-shooter"
+alias ao="accel-shooter open"
 alias dpcp="accel-shooter update && . ~/.virtualenvs/accel-shooter.py/bin/activate && python3 ~/git/accel-shooter.py/copy_action.py && deactivate"
 alias op="open ~/git/aether-mono/libs/pheno/documentation/compodoc/index.html"
 alias sp="cd ~/git/aether-mono; yarn build:iconfont; yarn serve pheno"
@@ -310,7 +311,7 @@ zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 fpath=(~/.zsh $fpath)
 
 autoload -Uz compinit && compinit
-export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/.config.json
+export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/.config.yml
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -331,4 +332,4 @@ add-zsh-hook precmd precmd_function
 export PATH="$HOME/.poetry/bin:$PATH"
 
 # Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
