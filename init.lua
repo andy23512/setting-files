@@ -14,6 +14,10 @@ end
 myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 hs.alert.show("Config loaded")
 
+-- load secrets part
+
+secrets = hs.json.read(".secrets.json")
+
 -- global setting part
 
 hs.window.animationDuration = 0
@@ -22,12 +26,14 @@ hs.window.animationDuration = 0
 
 function callbackFactory(callback)
     return function()
+        wf_all:pause()
         local win = hs.window.focusedWindow()
         local f = win:frame()
         local screen = win:screen()
         local max = screen:frame()
         callback(win, f, max)
-        win:setFrame(f)
+        win:setFrame(f, 0)
+        hs.timer.doAfter(1, function() wf_all:resume() end)
     end
 end
 
@@ -114,5 +120,24 @@ function snapWindow(window)
 end
 
 wf_all:subscribe(hs.window.filter.windowMoved, snapWindow)
+wf_all:subscribe(hs.window.filter.windowCreated, snapWindow)
+
+-- reconnect wifi
+
+ssid = secrets.wifiSSID
+passpharse = secrets.wifiPasspharse
+
+
+function checkAndReconnectWifi()
+    local currentNetwork = hs.wifi.currentNetwork()
+    if currentNetwork == nil then
+        hs.alert.show('no network')
+        hs.wifi.associate(ssid, passpharse)
+    end
+end
+
+
+checkAndReconnectWifi()
+hs.timer.doEvery(5, checkAndReconnectWifi)
 
 -- vim:sw=4:ts=4:sts=4:et
