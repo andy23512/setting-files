@@ -86,7 +86,7 @@ alias gs='git s'
 alias gd='git d'
 alias gdc='git dc'
 alias gp='git push'
-alias ga.='git a .'
+alias ga='git a .'
 alias y="yarn"
 alias ys="yarn start"
 alias yt="cf; yarn jest --watch --coverage=false"
