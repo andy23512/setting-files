@@ -46,7 +46,7 @@ export NVM_DIR="$HOME/.nvm"
 
 export EDITOR=vim
 export GDFONTPATH="$HOME/share/fonts"
-export LANG=ja_JP.UTF-8
+export LANG=en_US.UTF-8
 export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin:/Applications/Postgres.app/Contents/Versions/9.6/bin/:/usr/local/sbin"
 export WORKON_HOME="$HOME/.virtualenvs/"
 
@@ -86,6 +86,7 @@ alias gs='git s'
 alias gd='git d'
 alias gdc='git dc'
 alias gp='git push'
+alias ga.='git a .'
 alias y="yarn"
 alias ys="yarn start"
 alias yt="cf; yarn jest --watch --coverage=false"
