@@ -86,7 +86,7 @@ alias gs='git s'
 alias gd='git d'
 alias gdc='git dc'
 alias gp='git push'
-alias ga='git a .'
+alias ga='git a -A'
 alias y="yarn"
 alias ys="yarn start"
 alias yt="cf; yarn jest --watch --coverage=false"
@@ -163,6 +163,22 @@ alias ao="accel-shooter open"
 alias dpcp="accel-shooter update && . ~/.virtualenvs/accel-shooter.py/bin/activate && python3 ~/git/accel-shooter.py/copy_action.py && deactivate"
 alias op="open ~/git/aether-mono/libs/pheno/documentation/compodoc/index.html"
 alias sp="cd ~/git/aether-mono; yarn build:iconfont; yarn serve pheno"
+
+function gas {
+	Commands=(
+		"git status -s"
+		"git add -A"
+		"git diff --cached"
+		"accel-shooter commit"
+	)
+
+	for c in ${Commands[*]}; do
+		echo "continue?"
+		read x
+		[[ ! $x =~ ^[Yy]$ ]] && return 1
+		eval $c
+	done
+}
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
