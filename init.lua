@@ -28,11 +28,13 @@ function callbackFactory(callback)
     return function()
         wf_all:pause()
         local win = hs.window.focusedWindow()
-        local f = win:frame()
-        local screen = win:screen()
-        local max = screen:frame()
-        callback(win, f, max)
-        win:setFrame(f, 0)
+        if win ~= nil then
+            local f = win:frame()
+            local screen = win:screen()
+            local max = screen:frame()
+            callback(win, f, max)
+            win:setFrame(f, 0)
+        end
         hs.timer.doAfter(1, function() wf_all:resume() end)
     end
 end
@@ -139,5 +141,21 @@ end
 
 checkAndReconnectWifi()
 hs.timer.doEvery(5, checkAndReconnectWifi)
+
+-- work layout
+
+function workLayout()
+    brave = "Brave Browser"
+    iTerm = "iTerm2"
+    hs.application.launchOrFocus(brave)
+    hs.application.launchOrFocus(iTerm)
+    hs.layout.apply({
+        {brave, nil, nil, hs.layout.left50, nil, nil},
+        {iTerm, nil, nil, hs.layout.right50, nil, nil}
+    })
+end
+
+hs.hotkey.bind({'cmd', 'alt'}, 'w', workLayout)
+m:bind('', 'w', workLayout)
 
 -- vim:sw=4:ts=4:sts=4:et
