@@ -144,15 +144,20 @@ hs.timer.doEvery(5, checkAndReconnectWifi)
 
 -- work layout
 
+hs.application.enableSpotlightForNameSearches(true)
+
 function workLayout()
+    wf_all:pause()
     brave = "Brave Browser"
-    iTerm = "iTerm2"
     hs.application.launchOrFocus(brave)
-    hs.application.launchOrFocus(iTerm)
-    hs.layout.apply({
-        {brave, nil, nil, hs.layout.left50, nil, nil},
-        {iTerm, nil, nil, hs.layout.right50, nil, nil}
-    })
+    hs.application.launchOrFocus("iTerm")
+    hs.timer.doAfter(1, function()
+        hs.layout.apply({
+            {brave, nil, nil, hs.layout.left50, nil, nil},
+            {"iTerm2", nil, nil, hs.layout.right50, nil, nil}
+        })
+        hs.timer.doAfter(1, function() wf_all:resume() end)
+    end)
 end
 
 hs.hotkey.bind({'cmd', 'alt'}, 'w', workLayout)
