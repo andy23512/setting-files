@@ -14,10 +14,6 @@ end
 myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 hs.alert.show("Config loaded")
 
--- load secrets part
-
-secrets = hs.json.read(".secrets.json")
-
 -- global setting part
 
 hs.window.animationDuration = 0
@@ -123,24 +119,6 @@ end
 
 wf_all:subscribe(hs.window.filter.windowMoved, snapWindow)
 wf_all:subscribe(hs.window.filter.windowCreated, snapWindow)
-
--- reconnect wifi
-
-ssid = secrets.wifiSSID
-passpharse = secrets.wifiPasspharse
-
-
-function checkAndReconnectWifi()
-    local currentNetwork = hs.wifi.currentNetwork()
-    if currentNetwork == nil then
-        hs.alert.show('no network')
-        hs.wifi.associate(ssid, passpharse)
-    end
-end
-
-
-checkAndReconnectWifi()
-hs.timer.doEvery(5, checkAndReconnectWifi)
 
 -- work layout
 
