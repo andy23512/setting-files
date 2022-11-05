@@ -141,4 +141,24 @@ end
 hs.hotkey.bind({'cmd', 'alt'}, 'w', workLayout)
 m:bind('', 'w', workLayout)
 
+-- reconnect wifi
+
+secrets = hs.json.read(".secrets.json")
+
+ssid = secrets.wifiSSID
+passpharse = secrets.wifiPasspharse
+
+
+function checkAndReconnectWifi()
+    local currentNetwork = hs.wifi.currentNetwork()
+    if currentNetwork == nil then
+        hs.alert.show('no network')
+        hs.wifi.associate(ssid, passpharse)
+    end
+end
+
+
+checkAndReconnectWifi()
+timer = hs.timer.doEvery(1, checkAndReconnectWifi)
+
 -- vim:sw=4:ts=4:sts=4:et
