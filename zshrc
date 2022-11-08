@@ -1,5 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -78,6 +76,8 @@ alias cw='cd ~/git/website/'
 alias ca='cd ~/git/accel-shooter/'
 alias cm='cd ~/git/aether-mono/'
 alias ci='cd ~/git/ihis/'
+alias cdc='cd ~/git/dicom-ct/'
+alias cv='cd ~/git/vfss/'
 alias ports='netstat -tulanp'
 alias top='atop'
 alias df='df -H'
@@ -86,7 +86,7 @@ alias gs='git s'
 alias gd='git d'
 alias gdc='git dc'
 alias gp='git push'
-alias ga='git a -A'
+alias ga='git add -A'
 alias y="yarn"
 alias ys="yarn start"
 alias yt="cf; yarn jest --watch --coverage=false"
@@ -136,6 +136,7 @@ alias dcr="cr; dc restart"
 alias dcu="cr; dc up -d"
 alias dclf="cr; dcl frontend"
 alias dclb="cr; dcl backend"
+alias dcld="cr; dcl database"
 alias dcbf="cr; dcb frontend"
 alias dcbb="cr; dcb backend"
 function dcc() { cr; dc exec $@; }
@@ -148,14 +149,26 @@ alias msa="cr; make start-dev-main"
 alias mso="cr; make stop-dev-main"
 alias mrf="cr; dc restart frontend; dclf"
 alias mrb="cr; dc restart backend; dclb"
-alias grp="grep -nR --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git"
+alias grp="grep -nR --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git --exclude=poetry.lock"
+function search() {
+	rm -f ~/search-$1
+	grp -i $1 > ~/search-$1
+	vi ~/search-$1
+}
+function searchc() {
+	rm -f ~/search-$1
+	grp $1 > ~/search-$1
+	vi ~/search-$1
+}
 alias dp="vi ~/ResilioSync/Daily\ Progress.md"
 alias tk="vi ~/ResilioSync/Track.csv"
 alias isa="accel_shooter_starter"
 alias isw="innocent_starter ~/git/website w"
 alias iss="innocent_starter ~/git/space s"
 alias isi="innocent_starter ~/git/ihis i"
+alias isd="innocent_starter ~/git/dicom-ct d"
 alias ism="innocent_starter ~/git/aether-mono m"
+alias isv="innocent_starter ~/git/vfss v"
 alias ac="accel-shooter check"
 alias aci="accel-shooter commit"
 alias as="accel-shooter"
@@ -169,14 +182,18 @@ function gas {
 		"git status -s"
 		"git add -A"
 		"git diff --cached"
+		"c"
 		"accel-shooter commit"
 	)
 
 	for c in ${Commands[*]}; do
-		echo "continue?"
-		read x
-		[[ ! $x =~ ^[Yy]$ ]] && return 1
-		eval $c
+		if [[ "$c" == "c" ]]; then
+			echo "continue?"
+			read x
+			[[ ! $x =~ ^[Yy]$ ]] && break
+		else
+			eval $c
+		fi
 	done
 }
 
@@ -300,7 +317,7 @@ function workon_cwd {
 
 # New cd function that does the virtualenv magic
 function venv_cd {
-    \cd "$@" && workon_cwd
+    z "$@" && workon_cwd
 }
 
 # Initinalize
@@ -332,7 +349,7 @@ zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 fpath=(~/.zsh $fpath)
 
 autoload -Uz compinit && compinit
-export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/.config.yml
+export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/accel-shooter/.config.yml
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -352,5 +369,124 @@ add-zsh-hook precmd precmd_function
 
 export PATH="$HOME/.poetry/bin:$PATH"
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+# =============================================================================
+#
+# Utility functions for zoxide.
+#
+
+# pwd based on the value of _ZO_RESOLVE_SYMLINKS.
+function __zoxide_pwd() {
+    \builtin pwd -L
+}
+
+# cd + custom logic based on the value of _ZO_ECHO.
+function __zoxide_cd() {
+    # shellcheck disable=SC2164
+    \builtin cd -- "$@" >/dev/null
+}
+
+# =============================================================================
+#
+# Hook configuration for zoxide.
+#
+
+# Hook to add new entries to the database.
+function __zoxide_hook() {
+    # shellcheck disable=SC2312
+    \command zoxide add -- "$(__zoxide_pwd)"
+}
+
+# Initialize hook.
+# shellcheck disable=SC2154
+if [[ ${precmd_functions[(Ie)__zoxide_hook]:-} -eq 0 ]] && [[ ${chpwd_functions[(Ie)__zoxide_hook]:-} -eq 0 ]]; then
+    chpwd_functions+=(__zoxide_hook)
+fi
+
+# =============================================================================
+#
+# When using zoxide with --no-cmd, alias these internal functions as desired.
+#
+
+__zoxide_z_prefix='z#'
+
+# Jump to a directory using only keywords.
+function __zoxide_z() {
+    # shellcheck disable=SC2199
+    if [[ "$#" -eq 0 ]]; then
+        __zoxide_cd ~
+    elif [[ "$#" -eq 1 ]] && { [[ -d "$1" ]] || [[ "$1" = '-' ]] || [[ "$1" =~ ^[-+][0-9]$ ]]; }; then
+        __zoxide_cd "$1"
+    elif [[ "$@[-1]" == "${__zoxide_z_prefix}"* ]]; then
+        # shellcheck disable=SC2124
+        \builtin local result="${@[-1]}"
+        __zoxide_cd "${result:${#__zoxide_z_prefix}}"
+    else
+        \builtin local result
+        # shellcheck disable=SC2312
+        result="$(\command zoxide query --exclude "$(__zoxide_pwd)" -- "$@")" &&
+            __zoxide_cd "${result}"
+    fi
+}
+
+# Jump to a directory using interactive search.
+function __zoxide_zi() {
+    \builtin local result
+    result="$(\command zoxide query -i -- "$@")" && __zoxide_cd "${result}"
+}
+
+# =============================================================================
+#
+# Commands for zoxide. Disable these using --no-cmd.
+#
+
+\builtin unalias z &>/dev/null || \builtin true
+function z() {
+    __zoxide_z "$@"
+}
+
+\builtin unalias zi &>/dev/null || \builtin true
+function zi() {
+    __zoxide_zi "$@"
+}
+
+if [[ -o zle ]]; then
+    function __zoxide_z_complete() {
+        # Only show completions when the cursor is at the end of the line.
+        # shellcheck disable=SC2154
+        [[ "${#words[@]}" -eq "${CURRENT}" ]] || return
+
+        if [[ "${#words[@]}" -eq 2 ]]; then
+            _files -/
+        elif [[ "${words[-1]}" == '' ]]; then
+            \builtin local result
+            # shellcheck disable=SC2086,SC2312
+            if result="$(\command zoxide query --exclude "$(__zoxide_pwd)" -i -- ${words[2,-1]})"; then
+                __zoxide_result="${result}"
+            else
+                __zoxide_result=''
+            fi
+            \builtin printf '\e[5n'
+        fi
+    }
+
+    function __zoxide_z_complete_helper() {
+        \builtin local result="${__zoxide_z_prefix}${__zoxide_result}"
+        # shellcheck disable=SC2296
+        [[ -n "${__zoxide_result}" ]] && LBUFFER="${LBUFFER}${(q-)result}"
+        \builtin zle reset-prompt
+    }
+
+    \builtin zle -N __zoxide_z_complete_helper
+    \builtin bindkey "\e[0n" __zoxide_z_complete_helper
+    if [[ "${+functions[compdef]}" -ne 0 ]]; then
+        \compdef -d z
+        \compdef -d zi
+        \compdef __zoxide_z_complete z
+    fi
+fi
+
+# =============================================================================
+#
+# To initialize zoxide, add this to your configuration (usually ~/.zshrc):
+#
+# eval "$(zoxide init zsh)"
