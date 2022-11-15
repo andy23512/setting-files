@@ -79,6 +79,7 @@ set nocompatible " nocompatible with vi
 set noexpandtab
 set nosmartindent
 set nowrap
+set nu
 set redrawtime=10000
 set rtp+=/usr/local/opt/fzf
 set ruler " show current line and column position
@@ -231,6 +232,7 @@ let g:pymode_lint_on_write = 0
 let g:pymode_lint_checkers = ['pylint', 'pyflakes', 'pep8', 'mccabe']
 let g:pymode_options_max_line_length=119
 autocmd FileType python set colorcolumn=119
+autocmd BufRead,BufNewFile logging.conf setf dosini
 
 " vim-indent-guides
 let g:indent_guides_auto_colors = 0

@@ -160,8 +160,8 @@ function searchc() {
 	grp $1 > ~/search-$1
 	vi ~/search-$1
 }
-alias dp="vi ~/ResilioSync/Daily\ Progress.md"
-alias tk="vi ~/ResilioSync/Track.csv"
+alias dp="vi ~/ResilioSync/accel-shooter/Daily\ Progress.md"
+alias tk="vi ~/ResilioSync/accel-shooter/Track.csv"
 alias isa="accel_shooter_starter"
 alias isw="innocent_starter ~/git/website w"
 alias iss="innocent_starter ~/git/space s"
