@@ -68,6 +68,9 @@ alias tl='tmux ls'
 alias ts='tmux new -A -s'
 alias tx='tmux new -A -D -s'
 alias cd="venv_cd"
+function l() {
+  cd "$(llama "$@")"
+}
 alias cr='cd $(git root)'
 alias cf='cd $(git root)/frontend'
 alias cb='cd $(git root)/backend'
@@ -173,7 +176,7 @@ alias ac="accel-shooter check"
 alias aci="accel-shooter commit"
 alias as="accel-shooter"
 alias ao="accel-shooter open"
-alias dpcp="accel-shooter update && . ~/.virtualenvs/accel-shooter.py/bin/activate && python3 ~/git/accel-shooter.py/copy_action.py && deactivate"
+alias dpcp="accel-shooter dailyProgress"
 alias op="open ~/git/aether-mono/libs/pheno/documentation/compodoc/index.html"
 alias sp="cd ~/git/aether-mono; yarn build:iconfont; yarn serve pheno"
 
@@ -224,8 +227,6 @@ function accel_shooter_starter {
 	tmux send-keys 'as track' C-m
 	tmux split-window
 	tmux send-keys 'acst-server' C-m
-	tmux split-window
-	tmux send-keys 'as dumpMyTasks' C-m
 	tx a
 }
 
@@ -317,7 +318,7 @@ function workon_cwd {
 
 # New cd function that does the virtualenv magic
 function venv_cd {
-    z "$@" && workon_cwd
+    \cd "$@" && workon_cwd
 }
 
 # Initinalize
