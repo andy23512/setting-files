@@ -90,6 +90,7 @@ alias gd='git d'
 alias gdc='git dc'
 alias gp='git push'
 alias ga='git add -A'
+alias r='radian'
 alias y="yarn"
 alias ys="yarn start"
 alias yt="cf; yarn jest --watch --coverage=false"
@@ -227,6 +228,8 @@ function accel_shooter_starter {
 	tmux send-keys 'as track' C-m
 	tmux split-window
 	tmux send-keys 'acst-server' C-m
+	tmux split-window
+	tmux send-keys 'colima start' C-m
 	tx a
 }
 
