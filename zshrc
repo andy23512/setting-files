@@ -229,7 +229,7 @@ function accel_shooter_starter {
 	tmux split-window
 	tmux send-keys 'acst-server' C-m
 	tmux split-window
-	tmux send-keys 'as meetingTrack' C-m
+	tmux send-keys 'as meetingTrack && exit' C-m
 	tmux split-window
 	tmux send-keys 'colima start && exit' C-m
 	tx a
