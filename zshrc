@@ -45,7 +45,7 @@ export NVM_DIR="$HOME/.nvm"
 export EDITOR=vim
 export GDFONTPATH="$HOME/share/fonts"
 export LANG=en_US.UTF-8
-export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin:/Applications/Postgres.app/Contents/Versions/9.6/bin/:/usr/local/sbin"
+export PATH="$PATH:$HOME/bin:$HOME/.aspera/connect/bin:/Applications/Postgres.app/Contents/Versions/9.6/bin/:/usr/local/sbin:$HOME/.local/bin"
 export WORKON_HOME="$HOME/.virtualenvs/"
 
 # Standard Aliases
@@ -90,6 +90,7 @@ alias gd='git d'
 alias gdc='git dc'
 alias gp='git push'
 alias ga='git add -A'
+alias gci='git ci'
 alias r='radian'
 alias y="yarn"
 alias ys="yarn start"
@@ -125,8 +126,18 @@ function cob() {
 		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)
 	fi
 }
+function coi() {
+	DIR=$(git root)/image-server
+	if [ -d "$DIR" ]; then
+		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $DIR
+	else
+		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)
+	fi
+}
 function dc() {
-	if [ -e "dev.yaml" ]; then
+	if [[ "$(git_repo)" == "[website]" ]]; then
+		./bin/dc2 -f docker-compose.yaml -f docker-compose.dev.yaml $@
+	elif [ -e "dev.yaml" ]; then
 		docker-compose -f docker-compose.yaml -f dev.yaml $@
 	else
 		docker-compose $@
@@ -496,3 +507,6 @@ fi
 # To initialize zoxide, add this to your configuration (usually ~/.zshrc):
 #
 # eval "$(zoxide init zsh)"
+#
+export GPG_TTY=$(tty)
+export PUPPETEER_CACHE_DIR='/Users/nanoha/.cache/puppeteer'
