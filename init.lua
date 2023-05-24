@@ -120,26 +120,33 @@ end
 wf_all:subscribe(hs.window.filter.windowMoved, snapWindow)
 wf_all:subscribe(hs.window.filter.windowCreated, snapWindow)
 
--- work layout
+-- to cell
 
-hs.application.enableSpotlightForNameSearches(true)
-
-function workLayout()
+hs.hotkey.bind({'cmd', 'alt'}, 'c', function()
     wf_all:pause()
-    brave = "Brave Browser"
-    hs.application.launchOrFocus(brave)
-    hs.application.launchOrFocus("iTerm")
-    hs.timer.doAfter(1, function()
-        hs.layout.apply({
-            {brave, nil, nil, hs.layout.left50, nil, nil},
-            {"iTerm2", nil, nil, hs.layout.right50, nil, nil}
-        })
-        hs.timer.doAfter(1, function() wf_all:resume() end)
-    end)
-end
+    local win = hs.window.focusedWindow()
+    if win ~= nil then
+        cell = hs.grid.get(win)
+        cell.w = 1
+        cell.h = 1
+        hs.grid.set(win, cell)
+    end
+    hs.timer.doAfter(1, function() wf_all:resume() end)
+end)
 
-hs.hotkey.bind({'cmd', 'alt'}, 'w', workLayout)
-m:bind('', 'w', workLayout)
+-- to row
+
+hs.hotkey.bind({'cmd', 'alt'}, 'r', function()
+    wf_all:pause()
+    local win = hs.window.focusedWindow()
+    if win ~= nil then
+        cell = hs.grid.get(win)
+        cell.w = 1
+        cell.h = 2
+        hs.grid.set(win, cell)
+    end
+    hs.timer.doAfter(1, function() wf_all:resume() end)
+end)
 
 -- reconnect wifi
 
@@ -160,58 +167,5 @@ end
 
 checkAndReconnectWifi()
 timer = hs.timer.doEvery(1, checkAndReconnectWifi)
-
-
--- CC1
-
-function syncEnableChordSettingWithInputSource()
-    source_id = hs.keycodes.currentSourceID()
-    is_bopomofo = source_id == "org.openvanilla.inputmethod.McBopomofo.McBopomofo.Bopomofo"
-    is_abc = source_id == "com.apple.keylayout.ABC"
-    if not is_bopomofo and not is_abc then return end
-    local serial_object = hs.serial.newFromPath("/dev/cu.usbmodem14201")
-    if not serial_object then return end
-    local received_data = ''
-    serial_object:baudRate(115200)
-    serial_object:callback(function(spo, callbackType, message, hexdecimalString)
-        if callbackType == "received" then
-            if message == 'VAR' then
-                received_data = message
-            else
-                received_data = received_data .. message
-            end
-            if string.sub(received_data,-2) == '\r\n' then
-                if string.sub(received_data, 1, 9) == 'VAR B1 12' then
-                    chord_enabled = string.sub(received_data, 11, 11) == '0'
-                    if is_bopomofo and chord_enabled then
-                        serial_object:sendData("VAR B2 12 1\r\n")
-                    elseif is_abc and not chord_enabled then
-                        serial_object:sendData("VAR B2 12 0\r\n")
-                    else
-                        serial_object:close()
-                    end
-                elseif string.sub(received_data, 1, 9) == 'VAR B2 12' then
-                    serial_object:sendData("VAR B0\r\n")
-                elseif string.sub(received_data, 1, 6) == 'VAR B0' then
-                    serial_object:close()
-                end
-                received_data = ''
-            end
-        elseif callbackType == "opened" then
-            serial_object:sendData("VAR B1 12\r\n")
-        end
-    end)
-    serial_object:usesDTRDSRFlowControl(true)
-    serial_object:usesRTSCTSFlowControl(true)
-    serial_object:dtr(true)
-    serial_object:rts(true)
-    serial_object:open()
-    hs.timer.doAfter(20, function()
-        if serial_object:isOpen() then serial_object:close() end
-    end)
-end
-
-hs.keycodes.inputSourceChanged(syncEnableChordSettingWithInputSource)
-hs.serial.deviceCallback(syncEnableChordSettingWithInputSource)
 
 -- vim:sw=4:ts=4:sts=4:et
