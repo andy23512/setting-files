@@ -141,6 +141,7 @@ hs.hotkey.bind({'cmd', 'alt'}, 'r', function()
     local win = hs.window.focusedWindow()
     if win ~= nil then
         cell = hs.grid.get(win)
+        cell.y = 0
         cell.w = 1
         cell.h = 2
         hs.grid.set(win, cell)
@@ -148,24 +149,18 @@ hs.hotkey.bind({'cmd', 'alt'}, 'r', function()
     hs.timer.doAfter(1, function() wf_all:resume() end)
 end)
 
--- reconnect wifi
+-- show current input source
 
-secrets = hs.json.read(".secrets.json")
-
-ssid = secrets.wifiSSID
-passpharse = secrets.wifiPasspharse
-
-
-function checkAndReconnectWifi()
-    local currentNetwork = hs.wifi.currentNetwork()
-    if currentNetwork == nil then
-        hs.alert.show('no network')
-        hs.wifi.associate(ssid, passpharse)
+function onInputSourceChanged()
+    local currentLayout = hs.keycodes.currentLayout()
+    local currentMethod = hs.keycodes.currentMethod()
+    if currentMethod ~= nil then
+        hs.alert.show(currentLayout .. ' ' .. currentMethod)
+    else
+        hs.alert.show(currentLayout)
     end
 end
 
-
-checkAndReconnectWifi()
-timer = hs.timer.doEvery(1, checkAndReconnectWifi)
+hs.keycodes.inputSourceChanged(onInputSourceChanged)
 
 -- vim:sw=4:ts=4:sts=4:et
