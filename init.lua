@@ -151,13 +151,22 @@ end)
 
 -- show current input source
 
+
+layout = hs.keycodes.currentLayout()
+method = hs.keycodes.currentMethod()
+
+
 function onInputSourceChanged()
-    local currentLayout = hs.keycodes.currentLayout()
-    local currentMethod = hs.keycodes.currentMethod()
-    if currentMethod ~= nil then
-        hs.alert.show(currentLayout .. ' ' .. currentMethod)
-    else
-        hs.alert.show(currentLayout)
+    local newLayout = hs.keycodes.currentLayout()
+    local newMethod = hs.keycodes.currentMethod()
+    if layout ~= newLayout or method ~= newMethod then
+        layout = newLayout
+        method = newMethod
+        if method ~= nil then
+            hs.alert.show(layout .. ' ' .. newMethod)
+        else
+            hs.alert.show(newLayout)
+        end
     end
 end
 
