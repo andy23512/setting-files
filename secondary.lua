@@ -149,27 +149,41 @@ hs.hotkey.bind({'cmd', 'alt'}, 'r', function()
     hs.timer.doAfter(1, function() wf_all:resume() end)
 end)
 
--- show current input source
+-- webserver
 
+server = hs.httpserver.new()
+server:setInterface('192.168.1.101')
+server:setPort(11211)
+server:setCallback(function(method, path, headers, body)
+    blocking = true
+    hs.keycodes.currentSourceID(body)
+    hs.timer.doAfter(0.5, function() blocking = false end)
+    return 'OK', 200, {}
+end)
+server:start()
 
-layout = hs.keycodes.currentLayout()
-method = hs.keycodes.currentMethod()
+-- input source
 
+local blocking = false
+
+local current_source_id = hs.keycodes.currentSourceID()
 
 function onInputSourceChanged()
-    local newLayout = hs.keycodes.currentLayout()
-    local newMethod = hs.keycodes.currentMethod()
-    if layout ~= newLayout or method ~= newMethod then
-        layout = newLayout
-        method = newMethod
-        if method ~= nil then
-            hs.alert.show(layout .. ' ' .. newMethod)
-        else
-            hs.alert.show(newLayout)
-        end
+    next_source_id = hs.keycodes.currentSourceID()
+    if not blocking and next_source_id ~= current_source_id then
+        blocking = true
+        current_source_id = next_source_id
+        hs.http.asyncPost(
+            'http://192.168.1.106:11211',
+            hs.keycodes.currentSourceID(),
+            {},
+            function() end
+        )
+        hs.timer.doAfter(0.5, function() blocking = false end)
     end
 end
 
 hs.keycodes.inputSourceChanged(onInputSourceChanged)
+
 
 -- vim:sw=4:ts=4:sts=4:et
