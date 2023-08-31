@@ -151,8 +151,8 @@ end)
 
 -- webserver
 
-server = hs.httpserver.new()
-server:setInterface('192.168.1.106')
+server = hs.httpserver.new(false, true)
+server:setInterface('en2')
 server:setPort(11211)
 server:setCallback(function(method, path, headers, body)
     blocking = true
@@ -161,6 +161,23 @@ server:setCallback(function(method, path, headers, body)
     return 'OK', 200, {}
 end)
 server:start()
+
+bonjour = hs.bonjour.new()
+remote_address = nil
+remote_port = nil
+hs.timer.doAfter(1, function()
+    bonjour:findServices('_http._tcp', 'local.', function(b, d, a, s)
+        s:resolve(0.0, function(r)
+            address = r:addresses()[1]
+            if address == '127.0.0.1' then
+                return
+            end
+            remote_address = address
+            remote_port = r:port()
+            bonjour:stop()
+        end)
+    end)
+end)
 
 -- input source
 
@@ -183,10 +200,8 @@ function syncEnableChordSettingWithInputSource()
                 received_data = received_data .. message
             end
             if string.sub(received_data,-2) == '\r\n' then
-                print(received_data)
                 if string.sub(received_data, 1, 9) == 'VAR B1 12' then
                     chord_enabled = string.sub(received_data, 11, 11) == '0'
-                    print(chord_enabled)
                     if is_bopomofo and chord_enabled then
                         serial_object:sendData("VAR B2 12 1\r\n")
                     elseif is_abc and not chord_enabled then
@@ -222,7 +237,7 @@ function onInputSourceChanged()
         current_source_id = next_source_id
         syncEnableChordSettingWithInputSource()
         hs.http.asyncPost(
-            'http://192.168.1.101:11211',
+            'http://' .. remote_address .. ':' .. remote_port,
             hs.keycodes.currentSourceID(),
             {},
             function() end
