@@ -40,26 +40,6 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
-# place this after nvm initialization!
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local node_version="$(nvm version)"
-  local nvmrc_path="$(nvm_find_nvmrc)"
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$node_version" ]; then
-      nvm use
-    fi
-  elif [ "$node_version" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
-
 
 # Globals
 
@@ -130,29 +110,29 @@ function yc() {
 	tmux send-keys 'ydp' C-m
 	tmux select-layout even-vertical
 }
-alias c="code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 ."
+alias c="code-insiders --disable-gpu ."
 function cof() {
 	DIR=$(git root)/frontend
 	if [ -d "$DIR" ]; then
-		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $DIR
+		code-insiders --disable-gpu $DIR
 	else
-		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)
+		code-insiders --disable-gpu $(git root)
 	fi
 }
 function cob() {
 	DIR=$(git root)/backend
 	if [ -d "$DIR" ]; then
-		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $DIR
+		code-insiders --disable-gpu $DIR
 	else
-		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)
+		code-insiders --disable-gpu $(git root)
 	fi
 }
 function coi() {
 	DIR=$(git root)/image-server
 	if [ -d "$DIR" ]; then
-		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $DIR
+		code-insiders --disable-gpu $DIR
 	else
-		code-insiders --disable-gpu --ignore-gpu-blacklist --disable-gpu-blacklist --high-dpi-support=1 $(git root)
+		code-insiders --disable-gpu $(git root)
 	fi
 }
 function dc() {
@@ -211,7 +191,7 @@ alias as="accel-shooter"
 alias ao="accel-shooter open"
 alias dpcp="accel-shooter dailyProgress"
 alias op="open ~/git/aether-mono/libs/pheno/documentation/compodoc/index.html"
-alias sp="cd ~/git/aether-mono; yarn build:iconfont; yarn serve pheno"
+alias sp="cd ~/git/aether-mono;NODE_OPTIONS=--openssl-legacy-provider  yarn build:iconfont;NODE_OPTIONS=--openssl-legacy-provider yarn serve pheno"
 
 function gas {
 	Commands=(
@@ -531,3 +511,4 @@ fi
 #
 export GPG_TTY=$(tty)
 export PUPPETEER_CACHE_DIR='/Users/nanoha/.cache/puppeteer'
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

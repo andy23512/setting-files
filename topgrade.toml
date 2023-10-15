@@ -1,8 +1,9 @@
+[misc]
 # Don't ask for confirmations
 #assume_yes = true
 
 # Disable specific steps - same options as the command line flag
-disable = ["containers", "vim", "node", "yarn"]
+disable = ["containers", "vim", "node", "yarn", "tlmgr"]
 
 # Ignore failures for these steps
 #ignore_failures = ["powershell"]
@@ -12,6 +13,10 @@ disable = ["containers", "vim", "node", "yarn"]
 
 # Do not ask to retry failed steps (default: false)
 #no_retry = true
+
+# Run `sudo -v` to cache credentials at the start of the run; this avoids a
+# blocking password prompt in the middle of a possibly-unattended run.
+#pre_sudo = true
 
 # Run inside tmux
 #run_in_tmux = true

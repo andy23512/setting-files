@@ -18,6 +18,7 @@
 	insteadOf = git://
 [push]
 	default = simple
+	autoSetupRemote = true
 [http]
 	proxy =
 [core]
@@ -46,3 +47,5 @@
 	prune = true
 [merge]
 	conflictstyle=diff3
+[commit]
+	gpgsign = true
