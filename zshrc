@@ -512,3 +512,5 @@ fi
 export GPG_TTY=$(tty)
 export PUPPETEER_CACHE_DIR='/Users/nanoha/.cache/puppeteer'
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+[ -s "/Users/nanoha/.scm_breeze/scm_breeze.sh" ] && source "/Users/nanoha/.scm_breeze/scm_breeze.sh"
