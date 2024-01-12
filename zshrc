@@ -110,29 +110,29 @@ function yc() {
 	tmux send-keys 'ydp' C-m
 	tmux select-layout even-vertical
 }
-alias c="code-insiders --disable-gpu ."
+alias c="NODE_OPTIONS= code-insiders --disable-gpu ."
 function cof() {
 	DIR=$(git root)/frontend
 	if [ -d "$DIR" ]; then
-		code-insiders --disable-gpu $DIR
+		NODE_OPTIONS= code-insiders --disable-gpu $DIR
 	else
-		code-insiders --disable-gpu $(git root)
+		NODE_OPTIONS= code-insiders --disable-gpu $(git root)
 	fi
 }
 function cob() {
 	DIR=$(git root)/backend
 	if [ -d "$DIR" ]; then
-		code-insiders --disable-gpu $DIR
+		NODE_OPTIONS= code-insiders --disable-gpu $DIR
 	else
-		code-insiders --disable-gpu $(git root)
+		NODE_OPTIONS= code-insiders --disable-gpu $(git root)
 	fi
 }
 function coi() {
 	DIR=$(git root)/image-server
 	if [ -d "$DIR" ]; then
-		code-insiders --disable-gpu $DIR
+		NODE_OPTIONS= code-insiders --disable-gpu $DIR
 	else
-		code-insiders --disable-gpu $(git root)
+		NODE_OPTIONS= code-insiders --disable-gpu $(git root)
 	fi
 }
 function dc() {
@@ -185,8 +185,8 @@ alias isi="innocent_starter ~/git/ihis i"
 alias isd="innocent_starter ~/git/dicom-ct d"
 alias ism="innocent_starter ~/git/aether-mono m"
 alias isv="innocent_starter ~/git/vfss v"
-alias ac="accel-shooter check"
-alias aci="accel-shooter commit"
+alias ach="accel-shooter check"
+alias ac="accel-shooter commit"
 alias as="accel-shooter"
 alias ao="accel-shooter open"
 alias dpcp="accel-shooter dailyProgress"
@@ -392,3 +392,4 @@ export PUPPETEER_CACHE_DIR='/Users/nanoha/.cache/puppeteer'
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -s "/Users/nanoha/.scm_breeze/scm_breeze.sh" ] && source "/Users/nanoha/.scm_breeze/scm_breeze.sh"
+export PATH="${HOME}/.pyenv/shims:${PATH}"
