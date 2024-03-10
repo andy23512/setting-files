@@ -35,13 +35,6 @@ function callbackFactory(callback)
     end
 end
 
--- modal mode for characorder
-
-m = hs.hotkey.modal.new('cmd-alt', 'm')
-function m:entered() hs.alert('Entered mode') end
-function m:exited() hs.alert('Exited mode') end
-m:bind('', 'escape', function() m:exit() end)
-
 -- grid cols setting
 
 gcols = hs.settings.get('cols') or 4
@@ -60,7 +53,6 @@ end
 for i = 2, 6 do
     setColsCallback = setColsCallbackFactory(i)
     hs.hotkey.bind({'cmd', 'alt'}, tostring(i), setColsCallback)
-    m:bind('', tostring(i), setColsCallback)
 end
 
 -- show grid
@@ -70,7 +62,6 @@ function showGrid()
 end
 
 hs.hotkey.bind({'cmd', 'alt'}, 'g', showGrid)
-m:bind('', 'g', showGrid)
 
 -- snap to grid
 
@@ -85,7 +76,6 @@ function snapGrid()
 end
 
 hs.hotkey.bind({'cmd', 'alt'}, 's', snapGrid)
-m:bind('', 's', snapGrid)
 
 -- left right split window
 
@@ -93,8 +83,6 @@ split_and_move_window_keys = {
     ['['] = {index = 0, split = 2},
     [']'] = {index = 1, split = 2},
     ['\\'] = {index = 0.5, split = 2},
-    ['Left'] = {index = 0, split = 2},
-    ['Right'] = {index = 1, split = 2},
     ['Down'] = {index = 0.5, split = 2},
 }
 
@@ -149,58 +137,19 @@ hs.hotkey.bind({'cmd', 'alt'}, 'r', function()
     hs.timer.doAfter(1, function() wf_all:resume() end)
 end)
 
--- webserver
-
-server = hs.httpserver.new(false, true)
-server:setInterface('en0')
-server:setPort(11211)
-server:setCallback(function(method, path, headers, body)
-    blocking = true
-    hs.keycodes.currentSourceID(body)
-    hs.timer.doAfter(0.5, function() blocking = false end)
-    return 'OK', 200, {}
-end)
-server:start()
-
-bonjour = hs.bonjour.new()
-remote_address = nil
-remote_port = nil
-hs.timer.doAfter(1, function()
-    bonjour:findServices('_http._tcp', 'local.', function(b, d, a, s)
-        s:resolve(0.0, function(r)
-            address = r:addresses()[1]
-            if address == '127.0.0.1' then
-                return
-            end
-            remote_address = address
-            remote_port = r:port()
-            bonjour:stop()
-        end)
-    end)
-end)
-
 -- input source
 
-local blocking = false
+input_source_keys = {
+    ['a'] = 'com.apple.keylayout.ABC',
+    ['b'] = 'com.apple.inputmethod.TCIM.Zhuyin',
+    ['m'] = 'org.openvanilla.inputmethod.McBopomofo.McBopomofo.Bopomofo',
+    ['j'] = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese',
+}
 
-local current_source_id = hs.keycodes.currentSourceID()
-
-function onInputSourceChanged()
-    next_source_id = hs.keycodes.currentSourceID()
-    if not blocking and next_source_id ~= current_source_id then
-        blocking = true
-        current_source_id = next_source_id
-        hs.http.asyncPost(
-            'http://' .. remote_address .. ':' .. remote_port,
-            hs.keycodes.currentSourceID(),
-            {},
-            function() end
-        )
-        hs.timer.doAfter(0.5, function() blocking = false end)
-    end
+for key, source_id in pairs(input_source_keys) do
+    hs.hotkey.bind({'cmd', 'alt'}, key, function()
+        hs.keycodes.currentSourceID(source_id)
+    end)
 end
-
-hs.keycodes.inputSourceChanged(onInputSourceChanged)
-
 
 -- vim:sw=4:ts=4:sts=4:et
