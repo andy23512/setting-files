@@ -152,4 +152,20 @@ for key, source_id in pairs(input_source_keys) do
     end)
 end
 
+-- mouse teleport
+
+for i = 1, 5 do
+    hs.hotkey.bind({'shift', 'alt'}, tostring(i), function()
+        pos = hs.mouse.getRelativePosition()
+        screen_frame = hs.mouse.getCurrentScreen():frame()
+        pos.x = screen_frame.w * (i - 1) / 4
+        if i == 5 then
+            pos.x = pos.x - 5
+        elseif i == 1 then
+            pos.x = pos.x + 5
+        end
+        hs.mouse.setRelativePosition(pos)
+    end)
+end
+
 -- vim:sw=4:ts=4:sts=4:et
