@@ -148,7 +148,16 @@ input_source_keys = {
 
 for key, source_id in pairs(input_source_keys) do
     hs.hotkey.bind({'cmd', 'alt'}, key, function()
-        hs.keycodes.currentSourceID(source_id)
+        current_source_id = hs.keycodes.currentSourceID()
+        if current_source_id == source_id then
+            if currentSourceID == InputSource.ABC then
+                hs.keycodes.currentSourceID(InputSource.McBopomofo)
+            else
+                hs.keycodes.currentSourceID(InputSource.ABC)
+            end
+        else
+            hs.keycodes.currentSourceID(source_id)
+        end
     end)
 end
 
