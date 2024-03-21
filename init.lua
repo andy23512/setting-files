@@ -139,11 +139,19 @@ end)
 
 -- input source
 
+InputSource = {
+    ['ABC'] = 'com.apple.keylayout.ABC',
+    ['ZhuYin'] = 'com.apple.inputmethod.TCIM.Zhuyin',
+    ['McBopomofo'] = 'org.openvanilla.inputmethod.McBopomofo.McBopomofo.Bopomofo',
+    ['Japanese'] = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese',
+}
+
+
 input_source_keys = {
-    ['a'] = 'com.apple.keylayout.ABC',
-    ['b'] = 'com.apple.inputmethod.TCIM.Zhuyin',
-    ['m'] = 'org.openvanilla.inputmethod.McBopomofo.McBopomofo.Bopomofo',
-    ['j'] = 'com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese',
+    ['a'] = InputSource.ABC,
+    ['b'] = InputSource.ZhuYin,
+    ['m'] = InputSource.McBopomofo,
+    ['j'] = InputSource.Japanese,
 }
 
 for key, source_id in pairs(input_source_keys) do
