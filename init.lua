@@ -188,7 +188,7 @@ end
 -- application focus
 
 application_keys = {
-    ['c'] = 'Visual Studio Code - Insiders',
+    ['v'] = 'Visual Studio Code - Insiders',
     ['g'] = 'Google Chrome',
     ['i'] = 'iTerm',
 }
