@@ -185,4 +185,18 @@ for i = 1, 5 do
     end)
 end
 
+-- application focus
+
+application_keys = {
+    ['c'] = 'Visual Studio Code - Insiders',
+    ['g'] = 'Google Chrome',
+    ['i'] = 'iTerm',
+}
+
+for key, application_name in pairs(application_keys) do
+    hs.hotkey.bind({'shift', 'alt'}, key, function()
+        hs.application.launchOrFocus(application_name)
+    end)
+end
+
 -- vim:sw=4:ts=4:sts=4:et
