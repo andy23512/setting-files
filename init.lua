@@ -171,8 +171,8 @@ end
 
 -- mouse teleport
 
-for i = 1, 5 do
-    hs.hotkey.bind({'shift', 'alt'}, tostring(i), function()
+function mouseTeleportCallbackFactory(i)
+    return function()
         pos = hs.mouse.getRelativePosition()
         screen_frame = hs.mouse.getCurrentScreen():frame()
         pos.x = screen_frame.w * (i - 1) / 4
@@ -182,7 +182,14 @@ for i = 1, 5 do
             pos.x = pos.x + 5
         end
         hs.mouse.setRelativePosition(pos)
-    end)
+    end
+end
+
+mouse_teleport_key_list = {'a', 't', 'space', 'l', 'n'}
+
+for i = 1, 5 do
+    hs.hotkey.bind({'shift', 'alt'}, tostring(i), mouseTeleportCallbackFactory(i))
+    hs.hotkey.bind({'shift', 'alt'}, mouse_teleport_key_list[i], mouseTeleportCallbackFactory(i))
 end
 
 -- application focus
