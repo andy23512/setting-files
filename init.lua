@@ -206,4 +206,19 @@ for key, application_name in pairs(application_keys) do
     end)
 end
 
+-- volume control
+
+volume_control_keys = {
+    ['right'] = 10,
+    ['left'] = -10
+}
+
+for key, delta_volume in pairs(volume_control_keys) do
+    hs.hotkey.bind({'cmd', 'alt'}, key, function()
+        device = hs.audiodevice.defaultOutputDevice()
+        volume = device:outputVolume()
+        device:setOutputVolume(volume + delta_volume)
+    end)
+end
+
 -- vim:sw=4:ts=4:sts=4:et
