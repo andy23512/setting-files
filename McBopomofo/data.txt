@@ -9,6 +9,6 @@
 #
 # 如果任何一行以 "#" 開頭，該行將被當作註解忽略。
 
-「 _punctuation_Standard_<
-」 _punctuation_Standard_>
+「 _punctuation_<
+」 _punctuation_>
 
