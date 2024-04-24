@@ -37,10 +37,6 @@ if [ -f ~/.django_bash_completion ]; then
 	. ~/.django_bash_completion
 fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-
-
 # Globals
 
 export EDITOR=vim
@@ -390,7 +386,8 @@ export PATH="$HOME/.poetry/bin:$PATH"
 
 export GPG_TTY=$(tty)
 export PUPPETEER_CACHE_DIR='/Users/nanoha/.cache/puppeteer'
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -s "/Users/nanoha/.scm_breeze/scm_breeze.sh" ] && source "/Users/nanoha/.scm_breeze/scm_breeze.sh"
 export PATH="${HOME}/.pyenv/shims:${PATH}"
+
+eval "$(fnm env --use-on-cd)"
