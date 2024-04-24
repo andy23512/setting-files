@@ -360,19 +360,20 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 export EDITOR=vim
 export VISUAL="$EDITOR"
 
+### git completion
 zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 fpath=(~/.zsh $fpath)
 
+### accel-shooter
 export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/accel-shooter/.config.yml
 
-# fzf
+### fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 export FZF_COMPLETION_TRIGGER='//'
 export FZF_DEFAULT_COMMAND='fd'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-# zsh hook
+### zsh hook
 function precmd_function() {
     if [ "$TERM_PROGRAM" = tmux ]; then
         tmux set set-titles-string "$(git_repo)$(git_info)"
@@ -381,12 +382,18 @@ function precmd_function() {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd precmd_function
 
+### poetry
 export PATH="$HOME/.poetry/bin:$PATH"
 
+### gpg-agent
 export GPG_TTY=$(tty)
 export PUPPETEER_CACHE_DIR='/Users/nanoha/.cache/puppeteer'
 
-[ -s "/Users/nanoha/.scm_breeze/scm_breeze.sh" ] && source "/Users/nanoha/.scm_breeze/scm_breeze.sh"
+### pyenv
 export PATH="${HOME}/.pyenv/shims:${PATH}"
 
+### fnm
 eval "$(fnm env --use-on-cd)"
+
+### scm_breeze
+[ -s "/Users/nanoha/.scm_breeze/scm_breeze.sh" ] && source "/Users/nanoha/.scm_breeze/scm_breeze.sh"
