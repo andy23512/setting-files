@@ -1,3 +1,7 @@
+if [[ -v ENABLE_ZPROF ]]; then
+  zmodload zsh/zprof
+fi
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -181,34 +185,26 @@ alias isi="innocent_starter ~/git/ihis i"
 alias isd="innocent_starter ~/git/dicom-ct d"
 alias ism="innocent_starter ~/git/aether-mono m"
 alias isv="innocent_starter ~/git/vfss v"
+
+### Accel Shooter Alias
 alias ach="accel-shooter check"
-alias ac="accel-shooter commit"
+alias xf="accel-shooter commit feat"
+alias xx="accel-shooter commit fix"
+alias xd="accel-shooter commit docs"
+alias xs="accel-shooter commit style"
+alias xr="accel-shooter commit refactor"
+alias xp="accel-shooter commit perf"
+alias xt="accel-shooter commit test"
+alias xb="accel-shooter commit build"
+alias xi="accel-shooter commit ci"
+alias xc="accel-shooter commit chore"
 alias as="accel-shooter"
 alias ao="accel-shooter open"
 alias aw="accel-shooter work"
 alias dpcp="accel-shooter dailyProgress"
+
 alias op="open ~/git/aether-mono/libs/pheno/documentation/compodoc/index.html"
 alias sp="cd ~/git/aether-mono;NODE_OPTIONS=--openssl-legacy-provider  yarn build:iconfont;NODE_OPTIONS=--openssl-legacy-provider yarn serve pheno"
-
-function gas {
-	Commands=(
-		"git status -s"
-		"git add -A"
-		"git diff --cached"
-		"c"
-		"accel-shooter commit"
-	)
-
-	for c in ${Commands[*]}; do
-		if [[ "$c" == "c" ]]; then
-			echo "continue?"
-			read x
-			[[ ! $x =~ ^[Yy]$ ]] && break
-		else
-			eval $c
-		fi
-	done
-}
 
 # Home Aliases
 if [ -e $HOME/.alias ]; then
@@ -360,10 +356,6 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 export EDITOR=vim
 export VISUAL="$EDITOR"
 
-### git completion
-zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
-fpath=(~/.zsh $fpath)
-
 ### accel-shooter
 export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/accel-shooter/.config.yml
 
@@ -397,3 +389,13 @@ eval "$(fnm env --use-on-cd)"
 
 ### scm_breeze
 [ -s "/Users/nanoha/.scm_breeze/scm_breeze.sh" ] && source "/Users/nanoha/.scm_breeze/scm_breeze.sh"
+
+PATH=~/.console-ninja/.bin:$PATH
+
+if [[ -v ENABLE_ZPROF ]]; then
+  zprof_path=~/.zprof_output/
+  mkdir -p $zprof_path
+  current_time=$(date "+%Y.%m.%d-%H.%M.%S")
+  zprof_file=$zprof_path$current_time
+  zprof > $zprof_file
+fi
