@@ -2,11 +2,6 @@ if [[ -v ENABLE_ZPROF ]]; then
   zmodload zsh/zprof
 fi
 
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -388,6 +383,7 @@ export PATH="${HOME}/.pyenv/shims:${PATH}"
 eval "$(fnm env --use-on-cd)"
 
 ### scm_breeze
+autoload -Uz compinit && compinit
 [ -s "/Users/nanoha/.scm_breeze/scm_breeze.sh" ] && source "/Users/nanoha/.scm_breeze/scm_breeze.sh"
 
 PATH=~/.console-ninja/.bin:$PATH
