@@ -5,7 +5,7 @@
 vimrc
 ### Setup
 ```sh
-$ cp vimrc ~/.vimrc
+$ cp Shell/vimrc ~/.vimrc
 $ git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
 $ vim "+call minpac#update()" +qall
 ```
@@ -14,36 +14,29 @@ $ vim "+call minpac#update()" +qall
 gitconfig
 ### Setup
 ```sh
-$ cp gitconfig ~/.gitconfig
+$ cp Shell/gitconfig ~/.gitconfig
 ```
 
 ## tmux
 tmux.conf
 ### Setup
 ```sh
-$ cp tmux.conf ~/.tmux.conf
+$ cp Shell/tmux.conf ~/.tmux.conf
 ```
 
 ## Bash
 bashrc
 ### Setup
 ```sh
-$ cp bashrc ~/.bashrc
+$ cp Shell/bashrc ~/.bashrc
 ```
 
-## Zsh + Prezto
+## Zsh
 zshrc
-zpreztorc
 ### Setup
 ```sh
 zsh
-git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-setopt EXTENDED_GLOB
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-done
-cp zshrc ~/.zshrc
-cp zpreztorc ~/.zpreztorc
+cp Shell/zshrc ~/.zshrc
 chsh -s /bin/zsh
 mkdir -p ~/.zsh
 cd ~/.zsh
