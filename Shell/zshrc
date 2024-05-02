@@ -72,6 +72,8 @@ alias tx='tmux new -A -D -s'
 function l() {
   cd "$(llama "$@")"
 }
+
+## quick cd
 alias cr='cd $(git root)'
 alias cf='cd $(git root)/frontend'
 alias cb='cd $(git root)/backend'
@@ -82,6 +84,8 @@ alias cm='cd ~/git/aether-mono/'
 alias ci='cd ~/git/ihis/'
 alias cdc='cd ~/git/dicom-ct/'
 alias cv='cd ~/git/vfss/'
+alias cal='cd ~/git/alnitak/'
+
 alias ports='netstat -tulanp'
 alias top='atop'
 alias df='df -H'
@@ -254,15 +258,6 @@ function setup_python {
 	source ~/.virtualenvs/$1/bin/activate
 }
 
-function msoa {
-	pwd=`pwd`
-	cw
-	make stop-dev-main
-	cs
-	make stop-dev-main
-	cd $pwd
-}
-
 function git_repo {
     GIT_DIR=`git rev-parse --git-dir 2> /dev/null` || return;
     GIT_DIR=`\cd $GIT_DIR; pwd`
@@ -311,12 +306,6 @@ EXE_GUID=ad
 DIR_STICKY=Ex
 DIR_WO_STICKY=Ex
 export LSCOLORS="$DIR$SYM_LINK$SOCKET$PIPE$EXE$BLOCK_SP$CHAR_SP$EXE_SUID$EXE_GUID$DIR_STICKY$DIR_WO_STICKY"
-
-# tabtab source for yarn package
-# uninstall by removing these lines or running `tabtab uninstall yarn`
-[ -f /Users/nanoha/.config/yarn/global/node_modules/tabtab/.completions/yarn.bash ] && . /Users/nanoha/.config/yarn/global/node_modules/tabtab/.completions/yarn.bash
-
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export EDITOR=vim
 export VISUAL="$EDITOR"
