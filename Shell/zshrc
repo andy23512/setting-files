@@ -43,6 +43,7 @@ fi
 
 # Globals
 
+export TERM=screen-256color
 export EDITOR=vim
 export GDFONTPATH="$HOME/share/fonts"
 export LANG=en_US.UTF-8
