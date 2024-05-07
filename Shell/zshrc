@@ -104,6 +104,16 @@ setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
 ####################################### Personal Setting
 
+### Git Alias
+
+alias g='git'
+alias gs='git s'
+alias gd='git d'
+alias gdc='git dc'
+alias gp='git push'
+alias ga='git add -A'
+alias gci='git ci'
+
 ### Accel Shooter
 
 alias ach="accel-shooter check"
