@@ -104,7 +104,29 @@ setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
 ####################################### Personal Setting
 
-### Git Alias
+### Globals
+
+export LANG=en_US.UTF-8
+
+### ls
+
+alias ls='/bin/ls -G'
+
+### cd
+
+alias cr='cd $(git root)'
+alias cf='cd $(git root)/frontend'
+alias cb='cd $(git root)/backend'
+alias cs='cd ~/git/space/'
+alias cw='cd ~/git/website/'
+alias ca='cd ~/git/accel-shooter/'
+alias cm='cd ~/git/aether-mono/'
+alias ci='cd ~/git/ihis/'
+alias cdc='cd ~/git/dicom-ct/'
+alias cv='cd ~/git/vfss/'
+alias cal='cd ~/git/alnitak/'
+
+### Git
 
 alias g='git'
 alias gs='git s'
@@ -113,6 +135,37 @@ alias gdc='git dc'
 alias gp='git push'
 alias ga='git add -A'
 alias gci='git ci'
+
+### VSCode
+
+alias c="NODE_OPTIONS= code-insiders --disable-gpu ."
+
+function cof() {
+	DIR=$(git root)/frontend
+	if [ -d "$DIR" ]; then
+		NODE_OPTIONS= code-insiders --disable-gpu $DIR
+	else
+		NODE_OPTIONS= code-insiders --disable-gpu $(git root)
+	fi
+}
+
+function cob() {
+	DIR=$(git root)/backend
+	if [ -d "$DIR" ]; then
+		NODE_OPTIONS= code-insiders --disable-gpu $DIR
+	else
+		NODE_OPTIONS= code-insiders --disable-gpu $(git root)
+	fi
+}
+
+function coi() {
+	DIR=$(git root)/image-server
+	if [ -d "$DIR" ]; then
+		NODE_OPTIONS= code-insiders --disable-gpu $DIR
+	else
+		NODE_OPTIONS= code-insiders --disable-gpu $(git root)
+	fi
+}
 
 ### Accel Shooter
 
@@ -133,3 +186,11 @@ alias xt="accel-shooter commit test"
 alias xx="accel-shooter commit fix"
 
 export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/accel-shooter/.config.yml
+
+### Console Ninja
+
+PATH=~/.console-ninja/.bin:$PATH
+
+### Nx
+
+export NX_CACHE_DIRECTORY="${HOME}/.nx/cache"
