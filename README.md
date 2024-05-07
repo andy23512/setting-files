@@ -34,12 +34,12 @@ $ cp Shell/bashrc ~/.bashrc
 ## Zsh
 zshrc
 ### Setup
+
+use [Zsh for Humans](https://github.com/romkatv/zsh4humans/) to setup
+
 ```sh
-zsh
-cp Shell/zshrc ~/.zshrc
-chsh -s /bin/zsh
-mkdir -p ~/.zsh
-cd ~/.zsh
-curl -o git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
-curl -o _git https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
+$ vi -d Shell/zshrc ~/.zshrc (ensure the difference is expected)
+$ vi -d Shell/p10k.zsh ~/.p10k.zsh (ensure the difference is expected)
+$ cp Shell/zshrc ~/.zshrc
+$ cp Shell/p10k.zsh ~/.p10k.zsh
 ```
