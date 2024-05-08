@@ -239,3 +239,8 @@ PATH=~/.console-ninja/.bin:$PATH
 ### Nx
 
 export NX_CACHE_DIRECTORY="${HOME}/.nx/cache"
+
+### fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='fd'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
