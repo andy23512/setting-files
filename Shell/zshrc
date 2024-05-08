@@ -102,11 +102,14 @@ alias ls="${aliases[ls]:-ls} -A"
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
 ####################################### Personal Setting
 
 ### Globals
 
 export LANG=en_US.UTF-8
+export PATH="$PATH:/usr/local/sbin:$HOME/.local/bin"
 
 ### ls
 
@@ -167,7 +170,49 @@ function coi() {
 	fi
 }
 
+### yarn
+
+alias y="yarn"
+alias ys="yarn start"
+
+### tmux
+
+alias tx='tmux new -A -D -s'
+
+### fnm
+eval "$(fnm env --use-on-cd)"
+
+### Innocent Starter
+
+function innocent_starter {
+	cd $1
+	tmux new -A -d -s $2 -c $1
+	tx $2
+}
+
+alias isa="accel_shooter_starter"
+alias isw="innocent_starter ~/git/website w"
+alias iss="innocent_starter ~/git/space s"
+alias isi="innocent_starter ~/git/ihis i"
+alias isd="innocent_starter ~/git/dicom-ct d"
+alias ism="innocent_starter ~/git/aether-mono m"
+alias isv="innocent_starter ~/git/vfss v"
+
 ### Accel Shooter
+
+function accel_shooter_starter {
+	cd ~/git/accel-shooter
+	tmux new -A -d -s a -c ~/git/accel-shooter
+	tmux rename-window 'acst'
+	tmux send-keys 'as track' C-m
+	tmux split-window
+	tmux send-keys 'acst-server' C-m
+	tmux split-window
+	tmux send-keys 'as meetingTrack && exit' C-m
+	tmux split-window
+	tmux send-keys 'colima start && exit' C-m
+	tx a
+}
 
 alias ach="accel-shooter check"
 alias ao="accel-shooter open"
