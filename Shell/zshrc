@@ -139,6 +139,14 @@ alias gp='git push'
 alias ga='git add -A'
 alias gci='git ci'
 
+function git_repo {
+    GIT_DIR=`git rev-parse --git-dir 2> /dev/null` || return;
+    GIT_DIR=`\cd $GIT_DIR; pwd`
+    PROJECT_ROOT=`dirname "$GIT_DIR"`
+	REPO_NAME=`basename "$PROJECT_ROOT"`
+	echo "[$REPO_NAME]"
+}
+
 ### VSCode
 
 alias c="NODE_OPTIONS= code-insiders --disable-gpu ."
@@ -214,6 +222,7 @@ function accel_shooter_starter {
 	tx a
 }
 
+alias va="vim -R +AnsiEsc ~/ac-checker-log"
 alias ach="accel-shooter check"
 alias ao="accel-shooter open"
 alias as="accel-shooter"
@@ -244,3 +253,58 @@ export NX_CACHE_DIRECTORY="${HOME}/.nx/cache"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+### pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+### docker compose
+
+function dc() {
+	if [[ "$(git_repo)" == "[website]" ]]; then
+		./bin/dc -f docker-compose.yaml -f docker-compose.dev.yaml $@
+	elif [ -e "dev.yaml" ]; then
+		docker-compose -f docker-compose.yaml -f dev.yaml $@
+	else
+		docker-compose $@
+	fi
+}
+alias dcbu="cr; dc build"
+alias dcd="cr; dc down -v"
+alias dcl="cr; dc logs --tail 30 -f -t"
+alias dcfl="cr; dc logs 30 -f -t"
+alias dcr="cr; dc restart"
+alias dcu="cr; dc up -d"
+alias dclf="cr; dcl frontend"
+alias dclb="cr; dcl backend"
+alias dcld="cr; dcl database"
+alias dcbf="cr; dcb frontend"
+alias dcbb="cr; dcb backend"
+function dcc() { cr; dc exec $@; }
+function dcb() { cr; dc exec $@ /bin/bash; }
+function dcs() { cr; dc exec $@ /bin/sh; }
+alias drm='docker rm $(docker ps -q -f 'status=exited'); docker rmi $(docker images -q -f "dangling=true")'
+
+# make
+
+alias mr="cr; make stop-dev-main; make start-dev-main"
+alias msa="cr; make start-dev-main"
+alias mso="cr; make stop-dev-main"
+alias mrf="cr; dc restart frontend; dclf"
+alias mrb="cr; dc restart backend; dclb"
+
+# copy
+
+function copy() { cat $@ | pbcopy; }
+
+# setup python project
+
+function setup_python {
+	mkdir $1
+	cd $1
+	git init
+	python3 -m venv ~/.virtualenvs/$1
+	source ~/.virtualenvs/$1/bin/activate
+}
