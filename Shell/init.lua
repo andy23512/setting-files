@@ -50,7 +50,7 @@ function setColsCallbackFactory(cols)
     end
 end
 
-for i = 2, 6 do
+for i = 2, 8 do
     setColsCallback = setColsCallbackFactory(i)
     hs.hotkey.bind({'cmd', 'alt'}, tostring(i), setColsCallback)
 end
@@ -218,6 +218,7 @@ for key, delta_volume in pairs(volume_control_keys) do
         device = hs.audiodevice.defaultOutputDevice()
         volume = device:outputVolume()
         device:setOutputVolume(volume + delta_volume)
+        hs.alert.show('Volume: ' .. tostring(math.floor(device:outputVolume())))
     end)
 end
 
