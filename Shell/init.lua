@@ -239,18 +239,17 @@ function tableConcat(t1,t2)
     return t1
 end
 
-launcherData = hs.json.read('.launcher.json')
-
-launcher = hs.chooser.new(function (choice)
-    if choice.type == 'QuickLink' then
-        hs.execute('open ' .. choice.data.url)
-    elseif choice.type == 'Application' then
-        hs.application.launchOrFocus(choice.data.name)
-    end
-    
-end)
-
 hs.hotkey.bind({"ctrl"}, "/", function()
+    launcherData = hs.json.read('.launcher.json')
+
+    launcher = hs.chooser.new(function (choice)
+        if choice.type == 'QuickLink' then
+            hs.execute('open ' .. choice.data.url)
+        elseif choice.type == 'Application' then
+            hs.application.launchOrFocus(choice.data.name)
+        end
+    end)
+
     quickLinkChoices = map(
         launcherData.quickLinks,
         function(quickLink)
