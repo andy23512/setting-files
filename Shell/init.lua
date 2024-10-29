@@ -239,8 +239,10 @@ function tableConcat(t1,t2)
     return t1
 end
 
+config = hs.json.read('config.json')
+
 hs.hotkey.bind({"ctrl"}, "/", function()
-    launcherData = hs.json.read('.launcher.json')
+    launcherData = hs.json.read(config.launcherSettingPath)
 
     launcher = hs.chooser.new(function (choice)
         if choice.type == 'QuickLink' then
