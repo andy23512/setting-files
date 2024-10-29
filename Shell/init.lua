@@ -222,4 +222,57 @@ for key, delta_volume in pairs(volume_control_keys) do
     end)
 end
 
+-- launcher
+
+function map(tbl, f)
+    local t = {}
+    for k,v in pairs(tbl) do
+        t[k] = f(v)
+    end
+    return t
+end
+
+function tableConcat(t1,t2)
+    for i=1,#t2 do
+        t1[#t1+1] = t2[i]
+    end
+    return t1
+end
+
+launcherData = hs.json.read('.launcher.json')
+
+launcher = hs.chooser.new(function (choice)
+    if choice.type == 'QuickLink' then
+        hs.execute('open ' .. choice.data.url)
+    elseif choice.type == 'Application' then
+        hs.application.launchOrFocus(choice.data.name)
+    end
+    
+end)
+
+hs.hotkey.bind({"ctrl"}, "/", function()
+    quickLinkChoices = map(
+        launcherData.quickLinks,
+        function(quickLink)
+            return {
+                text = quickLink.alias,
+                type = "QuickLink",
+                data = quickLink
+            }
+        end
+    )
+    applicationChoices = map(
+        launcherData.applications,
+        function(application)
+            return {
+                text = application.alias,
+                type = "Application",
+                data = application
+            }
+        end
+    )
+    launcher:choices(tableConcat(quickLinkChoices, applicationChoices))
+    launcher:show()
+end)
+
 -- vim:sw=4:ts=4:sts=4:et
