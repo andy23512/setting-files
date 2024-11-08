@@ -212,13 +212,15 @@ function accel_shooter_starter {
 	cd ~/git/accel-shooter
 	tmux new -A -d -s a -c ~/git/accel-shooter
 	tmux rename-window 'acst'
-	tmux send-keys 'as track' C-m
-	tmux split-window
+	tmux send-keys 'sudo openfortivpn -c ~/vpn.conf' C-m
+	tmux split-window -l 80%
+	tmux send-keys 'sleep 10 && as track' C-m
+	tmux split-window -l 75%
+	tmux send-keys 'colima start' C-m
+	tmux split-window -l 66%
 	tmux send-keys 'acst-server' C-m
-	tmux split-window
+	tmux split-window -l 50%
 	tmux send-keys 'as meetingTrack && exit' C-m
-	tmux split-window
-	tmux send-keys 'colima start && exit' C-m
 	tx a
 }
 
@@ -266,9 +268,9 @@ function dc() {
 	if [[ "$(git_repo)" == "[website]" ]]; then
 		./bin/dc -f docker-compose.yaml -f docker-compose.dev.yaml $@
 	elif [ -e "dev.yaml" ]; then
-		docker-compose -f docker-compose.yaml -f dev.yaml $@
+		docker compose -f docker-compose.yaml -f dev.yaml $@
 	else
-		docker-compose $@
+		docker compose $@
 	fi
 }
 alias dcbu="cr; dc build"
@@ -308,3 +310,5 @@ function setup_python {
 	python3 -m venv ~/.virtualenvs/$1
 	source ~/.virtualenvs/$1/bin/activate
 }
+
+[ -s "/Users/nanoha/.scm_breeze/scm_breeze.sh" ] && source "/Users/nanoha/.scm_breeze/scm_breeze.sh"
