@@ -216,9 +216,9 @@ function accel_shooter_starter {
 	tmux split-window -l 80%
 	tmux send-keys 'sleep 10 && as track' C-m
 	tmux split-window -l 75%
-	tmux send-keys 'colima start' C-m
-	tmux split-window -l 66%
 	tmux send-keys 'acst-server' C-m
+	tmux split-window -l 66%
+	tmux send-keys 'colima start && exit' C-m
 	tmux split-window -l 50%
 	tmux send-keys 'as meetingTrack && exit' C-m
 	tx a
