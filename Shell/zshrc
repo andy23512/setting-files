@@ -213,14 +213,16 @@ function accel_shooter_starter {
 	tmux new -A -d -s a -c ~/git/accel-shooter
 	tmux rename-window 'acst'
 	tmux send-keys 'sudo openfortivpn -c ~/vpn.conf' C-m
-	tmux split-window -l 80%
-	tmux send-keys 'sleep 10 && as track' C-m
-	tmux split-window -l 75%
-	tmux send-keys 'acst-server' C-m
-	tmux split-window -l 66%
-	tmux send-keys 'colima start && exit' C-m
-	tmux split-window -l 50%
+	tmux split-window -l 83%
 	tmux send-keys 'as meetingTrack && exit' C-m
+	tmux split-window -l 80%
+	tmux send-keys 'acst-server' C-m
+	tmux split-window -l 75%
+	tmux send-keys 'colima start && exit' C-m
+	tmux split-window -l 66%
+	tmux send-keys 'sleep 10 && as track' C-m
+	tmux split-window -l 50%
+	tmux send-keys 'sleep 10 && as reviewTrack' C-m
 	tx a
 }
 
