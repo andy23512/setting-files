@@ -108,20 +108,6 @@ end
 wf_all:subscribe(hs.window.filter.windowMoved, snapWindow)
 wf_all:subscribe(hs.window.filter.windowCreated, snapWindow)
 
--- to cell
-
-hs.hotkey.bind({'cmd', 'alt'}, 'c', function()
-    wf_all:pause()
-    local win = hs.window.focusedWindow()
-    if win ~= nil then
-        cell = hs.grid.get(win)
-        cell.w = 1
-        cell.h = 1
-        hs.grid.set(win, cell)
-    end
-    hs.timer.doAfter(1, function() wf_all:resume() end)
-end)
-
 -- to row
 
 hs.hotkey.bind({'cmd', 'alt'}, 'r', function()
@@ -196,12 +182,12 @@ end
 
 application_keys = {
     ['v'] = 'Visual Studio Code - Insiders',
-    ['g'] = 'Google Chrome',
+    ['c'] = 'Google Chrome',
     ['i'] = 'iTerm',
 }
 
 for key, application_name in pairs(application_keys) do
-    hs.hotkey.bind({'shift', 'alt'}, key, function()
+    hs.hotkey.bind({'cmd', 'alt'}, key, function()
         hs.application.launchOrFocus(application_name)
     end)
 end
