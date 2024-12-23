@@ -37,14 +37,71 @@ end
 
 -- grid cols setting
 
+grid_hints = {
+    [2] = {
+        {'1', '2'},
+        {'1', '2'},
+        {'k', 'f'},
+        {'c', 'd'},
+        {'1', '2'},
+    },
+    [3] = {
+        {'1', '2', '3'},
+        {'1', '2', '3'},
+        {'k', 'f', 'a'},
+        {'c', 'd', 't'},
+        {'1', '2', '3'},
+    },
+    [4] = {
+        {'1', '2', '3', '4'},
+        {'1', '2', '3', '4'},
+        {'r', 'k', 'f', 'a'},
+        {'e', 'c', 'd', 't'},
+        {'1', '2', '3', '4'},
+    },
+    [5] = {
+        {'1', '2', '3', '4', '5'},
+        {'1', '2', '3', '4', '5'},
+        {'r', 'k', 'f', 'a', 'l'},
+        {'e', 'c', 'd', 't', 'n'},
+        {'1', '2', '3', '4', '5'},
+    },
+    [6] = {
+        {'1', '2', '3', '4', '5', '6'},
+        {'1', '2', '3', '4', '5', '6'},
+        {'i', 'r', 'k', 'f', 'a', 'l'},
+        {'o', 'e', 'c', 'd', 't', 'n'},
+        {'1', '2', '3', '4', '5', '6'},
+    },
+    [7] = {
+        {'1', '2', '3', '4', '5', '6', '7'},
+        {'1', '2', '3', '4', '5', '6', '7'},
+        {'i', 'r', 'k', 'f', 'a', 'l', 'y'},
+        {'o', 'e', 'c', 'd', 't', 'n', 's'},
+        {'1', '2', '3', '4', '5', '6', '7'},
+    },
+    [8] = {
+        {'1', '2', '3', '4', '5', '6', '7', '8'},
+        {'1', '2', '3', '4', '5', '6', '7', '8'},
+        {'\'', 'i', 'r', 'k', 'f', 'a', 'l', 'y'},
+        {'u', 'o', 'e', 'c', 'd', 't', 'n', 's'},
+        {'1', '2', '3', '4', '5', '6', '7', '8'},
+    },
+}
+
+function setGridCols(cols)
+    hs.grid.setGrid(tostring(cols) .. 'x2')
+    hs.grid.HINTS = grid_hints[cols]
+end
+
 gcols = hs.settings.get('cols') or 4
-hs.grid.setGrid(tostring(gcols) .. 'x2')
+setGridCols(gcols)
 hs.grid.setMargins({ x = 0, y = 0 })
 
 function setColsCallbackFactory(cols)
   return function()
         hs.settings.set('cols', cols)
-        hs.grid.setGrid(tostring(cols) .. 'x2')
+        setGridCols(cols)
         hs.alert.show(tostring(cols) .. 'x2')
         gcols = cols
     end
