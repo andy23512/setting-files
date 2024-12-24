@@ -180,6 +180,22 @@ hs.hotkey.bind({'cmd', 'alt'}, 'r', function()
     hs.timer.doAfter(1, function() wf_all:resume() end)
 end)
 
+-- to top-right
+
+hs.hotkey.bind({'cmd', 'alt'}, ';', function()
+    wf_all:pause()
+    local win = hs.window.focusedWindow()
+    if win ~= nil then
+        cell = hs.grid.get(win)
+        cell.x = gcols - 1
+        cell.y = 0
+        cell.w = 1
+        cell.h = 1
+        hs.grid.set(win, cell)
+    end
+    hs.timer.doAfter(1, function() wf_all:resume() end)
+end)
+
 -- input source
 
 InputSource = {
