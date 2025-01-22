@@ -14,6 +14,35 @@ end
 myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 hs.alert.show("Config loaded")
 
+-- fix bug for animation duration and grid
+
+local function axHotfix(win)
+    if not win then win = hs.window.frontmostWindow() end
+
+    local axApp = hs.axuielement.applicationElement(win:application())
+    local wasEnhanced = axApp.AXEnhancedUserInterface
+    axApp.AXEnhancedUserInterface = false
+
+    return function()
+        hs.timer.doAfter(hs.window.animationDuration * 2, function()
+            axApp.AXEnhancedUserInterface = wasEnhanced
+        end)
+    end
+end
+
+local function withAxHotfix(fn, position)
+    if not position then position = 1 end
+    return function(...)
+        local revert = axHotfix(select(position, ...))
+        fn(...)
+        revert()
+    end
+end
+
+local windowMT = hs.getObjectMetatable("hs.window")
+windowMT._setFrameInScreenBounds = windowMT._setFrameInScreenBounds or windowMT.setFrameInScreenBounds -- Keep the original, if needed
+windowMT.setFrameInScreenBounds = withAxHotfix(windowMT.setFrameInScreenBounds)
+
 -- global setting part
 
 hs.window.animationDuration = 0
@@ -186,11 +215,7 @@ hs.hotkey.bind({'cmd', 'alt'}, ';', function()
     wf_all:pause()
     local win = hs.window.focusedWindow()
     if win ~= nil then
-        cell = hs.grid.get(win)
-        cell.x = gcols - 1
-        cell.y = 0
-        cell.w = 1
-        cell.h = 1
+        cell = hs.geometry(gcols - 1, 0, 1, 1)
         hs.grid.set(win, cell)
     end
     hs.timer.doAfter(1, function() wf_all:resume() end)
