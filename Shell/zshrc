@@ -122,6 +122,7 @@ alias cf='cd $(git root)/frontend'
 alias cb='cd $(git root)/backend'
 alias cs='cd ~/git/space/'
 alias cw='cd ~/git/website/'
+alias cw2='cd ~/git/website2/'
 alias ca='cd ~/git/accel-shooter/'
 alias cm='cd ~/git/aether-mono/'
 alias ci='cd ~/git/ihis/'
@@ -205,6 +206,18 @@ alias isi="innocent_starter ~/git/ihis i"
 alias isd="innocent_starter ~/git/dicom-ct d"
 alias ism="innocent_starter ~/git/aether-mono m"
 alias isv="innocent_starter ~/git/vfss v"
+
+function website_service_starter {
+	cd ~/git/website
+	tmux new -A -d -s w -c ~/git/website
+	tmux rename-window 'w'
+	tmux send-keys 'cf; cf; WEB_NETWORK_LOCATION=localhost yarn start' C-m
+	tmux split-window -l 50%
+	tmux send-keys './bin/dc -f docker-compose.yaml -f docker-compose.dev.yaml up -d' C-m
+	tx w
+}
+
+alias wss="website_service_starter"
 
 ### Accel Shooter
 
