@@ -242,7 +242,7 @@ for key, source_id in pairs(input_source_keys) do
     hs.hotkey.bind({'cmd', 'alt'}, key, function()
         current_source_id = hs.keycodes.currentSourceID()
         if current_source_id == source_id then
-            if currentSourceID == InputSource.ABC then
+            if current_source_id == InputSource.ABC then
                 hs.keycodes.currentSourceID(InputSource.McBopomofo)
             else
                 hs.keycodes.currentSourceID(InputSource.ABC)
@@ -252,6 +252,15 @@ for key, source_id in pairs(input_source_keys) do
         end
     end)
 end
+
+hs.hotkey.bind({'cmd'}, 'm', function()
+    current_source_id = hs.keycodes.currentSourceID()
+    if current_source_id == InputSource.McBopomofo then
+        hs.keycodes.currentSourceID(InputSource.ABC)
+    else
+        hs.keycodes.currentSourceID(InputSource.McBopomofo)
+    end
+end)
 
 -- mouse teleport
 
