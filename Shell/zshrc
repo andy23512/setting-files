@@ -152,7 +152,7 @@ function git_repo {
 
 alias c="NODE_OPTIONS= code-insiders --disable-gpu ."
 
-function cof() {
+function f() {
 	DIR=$(git root)/frontend
 	if [ -d "$DIR" ]; then
 		NODE_OPTIONS= code-insiders --disable-gpu $DIR
@@ -161,7 +161,7 @@ function cof() {
 	fi
 }
 
-function cob() {
+function b() {
 	DIR=$(git root)/backend
 	if [ -d "$DIR" ]; then
 		NODE_OPTIONS= code-insiders --disable-gpu $DIR
@@ -213,7 +213,7 @@ function website_service_starter {
 	tmux rename-window 'w'
 	tmux send-keys 'cf; cf; WEB_NETWORK_LOCATION=localhost yarn start' C-m
 	tmux split-window -l 50%
-	tmux send-keys './bin/dc -f docker-compose.yaml -f docker-compose.dev.yaml up -d' C-m
+	tmux send-keys 'sleep 10 && ./bin/dc -f docker-compose.yaml -f docker-compose.dev.yaml up -d' C-m
 	tx w
 }
 
