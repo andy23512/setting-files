@@ -113,22 +113,21 @@ export PATH="$PATH:/usr/local/sbin:$HOME/.local/bin"
 
 ### ls
 
-alias ls='/bin/ls -G'
+alias l='/bin/ls -G'
 
 ### cd
 
 alias cr='cd $(git root)'
-alias cf='cd $(git root)/frontend'
-alias cb='cd $(git root)/backend'
-alias cs='cd ~/git/space/'
-alias cw='cd ~/git/website/'
-alias cw2='cd ~/git/website2/'
-alias ca='cd ~/git/accel-shooter/'
-alias cm='cd ~/git/aether-mono/'
-alias ci='cd ~/git/ihis/'
-alias cdc='cd ~/git/dicom-ct/'
-alias cv='cd ~/git/vfss/'
-alias cal='cd ~/git/alnitak/'
+alias f='cd $(git root)/frontend'
+alias b='cd $(git root)/backend'
+alias s='cd ~/git/space/'
+alias w='cd ~/git/website/'
+alias w2='cd ~/git/website2/'
+alias a='cd ~/git/accel-shooter/'
+alias m='cd ~/git/aether-mono/'
+alias i='cd ~/git/ihis/'
+alias d='cd ~/git/dicom-ct/'
+alias al='cd ~/git/alnitak/'
 
 ### Git
 
@@ -239,6 +238,7 @@ function accel_shooter_starter {
 	tx a
 }
 
+alias v="vim"
 alias va="vim -R +AnsiEsc ~/ac-checker-log"
 alias ach="accel-shooter check"
 alias ao="accel-shooter open"
