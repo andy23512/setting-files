@@ -185,14 +185,8 @@ end
 
 wf_all = hs.window.filter.new(true)
 
-function snapWindow(window)
-    if window:isVisible() and window:isStandard() then
-        hs.grid.snap(window)
-    end
-end
-
-wf_all:subscribe(hs.window.filter.windowMoved, snapWindow)
-wf_all:subscribe(hs.window.filter.windowCreated, snapWindow)
+wf_all:subscribe(hs.window.filter.windowMoved, snapGrid)
+wf_all:subscribe(hs.window.filter.windowCreated, snapGrid)
 
 -- to row
 
@@ -314,5 +308,13 @@ for key, delta_volume in pairs(volume_control_keys) do
         hs.alert.show('Volume: ' .. tostring(math.floor(device:outputVolume())))
     end)
 end
+
+-- grayscale
+
+function toggleGrayScale()
+  hs.screen.setForceToGray(not hs.screen.getForceToGray())
+end
+
+hs.hotkey.bind({'cmd', 'alt'}, 'w', toggleGrayScale)
 
 -- vim:sw=4:ts=4:sts=4:et
