@@ -225,16 +225,14 @@ function accel_shooter_starter {
 	tmux new -A -d -s a -c ~/git/accel-shooter
 	tmux rename-window 'acst'
 	tmux send-keys 'sudo openfortivpn -c ~/vpn.conf' C-m
-	tmux split-window -l 83%
-	tmux send-keys 'as meetingTrack && exit' C-m
 	tmux split-window -l 80%
-	tmux send-keys 'acst-server' C-m
+	tmux send-keys 'sudo set_vpn_net' C-m
 	tmux split-window -l 75%
-	tmux send-keys 'colima start && exit' C-m
+	tmux send-keys 'acst-server' C-m
 	tmux split-window -l 66%
-	tmux send-keys 'sleep 10 && as track' C-m
+	tmux send-keys 'colima start && exit' C-m
 	tmux split-window -l 50%
-	tmux send-keys 'sleep 10 && as reviewTrack' C-m
+	tmux send-keys 'sleep 20 && as period' C-m
 	tx a
 }
 
@@ -324,6 +322,12 @@ function setup_python {
 	git init
 	python3 -m venv ~/.virtualenvs/$1
 	source ~/.virtualenvs/$1/bin/activate
+}
+
+function set_vpn_net {
+	sudo route add -net 172.65.251.78 -netmask 255.255.0.0 -interface ppp0
+	sudo route add -net 34.74.90.64/28 -netmask 255.255.0.0 -interface ppp0
+	sudo route add -net 34.74.226.0/24 -netmask 255.255.0.0 -interface ppp0
 }
 
 [ -s "/Users/nanoha/.scm_breeze/scm_breeze.sh" ] && source "/Users/nanoha/.scm_breeze/scm_breeze.sh"
