@@ -118,16 +118,16 @@ alias l='/bin/ls -G'
 ### cd
 
 alias cr='cd $(git root)'
-alias f='cd $(git root)/frontend'
-alias b='cd $(git root)/backend'
-alias s='cd ~/git/space/'
-alias w='cd ~/git/website/'
-alias w2='cd ~/git/website2/'
-alias a='cd ~/git/accel-shooter/'
-alias m='cd ~/git/aether-mono/'
-alias i='cd ~/git/ihis/'
-alias d='cd ~/git/dicom-ct/'
-alias al='cd ~/git/alnitak/'
+alias cf='cd $(git root)/frontend'
+alias cb='cd $(git root)/backend'
+alias cs='cd ~/git/space/'
+alias cw='cd ~/git/website/'
+alias cw2='cd ~/git/website2/'
+alias ca='cd ~/git/accel-shooter/'
+alias cm='cd ~/git/aether-mono/'
+alias ci='cd ~/git/ihis/'
+alias cdc='cd ~/git/dicom-ct/'
+alias cal='cd ~/git/alnitak/'
 
 ### Git
 
@@ -149,7 +149,7 @@ function git_repo {
 
 ### VSCode
 
-alias c="NODE_OPTIONS= code-insiders --disable-gpu ."
+alias c="code-insiders ."
 
 function f() {
 	DIR=$(git root)/frontend
@@ -226,13 +226,13 @@ function accel_shooter_starter {
 	tmux rename-window 'acst'
 	tmux send-keys 'sudo openfortivpn -c ~/vpn.conf' C-m
 	tmux split-window -l 80%
-	tmux send-keys 'sudo set_vpn_net' C-m
+	tmux send-keys 'set_vpn_net' C-m
 	tmux split-window -l 75%
 	tmux send-keys 'acst-server' C-m
 	tmux split-window -l 66%
 	tmux send-keys 'colima start && exit' C-m
 	tmux split-window -l 50%
-	tmux send-keys 'sleep 20 && as period' C-m
+	tmux send-keys 'sleep 20 && as periodic' C-m
 	tx a
 }
 
@@ -265,15 +265,15 @@ PATH=~/.console-ninja/.bin:$PATH
 export NX_CACHE_DIRECTORY="${HOME}/.nx/cache"
 
 ### fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 export FZF_DEFAULT_COMMAND='fd'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 ### pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 
 ### docker compose
 
@@ -330,4 +330,15 @@ function set_vpn_net {
 	sudo route add -net 34.74.226.0/24 -netmask 255.255.0.0 -interface ppp0
 }
 
+#
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+export WEB_NETWORK_LOCATION='localhost:3000'
+
+#
+export GIT_EDITOR="vim -c 'normal A'"
+
 [ -s "/Users/nanoha/.scm_breeze/scm_breeze.sh" ] && source "/Users/nanoha/.scm_breeze/scm_breeze.sh"
+
+if [ -f ~/.zshrc_private ]; then
+    source ~/.zshrc_private
+fi
