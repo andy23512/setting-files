@@ -1,0 +1,30 @@
+[
+	{
+		"name": "as (accel-shooter)",
+		"rootPath": "/Users/nanoha/git/accel-shooter",
+		"paths": [],
+		"tags": [],
+		"enabled": true
+	},
+	{
+		"name": "m (aether-mono)",
+		"rootPath": "/Users/nanoha/git/aether-mono",
+		"paths": [],
+		"tags": [],
+		"enabled": true
+	},
+	{
+		"name": "wf (website/frontend)",
+		"rootPath": "/Users/nanoha/git/website/frontend",
+		"paths": [],
+		"tags": [],
+		"enabled": true
+	},
+	{
+		"name": "wb (website/backend)",
+		"rootPath": "/Users/nanoha/git/website/backend",
+		"paths": [],
+		"tags": [],
+		"enabled": true
+	}
+]
