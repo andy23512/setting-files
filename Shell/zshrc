@@ -128,6 +128,10 @@ alias cm='cd ~/git/aether-mono/'
 alias ci='cd ~/git/ihis/'
 alias cdc='cd ~/git/dicom-ct/'
 alias cal='cd ~/git/alnitak/'
+alias ck='cd ~/git/keybr-cc-extension/'
+alias cbl='cd ~/git/blog/'
+alias cbz='cd ~/git/blog-zh-tw/'
+alias cce='cd ~/git/chord-editor/'
 
 ### Git
 
@@ -210,7 +214,7 @@ function website_service_starter {
 	cd ~/git/website
 	tmux new -A -d -s w -c ~/git/website
 	tmux rename-window 'w'
-	tmux send-keys 'cf; cf; WEB_NETWORK_LOCATION=localhost yarn start' C-m
+	tmux send-keys 'cf; WEB_NETWORK_LOCATION=localhost yarn start' C-m
 	tmux split-window -l 50%
 	tmux send-keys 'sleep 10 && ./bin/dc -f docker-compose.yaml -f docker-compose.dev.yaml up -d' C-m
 	tx w
@@ -226,7 +230,7 @@ function accel_shooter_starter {
 	tmux rename-window 'acst'
 	tmux send-keys 'sudo openfortivpn -c ~/vpn.conf' C-m
 	tmux split-window -l 80%
-	tmux send-keys 'set_vpn_net' C-m
+	tmux send-keys 'sleep 5 && set_vpn_net && exit' C-m
 	tmux split-window -l 75%
 	tmux send-keys 'acst-server' C-m
 	tmux split-window -l 66%
@@ -333,9 +337,6 @@ function set_vpn_net {
 #
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
 export WEB_NETWORK_LOCATION='localhost:3000'
-
-#
-export GIT_EDITOR="vim -c 'normal A'"
 
 [ -s "/Users/nanoha/.scm_breeze/scm_breeze.sh" ] && source "/Users/nanoha/.scm_breeze/scm_breeze.sh"
 
