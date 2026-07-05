@@ -1,3 +1,10 @@
+# OPENSPEC:START
+# OpenSpec shell completions configuration
+fpath=("/Users/nanoha/.zsh/completions" $fpath)
+autoload -Uz compinit
+compinit
+# OPENSPEC:END
+
 # Personal Zsh configuration file. It is strongly recommended to keep all
 # shell customization and configuration (including exported environment
 # variables such as PATH) in this file or in files sourced from it.
@@ -108,7 +115,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 ### Globals
 
-export LANG=en_US.UTF-8
+export LANG=zh_TW.UTF-8
+export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
 export PATH="$PATH:/usr/local/sbin:$HOME/.local/bin"
 
 ### ls
@@ -117,21 +125,10 @@ alias l='/bin/ls -G'
 
 ### cd
 
-alias cr='cd $(git root)'
+alias cg='cd $(git root)'
+alias crr='cd $(git root)'
 alias cf='cd $(git root)/frontend'
 alias cb='cd $(git root)/backend'
-alias cs='cd ~/git/space/'
-alias cw='cd ~/git/website/'
-alias cw2='cd ~/git/website2/'
-alias ca='cd ~/git/accel-shooter/'
-alias cm='cd ~/git/aether-mono/'
-alias ci='cd ~/git/ihis/'
-alias cdc='cd ~/git/dicom-ct/'
-alias cal='cd ~/git/alnitak/'
-alias ck='cd ~/git/keybr-cc-extension/'
-alias cbl='cd ~/git/blog/'
-alias cbz='cd ~/git/blog-zh-tw/'
-alias cce='cd ~/git/chord-editor/'
 
 ### Git
 
@@ -194,55 +191,10 @@ alias tx='tmux new -A -D -s'
 ### fnm
 eval "$(fnm env --use-on-cd)"
 
-### Innocent Starter
-
-function innocent_starter {
-	cd $1
-	tmux new -A -d -s $2 -c $1
-	tx $2
-}
-
-alias isa="accel_shooter_starter"
-alias isw="innocent_starter ~/git/website w"
-alias iss="innocent_starter ~/git/space s"
-alias isi="innocent_starter ~/git/ihis i"
-alias isd="innocent_starter ~/git/dicom-ct d"
-alias ism="innocent_starter ~/git/aether-mono m"
-alias isv="innocent_starter ~/git/vfss v"
-
-function website_service_starter {
-	cd ~/git/website
-	tmux new -A -d -s w -c ~/git/website
-	tmux rename-window 'w'
-	tmux send-keys 'cf; WEB_NETWORK_LOCATION=localhost yarn start' C-m
-	tmux split-window -l 50%
-	tmux send-keys 'sleep 10 && ./bin/dc -f docker-compose.yaml -f docker-compose.dev.yaml up -d' C-m
-	tx w
-}
-
-alias wss="website_service_starter"
-
-### Accel Shooter
-
-function accel_shooter_starter {
-	cd ~/git/accel-shooter
-	tmux new -A -d -s a -c ~/git/accel-shooter
-	tmux rename-window 'acst'
-	tmux send-keys 'sudo openfortivpn -c ~/vpn.conf' C-m
-	tmux split-window -l 80%
-	tmux send-keys 'sleep 5 && set_vpn_net && exit' C-m
-	tmux split-window -l 75%
-	tmux send-keys 'acst-server' C-m
-	tmux split-window -l 66%
-	tmux send-keys 'colima start && exit' C-m
-	tmux split-window -l 50%
-	tmux send-keys 'sleep 20 && as periodic' C-m
-	tx a
-}
-
+alias q="exit"
 alias v="vim"
 alias va="vim -R +AnsiEsc ~/ac-checker-log"
-alias ach="accel-shooter check"
+alias ach="node --max_old_space_size=24576 /Users/nanoha/.local/state/fnm_multishells/45508_1763542300356/bin/accel-shooter check"
 alias ao="accel-shooter open"
 alias as="accel-shooter"
 alias aw="accel-shooter work"
@@ -257,6 +209,9 @@ alias xr="accel-shooter commit refactor"
 alias xs="accel-shooter commit style"
 alias xt="accel-shooter commit test"
 alias xx="accel-shooter commit fix"
+alias xwt="accel-shooter commit wt"
+alias xbv='accel-shooter commit bv'
+alias xup='accel-shooter commit up'
 
 export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/accel-shooter/.config.yml
 
@@ -274,10 +229,9 @@ export FZF_DEFAULT_COMMAND='fd'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 ### pyenv
-# export PYENV_ROOT="$HOME/.pyenv"
-# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 ### docker compose
 
@@ -290,29 +244,29 @@ function dc() {
 		docker compose $@
 	fi
 }
-alias dcbu="cr; dc build"
-alias dcd="cr; dc down -v"
-alias dcl="cr; dc logs --tail 30 -f -t"
-alias dcfl="cr; dc logs 30 -f -t"
-alias dcr="cr; dc restart"
-alias dcu="cr; dc up -d"
-alias dclf="cr; dcl frontend"
-alias dclb="cr; dcl backend"
-alias dcld="cr; dcl database"
-alias dcbf="cr; dcb frontend"
-alias dcbb="cr; dcb backend"
-function dcc() { cr; dc exec $@; }
-function dcb() { cr; dc exec $@ /bin/bash; }
-function dcs() { cr; dc exec $@ /bin/sh; }
+alias dcbu="crr; dc build"
+alias dcd="crr; dc down -v"
+alias dcl="crr; dc logs --tail 30 -f -t"
+alias dcfl="crr; dc logs 30 -f -t"
+alias dcr="crr; dc restart"
+alias dcu="crr; dc up -d"
+alias dclf="crr; dcl frontend"
+alias dclb="crr; dcl backend"
+alias dcld="crr; dcl database"
+alias dcbf="crr; dcb frontend"
+alias dcbb="crr; dcb backend"
+function dcc() { crr; dc exec $@; }
+function dcb() { crr; dc exec $@ /bin/bash; }
+function dcs() { crr; dc exec $@ /bin/sh; }
 alias drm='docker rm $(docker ps -q -f 'status=exited'); docker rmi $(docker images -q -f "dangling=true")'
 
 # make
 
-alias mr="cr; make stop-dev-main; make start-dev-main"
-alias msa="cr; make start-dev-main"
-alias mso="cr; make stop-dev-main"
-alias mrf="cr; dc restart frontend; dclf"
-alias mrb="cr; dc restart backend; dclb"
+alias mr="crr; make stop-dev-main; make start-dev-main"
+alias msa="crr; make start-dev-main"
+alias mso="crr; make stop-dev-main"
+alias mrf="crr; dc restart frontend; dclf"
+alias mrb="crr; dc restart backend; dclb"
 
 # copy
 
@@ -329,6 +283,8 @@ function setup_python {
 }
 
 function set_vpn_net {
+	sudo route add -net 10.1.0.0 -netmask 255.255.0.0 -interface ppp0
+	sudo route add -net 10.15.0.0 -netmask 255.255.0.0 -interface ppp0
 	sudo route add -net 172.65.251.78 -netmask 255.255.0.0 -interface ppp0
 	sudo route add -net 34.74.90.64/28 -netmask 255.255.0.0 -interface ppp0
 	sudo route add -net 34.74.226.0/24 -netmask 255.255.0.0 -interface ppp0
@@ -343,3 +299,8 @@ export WEB_NETWORK_LOCATION='localhost:3000'
 if [ -f ~/.zshrc_private ]; then
     source ~/.zshrc_private
 fi
+
+# antlr
+export CLASSPATH=".:/Users/nanoha/lib/antlr-4.13.2-complete.jar:$CLASSPATH"
+alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.2-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
+alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.2-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
