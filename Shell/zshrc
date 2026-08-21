@@ -1,8 +1,8 @@
 # OPENSPEC:START
-# OpenSpec shell completions configuration
-fpath=("/Users/nanoha/.zsh/completions" $fpath)
-autoload -Uz compinit
-compinit
+# OpenSpec shell completions configuration.
+# compinit is intentionally not called here: z4h runs it during `z4h init`.
+# Only fpath needs to be extended, and it must happen before `z4h init`.
+fpath=("$HOME/.zsh/completions" $fpath)
 # OPENSPEC:END
 
 # Personal Zsh configuration file. It is strongly recommended to keep all
@@ -42,23 +42,8 @@ zstyle ':z4h:direnv'         enable 'no'
 # Show "loading" and "unloading" notifications from direnv.
 zstyle ':z4h:direnv:success' notify 'yes'
 
-# Enable ('yes') or disable ('no') automatic teleportation of z4h over
-# SSH when connecting to these hosts.
-zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
-zstyle ':z4h:ssh:*.example-hostname2' enable 'no'
-# The default value if none of the overrides above match the hostname.
-zstyle ':z4h:ssh:*'                   enable 'no'
-
-# Send these files over to the remote host when connecting over SSH to the
-# enabled hosts.
-zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
-
-# Clone additional Git repositories from GitHub.
-#
-# This doesn't do anything apart from cloning the repository and keeping it
-# up-to-date. Cloned files can be used after `z4h init`. This is just an
-# example. If you don't plan to use Oh My Zsh, delete this line.
-z4h install ohmyzsh/ohmyzsh || return
+# Automatic teleportation of z4h over SSH is disabled for every host.
+zstyle ':z4h:ssh:*' enable 'no'
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -78,12 +63,6 @@ export GPG_TTY=$TTY
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
-
-# Use additional Git repositories pulled in with `z4h install`.
-#
-# This is just an example that you should delete. It does nothing useful.
-z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
-z4h load   ohmyzsh/ohmyzsh/plugins/emoji-clock  # load a plugin
 
 # Define key bindings.
 z4h bindkey undo Ctrl+/   Shift+Tab  # undo the last command line change
@@ -113,8 +92,6 @@ alias ls="${aliases[ls]:-ls} -A"
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
-
-DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 ####################################### Personal Setting
 
@@ -199,7 +176,7 @@ eval "$(fnm env --use-on-cd)"
 alias q="exit"
 alias v="vim"
 alias va="vim -R +AnsiEsc ~/ac-checker-log"
-alias ach="node --max_old_space_size=24576 /Users/nanoha/.local/state/fnm_multishells/45508_1763542300356/bin/accel-shooter check"
+alias ach="node --max_old_space_size=24576 $(which accel-shooter) check"
 alias ao="accel-shooter open"
 alias as="accel-shooter"
 alias aw="accel-shooter work"
@@ -250,7 +227,7 @@ function dc() {
 alias dcbu="crr; dc build"
 alias dcd="crr; dc down -v"
 alias dcl="crr; dc logs --tail 30 -f -t"
-alias dcfl="crr; dc logs 30 -f -t"
+alias dcfl="crr; dc logs -f -t"
 alias dcr="crr; dc restart"
 alias dcu="crr; dc up -d"
 alias dclf="crr; dcl frontend"
@@ -302,8 +279,3 @@ export WEB_NETWORK_LOCATION='localhost:3000'
 if [ -f ~/.zshrc_private ]; then
     source ~/.zshrc_private
 fi
-
-# antlr
-export CLASSPATH=".:/Users/nanoha/lib/antlr-4.13.2-complete.jar:$CLASSPATH"
-alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.2-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
-alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.13.2-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'

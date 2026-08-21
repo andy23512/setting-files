@@ -86,9 +86,9 @@ endif
 syntax on
 set nobackup		" keep a backup file
 set backupcopy=yes " for brunch
-set backupdir=~/tmp,.,/var/tmp/vi,/tmp
+set backupdir=~/.vim/tmp,.,/var/tmp/vi,/tmp
 set bs=2		" allow backspacing over everything in insert mode
-set directory=~/tmp,/var/tmp/vi,/tmp,.
+set directory=~/.vim/tmp,/var/tmp/vi,/tmp,.
 set incsearch " immediate search
 set modelines=1 " enable modeline
 set mouse=c " disable mouse
@@ -99,15 +99,21 @@ set nosmartindent
 set nowrap
 set nu
 set redrawtime=10000
-set rtp+=/usr/local/opt/fzf
+" fzf lives under a different Homebrew prefix on Apple Silicon vs Intel.
+for s:fzfdir in ['/opt/homebrew/opt/fzf', '/usr/local/opt/fzf']
+  if isdirectory(s:fzfdir)
+    let &runtimepath .= ',' . s:fzfdir
+    break
+  endif
+endfor
 set ruler " show current line and column position
 set shiftwidth=4
 set showmatch " show the match { ( <
 set spell
-set spellfile=$HOME/Cloud/MEGAsync/vim/spell/en.utf-8.add
+set spellfile=$HOME/.vim/spell/en.utf-8.add
 set spelllang=en
 set tabstop=4
-set undodir=~/tmp
+set undodir=~/.vim/tmp
 set viminfo='20,\"50	" read/write a .viminfo file, don't store more
 set wildignore+=*.a,*.o
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png

@@ -11,7 +11,6 @@
 	root = rev-parse --show-toplevel
 	s = status -s
 	st = status
-	n = commit -F /Users/nanoha/nanoha
 [color]
 	ui = true
 [url "https://"]
@@ -20,9 +19,9 @@
 	default = simple
 	autoSetupRemote = true
 [http]
-	proxy =
+	version = HTTP/1.1
 [core]
-	editor = /usr/local/bin/vim
+	editor = /opt/homebrew/bin/vim
 	pager = delta
 	autocrlf = input
 [interactive]
@@ -49,3 +48,8 @@
 	conflictstyle=diff3
 [commit]
 	gpgsign = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

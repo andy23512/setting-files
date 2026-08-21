@@ -24,13 +24,6 @@ tmux.conf
 $ cp Shell/tmux.conf ~/.tmux.conf
 ```
 
-## Bash
-bashrc
-### Setup
-```sh
-$ cp Shell/bashrc ~/.bashrc
-```
-
 ## Zsh
 zshrc
 ### Setup
