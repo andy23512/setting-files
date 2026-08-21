@@ -29,7 +29,7 @@ call minpac#add('tpope/vim-haml')
 call minpac#add('vim-jp/syntax-vim-ex')
 call minpac#add('vim-syntastic/syntastic')
 call minpac#add('mustache/vim-mustache-handlebars')
-call minpac#add('fisadev/vim-isort')
+" call minpac#add('fisadev/vim-isort')
 call minpac#add('powerman/vim-plugin-AnsiEsc')
 call minpac#add('nvie/vim-flake8')
 
@@ -48,9 +48,27 @@ if ($TERM == "vt100")
   set t_AF=[1;3%p1%dm
   set t_AB=[4%p1%dm
 endif
-set t_Co=8
-set t_AF=[1;3%p1%dm
-set t_AB=[4%p1%dm
+
+" Stay on the classic 8-color palette, but let Vim build the escape sequences
+" from terminfo. Do NOT hardcode t_AF / t_AB here: the old 'ESC[1;3%p1%dm'
+" form is only valid for colors 0-7 and silently emits garbage such as
+" ESC[1;313m (no such SGR code) as soon as t_Co reaches 16 or more, which
+" is why syntax colors disappeared outside tmux.
+if $TERM !=# 'vt100' && $TERM !=# 'dumb' && $TERM !=# ''
+  " Do not ask the terminal for its version. iTerm2 answers with
+  " ESC[>64;2500;0c, and on that reply Vim raises t_Co to 256 and
+  " re-initialises every highlight group, discarding the settings made
+  " here and the 'hi' overrides further down. tmux never answers, which
+  " is why colors differed inside and outside tmux. Staying silent puts
+  " both environments in the same state.
+  " Trade-off: Vim skips xterm feature detection (auto 'ttymouse',
+  " modifyOtherKeys, true-color probing). Harmless here: mouse is off,
+  " bracketed paste is configured by hand and termguicolors stays off.
+  set t_RV=
+  set t_Co=8
+endif
+" termguicolors is intentionally left off: the 'hi ... ctermfg=' lines further
+" down in this file would be ignored in favour of the gui* colors.
 
 " #########################################################################
 " default vimrc files
@@ -336,6 +354,54 @@ function PostPython()
   Isort
 endfunction
 
+" #########################################################################
+" keep the color setup stable after the terminal answers Vim's DA query
+"
+" iTerm2 replies to Vim's secondary-DA request with e.g. ESC[>64;2500;0c.
+" On that reply Vim raises t_Co to 256 and re-initialises every highlight
+" group, discarding both the t_Co setting near the top of this file and the
+" 'hi' overrides below. tmux answers differently, so without this the same
+" Vim looked different inside and outside tmux. Re-apply on TermResponse.
+
+function! s:MyHighlights() abort
+  hi link stylusProperty cssVisualProp
+  hi Comment ctermfg=LightMagenta
+  hi Pmenu ctermfg=white
+  hi vueTag ctermfg=Blue
+  hi link jsxTagName Statement
+  hi link jsxPunct Function
+  hi link jsxCloseString jsxTag
+  hi link javascriptImport Special
+  hi link javascriptExport Special
+endfunction
+
+function! s:Lock8Colors() abort
+  if $TERM ==# 'vt100' || $TERM ==# 'dumb' || $TERM ==# ''
+    return
+  endif
+  if &t_Co == 8
+    return
+  endif
+  set t_Co=8
+  call s:MyHighlights()
+  if exists('$VIMCOLORLOG')
+    call writefile(['relocked, t_Co=' . &t_Co], $VIMCOLORLOG, 'a')
+  endif
+endfunction
+
+augroup MyColorLock
+  autocmd!
+  autocmd TermResponse * call s:Lock8Colors()
+  autocmd VimEnter     * call s:Lock8Colors()
+  " SafeState fires once Vim is idle in the main loop, i.e. after any
+  " late terminal reply has been processed. The guard in s:Lock8Colors()
+  " makes this a single integer compare when nothing drifted.
+  if exists('##SafeState')
+    autocmd SafeState * call s:Lock8Colors()
+  endif
+augroup END
+
 au! VimEnter COMMIT_EDITMSG exec 'norm gg' | startinsert!
+autocmd FileType gitcommit setlocal textwidth=108
 
 " vi:et:sw=2:ts=2:sts=2

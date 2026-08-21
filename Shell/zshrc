@@ -22,6 +22,7 @@ zstyle ':z4h:bindkey' keyboard  'mac'
 
 # Start tmux if not already in tmux.
 # zstyle ':z4h:' start-tmux command tmux -u new -A -D -t z4h
+zstyle ':z4h:' start-tmux 'no'
 
 # Whether to move prompt to the bottom when zsh starts and on Ctrl+L.
 zstyle ':z4h:' prompt-at-bottom 'no'
@@ -64,6 +65,10 @@ z4h install ohmyzsh/ohmyzsh || return
 # is fully initialized. Everything that requires user interaction or can
 # perform network I/O must be done above. Everything else is best done below.
 z4h init || return
+
+### terminal title
+zstyle ':z4h:term-title:local' precmd  '%1~'
+zstyle ':z4h:term-title:local' preexec '%1~: ${${1//\%/%%}[1,30]}'
 
 # Extend PATH.
 path=(~/bin $path)
@@ -213,8 +218,6 @@ alias xwt="accel-shooter commit wt"
 alias xbv='accel-shooter commit bv'
 alias xup='accel-shooter commit up'
 
-export ACCEL_SHOOTER_CONFIG_FILE=~/ResilioSync/accel-shooter/.config.yml
-
 ### Console Ninja
 
 PATH=~/.console-ninja/.bin:$PATH
@@ -237,7 +240,7 @@ eval "$(pyenv init -)"
 
 function dc() {
 	if [[ "$(git_repo)" == "[website]" ]]; then
-		./bin/dc -f docker-compose.yaml -f docker-compose.dev.yaml $@
+		./bin/dc -f docker-compose.yaml -f docker-compose.dev.yaml --log-level DEBUG $@
 	elif [ -e "dev.yaml" ]; then
 		docker compose -f docker-compose.yaml -f dev.yaml $@
 	else
