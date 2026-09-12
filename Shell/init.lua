@@ -318,6 +318,23 @@ hs.hotkey.bind({'cmd'}, 'm', function()
     end
 end)
 
+-- show current input source
+
+-- macOS only pops up the little input-source label at the caret when the
+-- source actually changes, and there's no API to ask for it on demand. So we
+-- bounce through a different source and back; the second switch lands back on
+-- the original source and re-triggers the same native popup as a side effect.
+function showCurrentInputSource()
+    local current_source_id = hs.keycodes.currentSourceID()
+    local trampoline_source_id = (current_source_id == InputSource.ABC) and InputSource.McBopomofo or InputSource.ABC
+    setInputSource(trampoline_source_id)
+    hs.timer.doAfter(0.02, function()
+        setInputSource(current_source_id)
+    end)
+end
+
+hs.hotkey.bind({'cmd', 'alt'}, 'k', showCurrentInputSource)
+
 -- mouse teleport
 
 function mouseTeleportCallbackFactory(i)
