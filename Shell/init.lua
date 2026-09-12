@@ -225,6 +225,68 @@ InputSource = {
 }
 
 
+-- macOS has a long-standing bug where switching directly into a "complex"
+-- input source (Chinese/Japanese IMEs) via TISSelectInputSource (what
+-- hs.keycodes.currentSourceID wraps) updates the menu bar icon but doesn't
+-- actually change what gets typed. Synthetic keystrokes (hs.eventtap.keyStroke)
+-- aimed at the "Select next source in Input menu" shortcut are unreliable too,
+-- since macOS often ignores synthetic events for this system-reserved hotkey.
+-- The one thing that reliably works is performing the same action a real
+-- mouse click does: pressing the actual Input menu bar item (owned by the
+-- TextInputMenuAgent process) via the Accessibility API. This goes through
+-- the real NSMenu selection path, so it doesn't hit the bug. Doing this with
+-- hs.axuielement directly (instead of AppleScript/System Events) also makes
+-- it sub-millisecond instead of the ~0.3-0.5s AppleScript/GUI-scripting costs.
+-- See https://github.com/tekezo/Karabiner/issues/308 and
+-- https://github.com/Hammerspoon/hammerspoon/issues/1429
+InputSourceMenuTitle = {
+    [InputSource.ABC] = 'ABC',
+    [InputSource.ZhuYin] = '注音 – 繁体字', -- exact system menu label, do not "correct" to 繁體字
+    [InputSource.McBopomofo] = 'Bopomofo', -- the "McBopomofo" entry is only a prefs header shown while it's already active; "Bopomofo" is the actual switchable item
+    [InputSource.Japanese] = '日本語',
+}
+
+local function getInputMenuStatusItem()
+    local app = hs.application.find('TextInputMenuAgent')
+    if not app then return nil end
+    local extrasMenuBar = hs.axuielement.applicationElement(app).AXExtrasMenuBar
+    return extrasMenuBar and extrasMenuBar[1]
+end
+
+local function pressMenuItemByTitle(statusItem, title, attemptsLeft)
+    local menu = statusItem.AXChildren and statusItem.AXChildren[1]
+    local items = menu and menu.AXChildren
+    if items then
+        for _, item in ipairs(items) do
+            if item.AXTitle == title then
+                item:performAction('AXPress')
+                return true
+            end
+        end
+    end
+    if attemptsLeft > 0 then
+        hs.timer.usleep(20000)
+        return pressMenuItemByTitle(statusItem, title, attemptsLeft - 1)
+    end
+    return false
+end
+
+function setInputSource(targetSourceID)
+    local menuTitle = InputSourceMenuTitle[targetSourceID]
+    if not menuTitle then
+        hs.keycodes.currentSourceID(targetSourceID)
+        return
+    end
+    local statusItem = getInputMenuStatusItem()
+    if not statusItem then
+        hs.alert.show('Input menu extra not found')
+        return
+    end
+    if not pressMenuItemByTitle(statusItem, menuTitle, 5) then
+        hs.alert.show('Input source menu item not found: ' .. menuTitle)
+    end
+end
+
 input_source_keys = {
     ['a'] = InputSource.ABC,
     ['b'] = InputSource.ZhuYin,
@@ -237,12 +299,12 @@ for key, source_id in pairs(input_source_keys) do
         current_source_id = hs.keycodes.currentSourceID()
         if current_source_id == source_id then
             if current_source_id == InputSource.ABC then
-                hs.keycodes.currentSourceID(InputSource.McBopomofo)
+                setInputSource(InputSource.McBopomofo)
             else
-                hs.keycodes.currentSourceID(InputSource.ABC)
+                setInputSource(InputSource.ABC)
             end
         else
-            hs.keycodes.currentSourceID(source_id)
+            setInputSource(source_id)
         end
     end)
 end
@@ -250,9 +312,9 @@ end
 hs.hotkey.bind({'cmd'}, 'm', function()
     current_source_id = hs.keycodes.currentSourceID()
     if current_source_id == InputSource.McBopomofo then
-        hs.keycodes.currentSourceID(InputSource.ABC)
+        setInputSource(InputSource.ABC)
     else
-        hs.keycodes.currentSourceID(InputSource.McBopomofo)
+        setInputSource(InputSource.McBopomofo)
     end
 end)
 
