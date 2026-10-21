@@ -185,8 +185,106 @@ end
 
 wf_all = hs.window.filter.new(true)
 
-wf_all:subscribe(hs.window.filter.windowMoved, snapGrid)
-wf_all:subscribe(hs.window.filter.windowCreated, snapGrid)
+-- debug log (console + file, since the console is cleared on reload)
+
+local debugLogPath = os.getenv("HOME") .. "/.hammerspoon/wake-debug.log"
+local debugLogger = hs.logger.new('wake', 'debug')
+
+local function debugLog(fmt, ...)
+    local msg = string.format(fmt, ...)
+    debugLogger.i(msg)
+    local f = io.open(debugLogPath, "a")
+    if f then
+        f:write(os.date("%Y-%m-%d %H:%M:%S ") .. msg .. "\n")
+        f:close()
+    end
+end
+
+local function describeScreens()
+    local parts = {}
+    for _, s in ipairs(hs.screen.allScreens()) do
+        table.insert(parts, string.format("[%s id=%s frame=%s]", s:name() or "?", tostring(s:id()), s:frame().string))
+    end
+    return table.concat(parts, " ")
+end
+
+local caffeinateEventNames = {}
+for name, value in pairs(hs.caffeinate.watcher) do
+    if type(value) == "number" then caffeinateEventNames[value] = name end
+end
+
+local function onWindowEvent(win, appName, event)
+    debugLog("%s: %s (%s) screens=%s", event, win and win:title() or "?", appName or "?", describeScreens())
+    snapGrid()
+end
+
+wf_all:subscribe(hs.window.filter.windowMoved, onWindowEvent)
+wf_all:subscribe(hs.window.filter.windowCreated, onWindowEvent)
+
+-- sleep/wake handling
+-- While the display sleeps/wakes, macOS may temporarily change the screen
+-- layout and move windows. Auto snap during that period would snap windows to
+-- a wrong grid, so pause it, restore saved frames, and snap once after settling.
+
+local savedFrames = {}
+local resumeTimer
+
+local function saveFrames()
+    savedFrames = {}
+    local count = 0
+    for _, win in ipairs(hs.window.visibleWindows()) do
+        if win:isStandard() then
+            savedFrames[win:id()] = win:frame()
+            count = count + 1
+        end
+    end
+    debugLog("saved %d frames, screens=%s", count, describeScreens())
+end
+
+local function restoreFrames()
+    local count = 0
+    for id, frame in pairs(savedFrames) do
+        local win = hs.window.get(id)
+        if win then
+            win:setFrame(frame, 0)
+            count = count + 1
+        end
+    end
+    debugLog("restored %d frames, screens=%s", count, describeScreens())
+end
+
+local function pauseSnap()
+    wf_all:pause()
+    if resumeTimer then resumeTimer:stop() end
+end
+
+local function resumeSnapLater()
+    if resumeTimer then resumeTimer:stop() end
+    resumeTimer = hs.timer.doAfter(5, function()
+        debugLog("resume auto snap, screens=%s", describeScreens())
+        wf_all:resume()
+        snapGrid()
+    end)
+end
+
+wakeWatcher = hs.caffeinate.watcher.new(function(event)
+    local w = hs.caffeinate.watcher
+    debugLog("caffeinate: %s, screens=%s", caffeinateEventNames[event] or tostring(event), describeScreens())
+    if event == w.screensDidSleep or event == w.systemWillSleep then
+        saveFrames()
+        pauseSnap()
+    elseif event == w.screensDidWake or event == w.systemDidWake then
+        pauseSnap()
+        restoreFrames()
+        resumeSnapLater()
+    end
+end):start()
+
+screenWatcher = hs.screen.watcher.new(function()
+    debugLog("screen layout changed: %s", describeScreens())
+    pauseSnap()
+    resumeSnapLater()
+end):start()
 
 -- to row
 
