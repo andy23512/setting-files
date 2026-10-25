@@ -66,88 +66,13 @@ end
 
 -- grid cols setting
 
-grid_hints = {
-    [2] = {
-        {'1', '2'},
-        {'1', '2'},
-        {'k', 'f'},
-        {'c', 'd'},
-        {'1', '2'},
-    },
-    [3] = {
-        {'1', '2', '3'},
-        {'1', '2', '3'},
-        {'k', 'f', 'a'},
-        {'c', 'd', 't'},
-        {'1', '2', '3'},
-    },
-    [4] = {
-        {'1', '2', '3', '4'},
-        {'1', '2', '3', '4'},
-        {'r', 'k', 'f', 'a'},
-        {'e', 'c', 'd', 't'},
-        {'1', '2', '3', '4'},
-    },
-    [5] = {
-        {'1', '2', '3', '4', '5'},
-        {'1', '2', '3', '4', '5'},
-        {'r', 'k', 'f', 'a', 'l'},
-        {'e', 'c', 'd', 't', 'n'},
-        {'1', '2', '3', '4', '5'},
-    },
-    [6] = {
-        {'1', '2', '3', '4', '5', '6'},
-        {'1', '2', '3', '4', '5', '6'},
-        {'i', 'r', 'k', 'f', 'a', 'l'},
-        {'o', 'e', 'c', 'd', 't', 'n'},
-        {'1', '2', '3', '4', '5', '6'},
-    },
-    [7] = {
-        {'1', '2', '3', '4', '5', '6', '7'},
-        {'1', '2', '3', '4', '5', '6', '7'},
-        {'i', 'r', 'k', 'f', 'a', 'l', 'y'},
-        {'o', 'e', 'c', 'd', 't', 'n', 's'},
-        {'1', '2', '3', '4', '5', '6', '7'},
-    },
-    [8] = {
-        {'1', '2', '3', '4', '5', '6', '7', '8'},
-        {'1', '2', '3', '4', '5', '6', '7', '8'},
-        {'\'', 'i', 'r', 'k', 'f', 'a', 'l', 'y'},
-        {'u', 'o', 'e', 'c', 'd', 't', 'n', 's'},
-        {'1', '2', '3', '4', '5', '6', '7', '8'},
-    },
-}
-
 function setGridCols(cols)
     hs.grid.setGrid(tostring(cols) .. 'x2')
-    hs.grid.HINTS = grid_hints[cols]
 end
 
-gcols = hs.settings.get('cols') or 4
+gcols = 8
 setGridCols(gcols)
 hs.grid.setMargins({ x = 0, y = 0 })
-
-function setColsCallbackFactory(cols)
-  return function()
-        hs.settings.set('cols', cols)
-        setGridCols(cols)
-        hs.alert.show(tostring(cols) .. 'x2')
-        gcols = cols
-    end
-end
-
-for i = 2, 8 do
-    setColsCallback = setColsCallbackFactory(i)
-    hs.hotkey.bind({'cmd', 'alt'}, tostring(i), setColsCallback)
-end
-
--- show grid
-
-function showGrid()
-    hs.grid.show(true)
-end
-
-hs.hotkey.bind({'cmd', 'alt'}, 'g', showGrid)
 
 -- snap to grid
 
@@ -286,33 +211,6 @@ screenWatcher = hs.screen.watcher.new(function()
     resumeSnapLater()
 end):start()
 
--- to row
-
-hs.hotkey.bind({'cmd', 'alt'}, 'r', function()
-    wf_all:pause()
-    local win = hs.window.focusedWindow()
-    if win ~= nil then
-        cell = hs.grid.get(win)
-        cell.y = 0
-        cell.w = 1
-        cell.h = 2
-        hs.grid.set(win, cell)
-    end
-    hs.timer.doAfter(1, function() wf_all:resume() end)
-end)
-
--- to top-right
-
-hs.hotkey.bind({'cmd', 'alt'}, ';', function()
-    wf_all:pause()
-    local win = hs.window.focusedWindow()
-    if win ~= nil then
-        cell = hs.geometry(gcols - 1, 0, 1, 1)
-        hs.grid.set(win, cell)
-    end
-    hs.timer.doAfter(1, function() wf_all:resume() end)
-end)
-
 -- input source
 
 InputSource = {
@@ -433,29 +331,6 @@ end
 
 hs.hotkey.bind({'cmd', 'alt'}, 'k', showCurrentInputSource)
 
--- mouse teleport
-
-function mouseTeleportCallbackFactory(i)
-    return function()
-        pos = hs.mouse.getRelativePosition()
-        screen_frame = hs.mouse.getCurrentScreen():frame()
-        pos.x = screen_frame.w * (i - 1) / 4
-        if i == 5 then
-            pos.x = pos.x - 5
-        elseif i == 1 then
-            pos.x = pos.x + 5
-        end
-        hs.mouse.setRelativePosition(pos)
-    end
-end
-
-mouse_teleport_key_list = {'a', 't', 'space', 'l', 'n'}
-
-for i = 1, 5 do
-    hs.hotkey.bind({'shift', 'alt'}, tostring(i), mouseTeleportCallbackFactory(i))
-    hs.hotkey.bind({'shift', 'alt'}, mouse_teleport_key_list[i], mouseTeleportCallbackFactory(i))
-end
-
 -- application focus
 
 application_keys = {
@@ -485,13 +360,5 @@ for key, delta_volume in pairs(volume_control_keys) do
         hs.alert.show('Volume: ' .. tostring(math.floor(device:outputVolume())))
     end)
 end
-
--- grayscale
-
-function toggleGrayScale()
-  hs.screen.setForceToGray(not hs.screen.getForceToGray())
-end
-
-hs.hotkey.bind({'cmd', 'alt'}, 'w', toggleGrayScale)
 
 -- vim:sw=4:ts=4:sts=4:et
