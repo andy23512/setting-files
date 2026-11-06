@@ -235,11 +235,17 @@ InputSource = {
 -- it sub-millisecond instead of the ~0.3-0.5s AppleScript/GUI-scripting costs.
 -- See https://github.com/tekezo/Karabiner/issues/308 and
 -- https://github.com/Hammerspoon/hammerspoon/issues/1429
+-- Menu labels change with the system language, so each source lists every
+-- known label (any one match is enough). If none match, the available labels
+-- are shown in an alert and written to wake-debug.log so they can be added here.
 InputSourceMenuTitle = {
-    [InputSource.ABC] = 'ABC',
-    [InputSource.ZhuYin] = '注音 – 繁体字', -- exact system menu label, do not "correct" to 繁體字
-    [InputSource.McBopomofo] = 'Bopomofo', -- the "McBopomofo" entry is only a prefs header shown while it's already active; "Bopomofo" is the actual switchable item
-    [InputSource.Japanese] = '日本語',
+    [InputSource.ABC] = { 'ABC' },
+    -- exact system menu labels, do not "correct" 繁体字 <-> 繁體字
+    -- (first entry: current zh-Hant-TW label, the rest: previous labels)
+    [InputSource.ZhuYin] = { '繁體注音', '注音 – 繁体字' },
+    -- the old "McBopomofo" entry is only a prefs header shown while it's already active; "Bopomofo" is the actual switchable item
+    [InputSource.McBopomofo] = { '小麥注音', 'Bopomofo' },
+    [InputSource.Japanese] = { '日文', '日本語' },
 }
 
 local function getInputMenuStatusItem()
@@ -249,27 +255,35 @@ local function getInputMenuStatusItem()
     return extrasMenuBar and extrasMenuBar[1]
 end
 
-local function pressMenuItemByTitle(statusItem, title, attemptsLeft)
+local function pressMenuItemByTitle(statusItem, titles, attemptsLeft)
     local menu = statusItem.AXChildren and statusItem.AXChildren[1]
     local items = menu and menu.AXChildren
+    local seen = {}
     if items then
         for _, item in ipairs(items) do
-            if item.AXTitle == title then
-                item:performAction('AXPress')
-                return true
+            local itemTitle = item.AXTitle
+            table.insert(seen, tostring(itemTitle))
+            for _, title in ipairs(titles) do
+                if itemTitle == title then
+                    item:performAction('AXPress')
+                    return true
+                end
             end
         end
     end
     if attemptsLeft > 0 then
         hs.timer.usleep(20000)
-        return pressMenuItemByTitle(statusItem, title, attemptsLeft - 1)
+        return pressMenuItemByTitle(statusItem, titles, attemptsLeft - 1)
     end
+    local available = table.concat(seen, ' | ')
+    debugLog("input source menu item not found: %s; available: %s", table.concat(titles, ' / '), available)
+    hs.alert.show('Input source menu item not found\navailable: ' .. available, 5)
     return false
 end
 
 function setInputSource(targetSourceID)
-    local menuTitle = InputSourceMenuTitle[targetSourceID]
-    if not menuTitle then
+    local menuTitles = InputSourceMenuTitle[targetSourceID]
+    if not menuTitles then
         hs.keycodes.currentSourceID(targetSourceID)
         return
     end
@@ -278,9 +292,7 @@ function setInputSource(targetSourceID)
         hs.alert.show('Input menu extra not found')
         return
     end
-    if not pressMenuItemByTitle(statusItem, menuTitle, 5) then
-        hs.alert.show('Input source menu item not found: ' .. menuTitle)
-    end
+    pressMenuItemByTitle(statusItem, menuTitles, 5)
 end
 
 input_source_keys = {
